@@ -1,0 +1,112 @@
+// app global css in SCSS form
+@import './quasar.variables.scss';
+
+@font-face {
+  font-family: ITC;
+  src: url('/src/assets/fonts/ITC-Avan- Garde-Gothic-Std-Medium.otf');
+}
+
+
+/* Set the light and dark themes using CSS variables */
+:root {
+  --q-color-bg: #{$bg};
+  --q-color-gray-light: #{$gray-light};
+  --q-color-text-custom-dark: #{$text-custom-dark};
+  --q-color-highlight: #{$highlight};
+  --q-color-gray-dark: #{$gray-dark};
+  --q-color-text-light: #{$text-light};
+  --q-color-bg-primary: #{$bg-primary};
+  --q-color-text-secondary: #{$text-secondary};
+}
+
+body.body--dark {
+  --q-color-bg: #{$dark-bg};
+  --q-color-gray-light: #{$dark-gray-light};
+  --q-color-text-custom-dark: #{$text-light};
+  --q-color-highlight: #{$highlight-dark};
+  --q-color-gray-dark: #{$gray-dark-light};
+  --q-color-text-light: #{$text-dark};
+  --q-color-bg-primary: #{$dark-bg-primary};
+  --q-color-text-secondary: #{$dark-text-secondary};
+}
+
+// Override css classes
+.bg-custom-dark-color {
+  background-color: var(--q-color-bg) !important;
+}
+
+.bg-custom-primary {
+  background-color: var(--q-color-bg-primary);
+}
+
+.bg-custom-dark {
+  background-color: var(--q-color-text-custom-dark);
+}
+
+.text-custom-gray-light {
+  color: var(--q-color-gray-light)
+}
+
+.text-custom-dark {
+  color: var(--q-color-text-custom-dark);
+}
+
+.text-custom-gray-dark {
+  color: var(--q-color-gray-dark);
+}
+
+.text-custom-text-secondary {
+  color: var(--q-color-text-secondary);
+}
+
+/* Apply a default theme */
+body {
+  font-family: 'ITC';
+}
+
+// Utilities classes
+.fs-lg {
+  font-size: 18px;
+}
+
+.text-uppercase {
+  text-transform: uppercase
+}
+
+// Header css 
+.zillbase-dashboard {
+  &:has(.q-layout--prevent-focus) {
+    .q-header.zillbase-header {
+      left: 150px;
+    }
+
+    .q-page-container {
+      padding-left: 150px;
+    }
+
+    .q-drawer {
+      width: 150px !important;
+      transform: translateX(0px) !important;
+      visibility: visible;
+
+      .q-btn.q-btn-item {
+        position: absolute;
+        right: 0;
+      }
+    }
+
+    .q-item.q-item-type {
+      .q-item__section {
+        flex-direction: row;
+      }
+
+      .nav-items {
+        justify-content: center;
+
+        .q-item__label {
+          display: none;
+        }
+      }
+    }
+  }
+}
