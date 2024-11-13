@@ -62,6 +62,7 @@
             v-for="link in item.children"
             :key="link.title"
             class="nav-items q-py-sm"
+            :class="{'active-link': isActive(link.href)}" 
           >
             <q-tooltip
               v-if="!leftDrawerOpen"
@@ -110,6 +111,7 @@ import { defineComponent, ref } from "vue";
 import { Dark } from "quasar";
 import NavLinks from "src/assets/data/navlinks";
 import DynamicBreadCrumb from "src/pages/shared/DynamicBreadCrumb.vue";
+import { useRoute } from "vue-router";
 
 export default defineComponent({
   name: "MainLayout",
@@ -128,8 +130,6 @@ export default defineComponent({
       this.darkModeIcon = !this.darkModeIcon;
     },
     navigate(href) {
-      console.log(href);
-      
       if (href) {
         this.$router.push(href);
       }
@@ -137,9 +137,15 @@ export default defineComponent({
   },
 
   setup() {
+    const route = useRoute  ();
+
+    const isActive = (href) => {
+      return route.path === href;
+    };
     return {
       leftDrawerOpen: ref(false),
       NavLinks: NavLinks,
+      isActive
     };
   },
   computed: {
@@ -180,7 +186,7 @@ export default defineComponent({
       transition: color 0.3s ease, filter 0.3s ease;
     }
 
-    &:hover {
+    &:hover, &.active-link {
       .q-item__label,
       .q-icon {
         color: $light-green !important;
