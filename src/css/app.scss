@@ -3,7 +3,28 @@
 
 @font-face {
   font-family: ITC;
-  src: url('/src/assets/fonts/ITC-Avan- Garde-Gothic-Std-Medium.otf');
+  src: url('/src/assets/fonts/ITC-Avant-Garde-Gothic-Std-Extra-Light.otf');
+  font-weight: 200; 
+}
+@font-face {
+  font-family: ITC;
+  src: url('/src/assets/fonts/ITC-Avant-Garde-Gothic-Std-Demi.otf');
+  font-weight: 600;
+}
+@font-face {
+  font-family: ITC;
+  src: url('/src/assets/fonts/ITC-Avant-Garde-Gothic-Std-Book.otf');
+  font-weight: 400;
+}
+@font-face {
+  font-family: ITC;
+  src: url('/src/assets/fonts/ITC-Avan-Garde-Gothic-Std-Medium.otf');
+  font-weight: 500;
+}
+@font-face {
+  font-family: ITC;
+  src: url('/src/assets/fonts/ITC-Avant-Garde-Gothic-Std-Bold.otf');
+  font-weight: bold;
 }
 
 
@@ -17,6 +38,7 @@
   --q-color-text-light: #{$text-light};
   --q-color-bg-primary: #{$bg-primary};
   --q-color-text-secondary: #{$text-secondary};
+  --q-color-light-green: #{$light-green}; //default light green color
 }
 
 body.body--dark {
@@ -59,9 +81,18 @@ body.body--dark {
   color: var(--q-color-text-secondary);
 }
 
+.text-default-light-green {
+  color: var(--q-color-light-green);
+}
+
+// Reset css 
+h1,h2,h3,h4,h5,h6,p {
+  margin: 0;
+  padding: 0;
+}
 /* Apply a default theme */
 body {
-  font-family: 'ITC';
+  font-family: "ITC", sans-serif;
 }
 
 // Utilities classes
@@ -69,8 +100,23 @@ body {
   font-size: 18px;
 }
 
+.fw-600 {
+  font-weight: 600;
+}
+
 .text-uppercase {
   text-transform: uppercase
+}
+
+.rounded-10 {
+  border-radius: 10px;
+}
+.rounded-15 {
+  border-radius: 15px;
+}
+
+.w-full {
+  width: 100%;
 }
 
 // Header css 
@@ -107,6 +153,13 @@ body {
           display: none;
         }
       }
+    }
+  }
+  .q-drawer__content {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    ::-webkit-scrollbar {
+      display: none; // Chrome, Safari, and newer versions of Edge
     }
   }
 }

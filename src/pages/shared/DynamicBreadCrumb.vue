@@ -9,13 +9,15 @@
 </template>
 
 <script>
+import { defineComponent } from "vue";
 import { useRoute } from "vue-router";
 
-export default {
+export default defineComponent({
+  name: "DynamicBreadCrumb",
   props: {
     staticCrumbs: {
       type: Array,
-      default: () => ["zillabase", "user_account"],
+      default: () => ["Zillabase", "user_account"],
     },
     dynamicLabel: {
       type: String,
@@ -25,13 +27,11 @@ export default {
   setup(props) {
     const route = useRoute();
 
-    // Combine static crumbs with the dynamic crumb at the end
     const breadcrumbs = [...props.staticCrumbs, props.dynamicLabel];
 
-    // Function to set the last breadcrumb based on the route
     const getBreadcrumbLabel = (crumb, index) => {
       if (index === breadcrumbs.length - 1) {
-        return route.meta.title || props.dynamicLabel; // Use route meta if available
+        return route.meta.title || props.dynamicLabel;
       }
       return crumb;
     };
@@ -41,7 +41,7 @@ export default {
       getBreadcrumbLabel,
     };
   },
-};
+});
 </script>
 <style scoped lang="scss">
 .q-breadcrumbs {

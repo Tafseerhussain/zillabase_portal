@@ -1,17 +1,22 @@
 <template>
     <div class="q-pa-md q-gutter-sm">
-        <q-avatar color="red" text-color="white" icon="directions" />
-        <q-avatar color="primary" text-color="white">J</q-avatar>
-        <q-avatar size="100px" font-size="52px" color="teal" text-color="white" icon="directions" />
-        <q-avatar size="24px" color="orange">J</q-avatar>
-        <q-avatar>
-            <img src="https://cdn.quasar.dev/img/avatar.png">
-        </q-avatar>
+        <p class="text-custom-text-secondary text-h6 fw-600">Docs</p>
+        <p class="text-custom-gray-dark text-subtitle1">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <overview-card />
+    </div>
+    <q-separator />
+    <div class="q-pa-md">
+        <p class="text-custom-text-secondary text-h6 fw-600">Our Projects</p>
+        <p class="text-custom-gray-dark text-subtitle1">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
     </div>
 </template>
 <script>
 import { defineComponent } from "vue";
+import OverviewCard from "../shared/OverviewCard.vue";
 export default defineComponent({
     name: "OverviewComponent",
+    components: {
+        OverviewCard
+    }
 })
 </script>

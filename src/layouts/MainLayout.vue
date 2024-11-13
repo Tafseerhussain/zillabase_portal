@@ -6,23 +6,24 @@
           <dynamic-bread-crumb />
         </q-toolbar-title>
         <q-space />
-        <q-btn flat color="grey" :icon="darkModeIcon" @click="toggleDarkMode" />
-        <q-separator dark color="grey" vertical />
-        <q-btn flat color="grey" icon="o_notifications" />
-        <q-separator dark color="grey" vertical />
-        <q-btn flat color="grey" icon="o_contact_support" />
-        <q-separator dark color="grey" vertical />
+        <q-btn flat color="grey" :icon="darkModeIcon ? 'o_light_mode' : 'o_bedtime'" :ripple="false"
+         style="color: var(--q-color-text-secondary) !important;" @click="toggleDarkMode" />
+        <q-separator vertical />
+        <q-btn flat color="grey" icon="o_notifications" :ripple="false" style="color: var(--q-color-text-secondary) !important;" />
+        <q-separator vertical />
+        <q-btn flat color="grey" icon="o_contact_support" :ripple="false" style="color: var(--q-color-text-secondary) !important;" />
+        <q-separator vertical />
         <div class="row no-wrap items-center">
           <q-avatar size="42px" class="q-mr-sm">
             <q-img src="/icons/person-01.svg" height="28px" width="28px" />
           </q-avatar>
           <div class="column">
-            <div class="text-subtitle1 text-custom-text-secondary">
+            <div class="text-subtitle1 text-custom-text-secondary text-weight-medium">
               John Doe
             </div>
             <div class="text-caption text-custom-gray-dark">Web Developer</div>
           </div>
-          <q-btn flat icon="arrow_drop_down" color="grey" />
+          <q-btn flat icon="arrow_drop_down" color="grey" :ripple="false" />
         </div>
       </q-toolbar>
     </q-header>
@@ -34,27 +35,24 @@
       class="bg-custom-primary"
     >
       <q-list>
-        <q-item-label header class="flex justify-between items-center q-pb-sm">
+        <q-item-label header class="flex justify-between items-center q-pb-sm fixed q-mb-xl border-bottom-custom-highlight w-full left-sidebar-log">
           <q-img
-            :src="
-              leftDrawerOpen ? '/images/logo.svg' : '/images/short-logo.svg'
-            "
+            :src="logoSrc"
             fit="contain"
             style="width: 150px; height: 22px"
           />
           <q-btn
             unelevated
-            size="sm"
             color="light-green"
             :icon="leftDrawerOpen ? 'chevron_left' : 'chevron_right'"
-            style="width: 38px; border-radius: 10px"
+            style="width: 30px; height: 30px; border-radius: 10px"
             @click="leftDrawerOpen = !leftDrawerOpen"
           />
         </q-item-label>
-        <q-separator class="q-mb-md" />
+        <q-separator class="" />
 
-        <q-item v-for="item in NavLinks" :key="item.groupTitle" class="column">
-          <q-item-section avatar class="q-pb-md q-pr-none">
+        <q-item v-for="item in NavLinks" :key="item.groupTitle" class="column q-pb-md">
+          <q-item-section avatar class="q-pb-sm q-pr-none">
             <q-item-label
               class="text-uppercase text-custom-gray-light text-subtitle2"
               >{{ item.groupTitle }}</q-item-label
@@ -78,19 +76,18 @@
               style="color: var(--q-color-text-custom-dark)"
             >
             </q-icon>
-            <q-item-label class="text-subtitle2 text-custom-dark">{{
-              link.title
-            }}</q-item-label>
+            <q-item-label class="text-subtitle2 text-custom-dark" @click="navigate(link.href)">
+              {{ link.title }}</q-item-label>
           </q-item-section>
         </q-item>
       </q-list>
     </q-drawer>
 
     <q-page-container>
-      <div class="q-px-md q-py-lg">
+      <div class="q-px-md q-py-lg flex justify-between">
         <div class="flex items-center q-gutter-sm">
           <h6
-            class="text-custom-text-secondary text-weight-bold text-h4 q-my-none"
+            class="text-custom-text-secondary text-weight-bold text-h4"
           >
             Overview
           </h6>
@@ -100,7 +97,9 @@
             style="color: var(--q-color-text-secondary)"
           />
         </div>
+        <q-btn label="Settings" icon="o_settings" :ripple="false" color="dark" class="text-capitalize rounded-10" />
       </div>
+      <q-separator />
       <router-view />
     </q-page-container>
   </q-layout>
@@ -113,21 +112,28 @@ import NavLinks from "src/assets/data/navlinks";
 import DynamicBreadCrumb from "src/pages/shared/DynamicBreadCrumb.vue";
 
 export default defineComponent({
-  name: "DashBoardLayout",
+  name: "MainLayout",
 
   components: {
     DynamicBreadCrumb,
   },
   data() {
     return {
-      darkModeIcon: Dark.isActive ? "o_light_mode" : "o_bedtime",
+      darkModeIcon: false,
     };
   },
   methods: {
     toggleDarkMode() {
       Dark.set(!Dark.isActive);
-      this.darkModeIcon = Dark.isActive ? "o_light_mode" : "o_bedtime";
+      this.darkModeIcon = !this.darkModeIcon;
     },
+    navigate(href) {
+      console.log(href);
+      
+      if (href) {
+        this.$router.push(href);
+      }
+    }
   },
 
   setup() {
@@ -136,28 +142,52 @@ export default defineComponent({
       NavLinks: NavLinks,
     };
   },
+  computed: {
+    logoSrc() {
+      if (this.leftDrawerOpen) {
+        return this.darkModeIcon ? '/images/light-logo.svg' : '/images/logo.svg';
+      } else {
+        return this.darkModeIcon ? '/images/short-light-logo.svg' : '/images/short-logo.svg';
+      }
+    }
+  }
 });
 </script>
 <style scoped lang="scss">
-.zillbase-header {
-}
-.nav-items {
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 12px;
-  margin-left: 0 !important;
-
-  .q-item__label,
-  .q-icon {
-    transition: color 0.3s ease, filter 0.3s ease;
+  .q-toolbar {
+    min-height: 60px;
   }
-
-  &:hover {
-    .q-item__label,
-    .q-icon {
-      color: $light-green !important;
+  .q-drawer__content {
+    .left-sidebar-log {
+      min-height: 61px;
+    }
+    .q-list {
+      .q-item.q-item-type:nth-child(3) {
+      margin-top: 4.50rem;
+    }
     }
   }
-}
+  .nav-items {
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12px;
+    margin-left: 0 !important;
+    cursor: pointer;
+
+    .q-item__label,
+    .q-icon {
+      transition: color 0.3s ease, filter 0.3s ease;
+    }
+
+    &:hover {
+      .q-item__label,
+      .q-icon {
+        color: $light-green !important;
+      }
+    }
+  }
+  .border-bottom-custom-highlight {
+    border-bottom: 1px solid var(--q-color-highlight);
+  }
 </style>

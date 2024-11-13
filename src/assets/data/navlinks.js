@@ -5,7 +5,7 @@ const NavLinks = [
       {
         title: "Overview",
         icon: "o_layers",
-        href: "",
+        href: "/overview",
       },
     ],
   },
@@ -15,7 +15,7 @@ const NavLinks = [
       {
         title: "API Docs",
         icon: "o_description",
-        href: "",
+        href: "/",
       },
     ],
   },
@@ -25,32 +25,32 @@ const NavLinks = [
       {
         title: "Tables",
         icon: "o_space_dashboard",
-        href: "",
+        href: "/",
       },
       {
         title: "Functions",
         icon: "o_account_tree",
-        href: "",
+        href: "/",
       },
       {
         title: "Views",
         icon: "o_drive_file_move",
-        href: "",
+        href: "/",
       },
       {
         title: "Streams",
         icon: "o_cast_connected",
-        href: "",
+        href: "/",
       },
       {
         title: "Auth",
         icon: "o_shield",
-        href: "",
+        href: "/",
       },
       {
         title: "Storage",
         icon: "o_save",
-        href: "",
+        href: "/",
       },
     ],
   },
@@ -60,7 +60,7 @@ const NavLinks = [
       {
         title: "SQL Editor",
         icon: "o_terminal",
-        href: "",
+        href: "/",
       },
     ],
   },
