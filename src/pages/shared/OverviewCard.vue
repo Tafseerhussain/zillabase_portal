@@ -8,7 +8,7 @@
       </q-card-section>
 
       <!-- Description Section -->
-      <q-card-section class="text-subtitle2 text-custom-gray-dark q-pt-none text-weight-regular">
+      <q-card-section class="text-subtitle2 text-custom-gray-dark q-pt-none text-weight-light">
         {{ card.description }}
       </q-card-section>
       <q-separator />
@@ -17,9 +17,9 @@
         <div class="row justify-between items-center q-pt-md bg-custom-primary q-pa-md">
           <div class="text-caption text-custom-gray-dark q-mb-xs text-weight-medium">
             {{ card.statLabel }}
-            <p class="text-subtitle2 text-bold text-custom-text-secondary text-weight-regular">{{ card.statValue }}</p>
+            <p class="text-subtitle2 text-bold text-custom-text-secondary">{{ card.statValue }}</p>
           </div>
-          <q-btn label="View Docs" color="light-green" class="text-weight-regular text-capitalize rounded-10" unelevated :ripple="false" />
+          <q-btn label="View Docs" color="light-green" class="text-weight-medium text-capitalize rounded-10" unelevated :ripple="false" />
         </div>
       </q-card-section>
     </q-card>

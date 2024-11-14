@@ -33,13 +33,13 @@ export default route(function (/* { store, ssrContext } */) {
     history: createHistory(process.env.VUE_ROUTER_BASE),
   });
 
-  // Router.beforeEach((to, from) => {
-  //   if (to.fullPath === "/") {
-  //     return {
-  //       path: `/overview`,
-  //     };
-  //   }
-  // });
+  Router.beforeEach((to, from) => {
+    if (to.fullPath === "/") {
+      return {
+        path: `/overview`,
+      };
+    }
+  });
 
   return Router;
 });

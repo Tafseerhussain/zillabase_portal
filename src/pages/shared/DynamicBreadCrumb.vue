@@ -47,10 +47,12 @@ export default defineComponent({
 .q-breadcrumbs {
   .q-breadcrumbs__el {
     color: var(--q-color-gray-dark);
+    font-weight: 300;
   }
   .q-breadcrumbs--last {
     .q-breadcrumbs__el {
       color: var(--q-color-text-secondary);
+      font-weight: 500;
     }
   }
 }

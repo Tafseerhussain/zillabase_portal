@@ -25,7 +25,7 @@ const NavLinks = [
       {
         title: "Tables",
         icon: "o_space_dashboard",
-        href: "/",
+        href: "/tables",
       },
       {
         title: "Functions",

@@ -21,7 +21,7 @@
             <div class="text-subtitle1 text-custom-text-secondary text-weight-medium">
               John Doe
             </div>
-            <div class="text-caption text-custom-gray-dark">Web Developer</div>
+            <div class="text-caption text-custom-gray-dark text-weight-light">Web Developer</div>
           </div>
           <q-btn flat icon="arrow_drop_down" color="grey" :ripple="false" />
         </div>
@@ -54,7 +54,7 @@
         <q-item v-for="item in NavLinks" :key="item.groupTitle" class="column q-pb-md">
           <q-item-section avatar class="q-pb-sm q-pr-none">
             <q-item-label
-              class="text-uppercase text-custom-gray-light text-subtitle2"
+              class="text-uppercase text-custom-gray-light text-subtitle2 text-weight-light"
               >{{ item.groupTitle }}</q-item-label
             >
           </q-item-section>
@@ -77,7 +77,7 @@
               style="color: var(--q-color-text-custom-dark)"
             >
             </q-icon>
-            <q-item-label class="text-subtitle2 text-custom-dark" @click="navigate(link.href)">
+            <q-item-label class="text-subtitle2 text-custom-dark text-weight-medium" @click="navigate(link.href)">
               {{ link.title }}</q-item-label>
           </q-item-section>
         </q-item>
@@ -86,16 +86,16 @@
 
     <q-page-container>
       <div class="q-px-md q-py-lg flex justify-between">
-        <div class="flex items-center q-gutter-sm">
+        <div class="flex items-center q-gutter-md">
           <h6
             class="text-custom-text-secondary text-weight-bold text-h4"
           >
-            Overview
+          {{ route.meta.title }}
           </h6>
           <q-icon
-            size="sm"
-            name="o_layers"
-            style="color: var(--q-color-text-secondary)"
+           :name="route.meta.icon"
+           class="fs-30"
+            style="color: var(--q-color-text-custom-dark);"
           />
         </div>
         <q-btn label="Settings" icon="o_settings" :ripple="false" color="dark" class="text-capitalize rounded-10" />
@@ -145,7 +145,8 @@ export default defineComponent({
     return {
       leftDrawerOpen: ref(false),
       NavLinks: NavLinks,
-      isActive
+      isActive,
+      route
     };
   },
   computed: {

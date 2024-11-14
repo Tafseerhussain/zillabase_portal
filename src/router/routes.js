@@ -10,6 +10,17 @@ const routes = [
           import("/src/pages/user_account/OverviewComponent.vue"),
         meta: {
           title: "Overview",
+          icon: "o_layers",
+        },
+      },
+      {
+        path: "/tables",
+        name: "tables",
+        component: () =>
+          import("/src/pages/user_account/TableComponent.vue"),
+        meta: {
+          title: "Tables",
+          icon: "o_space_dashboard",
         },
       },
     ],
