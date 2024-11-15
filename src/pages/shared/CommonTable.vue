@@ -8,19 +8,10 @@
         </p>
       </div>
       <div class="flex q-gutter-md">
-        <q-btn
-          :label="buttonLabel"
-          icon="add"
-          :ripple="false"
-          class="bg-light-green rounded-10 text-white text-capitalize self-center"
-        />
-        <q-input
-          outlined
-          v-model="searchQuery"
-          dense
-          placeholder="Search Data..."
-          class="rounded-10 self-center search-input text-weight-light"
-        >
+        <q-btn :label="buttonLabel" icon="add" :ripple="false"
+          class="bg-light-green rounded-10 text-white text-capitalize self-center" />
+        <q-input outlined v-model="searchQuery" dense placeholder="Search Data..."
+          class="rounded-10 self-center search-input text-weight-light">
           <template v-slot:append>
             <q-icon name="search" style="color: var(--q-color-gray-dark)" />
           </template>
@@ -28,72 +19,53 @@
       </div>
     </div>
 
-    <q-table
-      :rows="filteredRows"
-      :columns="columns"
-      row-key="id"
-      flat
-      bordered
-      :rows-per-page-options="[]"
-      hideBottom
-      class="rounded-15 data-table"
-    >
+    <q-table :rows="filteredRows" :columns="columns" row-key="id" flat bordered :rows-per-page-options="[]" hideBottom
+      class="rounded-15 data-table">
       <template v-slot:header-cell-ztable="props">
         <q-th :props="props">
-            {{ props.col.label }}
-          <q-icon
-            name="o_contact_support"
-            class="fs-20 text-custom-gray-dark"
-          />
+          {{ props.col.label }}
+          <q-icon name="o_contact_support" class="fs-20 text-custom-gray-dark" />
         </q-th>
       </template>
       <template v-slot:body-cell-ztable="props">
         <q-td :props="props">
-          <q-icon
-            size="sm"
-            :name="props.row.ztable ? 'check_circle' : 'cancel'"
-            :color="props.row.ztable ? '' : 'negative'"
-            :class="props.row.ztable ? 'text-default-light-green' : ''"
-          />
+          <q-icon size="sm" :name="props.row.ztable ? 'check_circle' : 'cancel'"
+            :color="props.row.ztable ? '' : 'negative'" :class="props.row.ztable ? 'text-default-light-green' : ''" />
         </q-td>
       </template>
 
       <template v-slot:header-cell-materialized="props">
         <q-th :props="props">
-            {{ props.col.label }}
-          <q-icon
-            name="o_contact_support"
-            class="fs-20 text-custom-gray-dark"
-          />
+          {{ props.col.label }}
+          <q-icon name="o_contact_support" class="fs-20 text-custom-gray-dark" />
         </q-th>
       </template>
+
       <template v-slot:body-cell-materialized="props">
         <q-td :props="props">
-          <q-icon
-            size="sm"
-            :name="props.row.materialized ? 'check_circle' : 'cancel'"
+          <q-icon size="sm" :name="props.row.materialized ? 'check_circle' : 'cancel'"
             :color="props.row.materialized ? '' : 'negative'"
-            :class="props.row.materialized ? 'text-default-light-green' : ''"
-          />
+            :class="props.row.materialized ? 'text-default-light-green' : ''" />
         </q-td>
       </template>
 
+      <template v-slot:body-cell-type="props">
+        <q-td :props="props" :align="columns.align">
+          <p :class="getTextClass(props.row.type)">{{ props.row.type }}</p>
+        </q-td>
+      </template>
+      <template v-slot:body-cell-bodyOrExternalName="props">
+        <q-td :props="props">
+          
+            <q-icon size="sm" name="visibility" class="icon-outline text-default-light-green" />
+
+        </q-td>
+      </template>
+      
       <template v-slot:body-cell-actions="props">
         <q-td :props="props">
-          <q-btn
-            flat
-            dense
-            icon="bi-pencil-square"
-            class="text-custom-text-secondary"
-            @click="editRow(props.row)"
-          />
-          <q-btn
-            flat
-            dense
-            icon="o_delete"
-            color="negative"
-            @click="deleteRow(props.row)"
-          />
+          <q-btn flat dense icon="bi-pencil-square" class="text-custom-text-secondary" @click="editRow(props.row)" />
+          <q-btn flat dense icon="o_delete" color="negative" @click="deleteRow(props.row)" />
         </q-td>
       </template>
     </q-table>
@@ -122,8 +94,8 @@ export default defineComponent({
     },
     buttonLabel:
     {
-      type:String,
-      default:""
+      type: String,
+      default: ""
     }
   },
   data() {
@@ -150,8 +122,34 @@ export default defineComponent({
       // Handle delete row action
       this.$emit("delete-row", row);
     },
+    getTextClass(type) {
+      if (type === 'External') {
+        return 'external-text';
+      } else if (type === 'Embedded') {
+        return 'embedded-text';
+      }
+      return '';
+    }
+
   },
 });
 </script>
 <style scoped lang="scss">
+.external-text {
+  background-color: #1ED5A7;
+  color: #ffffff;
+  border-radius: 6px;
+  border: 1px;
+  padding: 6px 0px;
+  width: 66px;
+}
+
+.embedded-text {
+  background-color: #272727;
+  color: white;
+  border-radius: 6px;
+  border: 1px;
+  padding: 6px 0px;
+  width: 85px;
+}
 </style>
