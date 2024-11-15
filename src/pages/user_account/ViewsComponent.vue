@@ -1,7 +1,7 @@
 <template>
     <div class="q-pa-md q-gutter-sm">
         <common-table title="All Views" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-            :columns="tableColumns" :rows="tableData" buttonLabel="Add View" @delete-row="openDeleteDialog" />
+            :columns="tableColumns" :rows="tableData" buttonLabel="Add View" searchInputPlaceholder="Views" @delete-row="openDeleteDialog" />
     </div>
     <q-dialog v-model="isDeleteDialogOpen" backdrop-filter="blur(4px)" class="delete-dialog">
         <q-card>

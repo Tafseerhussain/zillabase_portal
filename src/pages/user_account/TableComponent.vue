@@ -7,8 +7,117 @@
         :rows="tableData"
         buttonLabel="Add Table"
         @delete-row="openDeleteDialog"
+        @add-new="openTableDialog"
     />
     </div>
+
+    <q-dialog v-model="addNewTable" persistent full-height maximized position="right"  backdrop-filter="blur(4px)" class="add-new-dialog">
+        <q-card class="full-height">
+          <q-card-section class="flex justify-between items-center q-pa-lg">
+            <div class="flex q-gutter-lg">
+              <q-btn
+              unelevated
+              color="light-green"
+              :icon="addNewTable ? 'chevron_left' : 'chevron_right'"
+              style="width: 30px; min-height: 30px"
+              @click="addNewTable = !addNewTable"
+              class="rounded-10"
+            />
+            <p class="text-custom-text-secondary text-h6 fw-600">Create New Table</p>
+            </div>
+            <q-icon
+           name="o_space_dashboard"
+           class="fs-30"
+            style="color: var(--q-color-text-custom-dark); min-height: 30px;"
+          />
+          </q-card-section>
+          <q-separator />
+          <q-card-section class="q-px-md q-py-xl" style="width: 620px;">
+              <div class="row items-center">
+                <div class="col-3">
+                  <span class="text-custom-gray-dark text-subtitle1 text-weight-light">Name</span>
+                </div>
+                <div class="col-9">
+                  <q-input
+                    dense
+                    outlined
+                    placeholder="Table Name"
+                    class="rounded-10 self-center text-weight-light rounded-input"
+                  />
+                </div>
+              </div>
+              <div class="row items-center q-mt-lg">
+                <div class="col-3">
+                  <span class="text-custom-gray-dark text-subtitle1 text-weight-light">Description</span>
+                </div>
+                <div class="col-9">
+                  <q-input
+                    outlined
+                    type="textarea"
+                    placeholder="Table Description..."
+                    rows="6"
+                    autogrow 
+                    class="rounded-10 self-center text-weight-light rounded-input"
+                  />
+                </div>
+              </div>
+            </q-card-section>
+            <q-separator />
+            <q-card-section class="q-py-lg">
+              <div class="row items-center">
+                <div class="col-3 flex items-center">
+                  <span class="text-custom-gray-dark text-subtitle1 text-weight-light">ZTable</span>
+                  <div>
+                    <q-icon   
+                    name="bi-question-circle"
+                    class="fs-lg text-custom-gray-dark q-ml-sm"
+                  />
+                  <q-tooltip  
+                  anchor="bottom middle"
+                  self="top middle">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  </q-tooltip>
+                  </div>
+                </div>
+                <div class="col-9">
+                  <q-checkbox dense v-model="zTableVal" color="light-green" />
+                </div>
+              </div>
+            </q-card-section>
+            <q-separator />
+            <q-card-section class="q-py-lg">
+              <div class="flex justify-between items-center q-mb-sm">
+                <p class="text-custom-text-secondary text-subtitle1 fw-600">Columns</p>
+                <div>
+                  <q-tooltip  
+                    anchor="center left" 
+                    self="center end">
+                    Data Type Docs
+                    </q-tooltip>
+                  <q-icon name="o_open_in_new" size="sm" color="light-green" />
+                </div>
+              </div>
+              <data-type-table />
+            </q-card-section>
+            <q-separator />
+            <q-card-section class="q-py-lg">
+              <div class="flex justify-between items-center q-mb-sm">
+                <p class="text-custom-text-secondary text-subtitle1 fw-600">Foreign Keys</p>
+                <div>
+                  <q-tooltip  
+                    anchor="center left" 
+                    self="center end">
+                    Foreign Key Docs
+                    </q-tooltip>
+                  <q-icon name="o_open_in_new" size="sm" color="light-green" />
+                </div>
+              </div>
+            </q-card-section>
+          <q-separator />
+        </q-card>
+    </q-dialog>
+
+      <!-- Delete Dialog -->
     <q-dialog v-model="isDeleteDialogOpen" backdrop-filter="blur(4px)" class="delete-dialog">
       <q-card>
         <q-card-section class="flex justify-between items-center q-pa-lg">
@@ -33,14 +142,18 @@
 <script>
 import { defineComponent } from "vue";
 import CommonTable from "../shared/CommonTable.vue";
+import DataTypeTable from "../shared/DataTypeTable.vue";
 export default defineComponent({
     name: "TableComponent",
     components: {
-        CommonTable
+        CommonTable,
+        DataTypeTable
     },
     data() {
     return {
         isDeleteDialogOpen: false,
+        addNewTable: false,
+        zTableVal: true,
         selectedRow: null,
         tableColumns: [
             { name: 'name', label: 'Table Name', align: 'left', field: 'name' },
@@ -69,6 +182,9 @@ export default defineComponent({
       // Handle deletion logic here
       this.isDeleteDialogOpen = false;
       this.selectedRow = null;
+    },
+    openTableDialog() {
+      this.addNewTable = !this.addNewTable;
     }
   }
   

@@ -33,6 +33,7 @@
       show-if-above
       bordered
       class="bg-custom-primary"
+      side="left"
     >
       <q-list>
         <q-item-label header class="flex justify-between items-center q-pb-sm fixed q-mb-xl border-bottom-custom-highlight w-full left-sidebar-log">
@@ -45,7 +46,7 @@
             unelevated
             color="light-green"
             :icon="leftDrawerOpen ? 'chevron_left' : 'chevron_right'"
-            style="width: 30px; height: 30px; border-radius: 10px"
+            style="width: 30px; min-height: 30px; border-radius: 10px"
             @click="leftDrawerOpen = !leftDrawerOpen"
           />
         </q-item-label>
@@ -75,8 +76,7 @@
               size="sm"
               :name="link.icon"
               style="color: var(--q-color-text-custom-dark)"
-            >
-            </q-icon>
+            />
             <q-item-label class="text-subtitle2 text-custom-dark text-weight-medium" @click="navigate(link.href)">
               {{ link.title }}</q-item-label>
           </q-item-section>

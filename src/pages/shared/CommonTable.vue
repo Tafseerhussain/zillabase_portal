@@ -13,13 +13,14 @@
           icon="add"
           :ripple="false"
           class="bg-light-green rounded-10 text-white text-capitalize self-center"
+          @click="handleClick"
         />
         <q-input
           outlined
           v-model="searchQuery"
           dense
-          placeholder="Search Data..."
-          class="rounded-10 self-center search-input text-weight-light"
+          :placeholder="`Search ${searchInputPlaceholder}..`"
+          class="rounded-10 self-center search-input text-weight-light rounded-input"
         >
           <template v-slot:append>
             <q-icon name="search" style="color: var(--q-color-gray-dark)" />
@@ -42,8 +43,8 @@
         <q-th :props="props">
             {{ props.col.label }}
           <q-icon
-            name="o_contact_support"
-            class="fs-20 text-custom-gray-dark"
+            name="bi-question-circle"
+            class="fs-lg text-custom-gray-dark"
           />
         </q-th>
       </template>
@@ -62,8 +63,8 @@
         <q-th :props="props">
             {{ props.col.label }}
           <q-icon
-            name="o_contact_support"
-            class="fs-20 text-custom-gray-dark"
+            name="bi-question-circle"
+            class="fs-lg text-custom-gray-dark"
           />
         </q-th>
       </template>
@@ -120,11 +121,14 @@ export default defineComponent({
       type: Array,
       required: true,
     },
-    buttonLabel:
-    {
+    buttonLabel: {
       type:String,
       default:""
-    }
+    },
+    searchInputPlaceholder: {
+      type:String,
+      default:"Data"
+    },
   },
   data() {
     return {
@@ -150,6 +154,9 @@ export default defineComponent({
       // Handle delete row action
       this.$emit("delete-row", row);
     },
+    handleClick() {
+      this.$emit("add-new")
+    }
   },
 });
 </script>

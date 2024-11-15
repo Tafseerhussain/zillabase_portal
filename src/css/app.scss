@@ -142,15 +142,17 @@ body {
       padding-left: 150px;
     }
 
-    .q-drawer {
-      width: 150px !important;
-      transform: translateX(0px) !important;
-      visibility: visible;
-
-      .q-btn.q-btn-item {
-        position: absolute;
-        right: 0;
-      }
+    .q-header.zillbase-header + .q-drawer-container {
+      .q-drawer {
+        width: 150px !important;
+        transform: translateX(0px) !important;
+        visibility: visible;
+  
+        .q-btn.q-btn-item {
+          position: absolute;
+          right: 0;
+        }
+    }
     }
 
     .q-item.q-item-type {
@@ -201,9 +203,52 @@ body {
   }
 }
 
+.editable-table.q-table__container {
+  background-color: var(--q-color-bg);
+  .q-table {
+    tr, th, td {
+      border: none;
+    }
+    thead {
+      th {
+        color: var(--q-color-gray-dark);
+      }
+    }
+    .row-primary {
+      td {
+        border: 1px solid var(--q-color-highlight);
+        background-color: var(--q-color-bg-primary);
+        border-right: none;
+        border-left: none;
+      }
+
+      td:first-of-type {
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+        border-left: 1px solid var(--q-color-highlight);
+      }
+
+      td:last-of-type {
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+        border-right: 1px solid var(--q-color-highlight);
+      }
+    }
+    .q-field__native {
+      color: var(--q-color-gray-dark);
+    }
+  }
+}
+
+
+
 //Table search input
 .search-input {
   width: 312px;
+}
+
+//Input Css
+.rounded-input {
   &.q-field--outlined {
     .q-field__control {
       border-radius: 10px;
