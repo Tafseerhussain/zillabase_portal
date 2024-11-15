@@ -1,7 +1,7 @@
 <template>
     <div class="q-pa-md q-gutter-sm">
         <common-table title="External & Embedded" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-            :columns="tableColumns" :rows="tableData" buttonLabel="Add function" @delete-row="openDeleteDialog" />
+            :columns="tableColumns" :rows="tableData" buttonLabel="Add function" searchInputPlaceholder="Functions" @delete-row="openDeleteDialog" />
     </div>
 
 </template>

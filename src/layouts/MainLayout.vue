@@ -98,7 +98,7 @@
             style="color: var(--q-color-text-custom-dark);"
           />
         </div>
-        <q-btn label="Settings" icon="o_settings" :ripple="false" color="dark" class="text-capitalize rounded-10" />
+        <q-btn label="Settings" icon="o_settings" :ripple="false" color="dark" class="text-capitalize rounded-10 highlighted-border" />
       </div>
       <q-separator />
       <router-view />

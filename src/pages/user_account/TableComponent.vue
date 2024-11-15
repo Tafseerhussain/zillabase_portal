@@ -32,7 +32,7 @@
           />
           </q-card-section>
           <q-separator />
-          <q-card-section class="q-px-md q-py-xl" style="width: 620px;">
+          <q-card-section class="q-px-md q-py-xl">
               <div class="row items-center">
                 <div class="col-3">
                   <span class="text-custom-gray-dark text-subtitle1 text-weight-light">Name</span>
@@ -112,8 +112,27 @@
                   <q-icon name="o_open_in_new" size="sm" color="light-green" />
                 </div>
               </div>
+              <div class="flex justify-between q-pa-md foreign-key rounded-10">
+                <span class="text-custom-gray-dark">No Foreign Keys</span>
+                <q-btn 
+                  unelevated
+                  color="light-green"
+                  icon="add"
+                  style="width: 30px; min-height: 30px"
+                  class="rounded-10 q-pa-none"
+                />
+              </div>
             </q-card-section>
-          <q-separator />
+            <q-separator />
+            <q-card-section class="flex justify-end q-gutter-lg q-pa-lg">
+              <q-btn label="Cancel" :ripple="false" color="dark" class="text-capitalize rounded-10 highlighted-border" />
+              <q-btn
+                label="Add Table"
+                icon="add"
+                :ripple="false"
+                class="bg-light-green rounded-10 text-white text-capitalize self-center"
+              />
+            </q-card-section>
         </q-card>
     </q-dialog>
 
@@ -202,5 +221,9 @@ export default defineComponent({
             }
         }
     }
+}
+
+.foreign-key {
+  border: 1px dashed var(--q-color-highlight);
 }
 </style>

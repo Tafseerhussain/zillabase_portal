@@ -52,35 +52,36 @@
               </template>
   
               <template v-else-if="col.name === 'actions'">
+                 <!-- Show action buttons for all rows except the last one -->
+                <template v-if="props.row !== rows[rows.length - 1]">
+                    <q-btn
+                    icon="o_settings"
+                    flat
+                    dense
+                    class="text-custom-dark"
+                    @click="onSettingsClick(props.row)"
+                    />
+                    <q-btn
+                    icon="o_disabled_by_default"
+                    flat
+                    dense
+                    color="negative"
+                    @click="removeRow(props.row)"
+                    />
+                </template>
+                <template v-else>
                 <q-btn
-                  icon="o_settings"
-                  flat
-                  dense
-                  class="text-custom-dark"
-                  @click="onSettingsClick(props.row)"
+                unelevated
+                  icon="add"
+                  color="light-green"
+                  @click="addRow"
+                  style="width: 30px; min-height: 30px"
+                  class="rounded-10 q-pa-none"
                 />
-                <q-btn
-                  icon="o_disabled_by_default"
-                  flat
-                  dense
-                  color="negative"
-                  @click="removeRow(props.row)"
-                />
+                </template>
               </template>
             </q-td>
           </q-tr>
-          <!-- <q-tr>
-            <q-td colspan="5">
-              <div class="flex justify-end">
-                <q-btn
-                  icon="add"
-                  color="green"
-                  label="Add Row"
-                  @click="addRow"
-                />
-              </div>
-            </q-td>
-          </q-tr> -->
         </template>
       </q-table>
   </template>
@@ -95,6 +96,7 @@
         { name: "id", type: "id", defaultValue: "id", primary: true },
         { name: "name", type: "varchar()", defaultValue: "", primary: false },
         { name: "created_at", type: "timestamps()", defaultValue: "", primary: false },
+        { name: "", type: "", defaultValue: "", primary: false },
       ]);
   
       const columns = [
