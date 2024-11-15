@@ -4,8 +4,8 @@
         <p class="text-custom-gray-dark text-subtitle1 text-weight-light">Lorem ipsum dolor sit amet, consectetur
             adipiscing elit.</p>
     </div>
-    <div class="q-pa-md">
-        <iframe :src="iframeSrc" width="100%" height="600px" frameborder="0" allowfullscreen>
+    <div class="q-pa-md iframe">
+        <iframe :src="iframeSrc" width="100%" height="400px" frameborder="0" allowfullscreen  style="display: block; border: none;"        >
         </iframe>
     </div>
 </template>

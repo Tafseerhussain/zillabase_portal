@@ -9,7 +9,7 @@
       </div>
       <div class="flex q-gutter-md">
         <q-btn
-          label="Add Table"
+          :label="buttonLabel"
           icon="add"
           :ripple="false"
           class="bg-light-green rounded-10 text-white text-capitalize self-center"
@@ -58,6 +58,26 @@
         </q-td>
       </template>
 
+      <template v-slot:header-cell-materialized="props">
+        <q-th :props="props">
+            {{ props.col.label }}
+          <q-icon
+            name="o_contact_support"
+            class="fs-20 text-custom-gray-dark"
+          />
+        </q-th>
+      </template>
+      <template v-slot:body-cell-materialized="props">
+        <q-td :props="props">
+          <q-icon
+            size="sm"
+            :name="props.row.materialized ? 'check_circle' : 'cancel'"
+            :color="props.row.materialized ? '' : 'negative'"
+            :class="props.row.materialized ? 'text-default-light-green' : ''"
+          />
+        </q-td>
+      </template>
+
       <template v-slot:body-cell-actions="props">
         <q-td :props="props">
           <q-btn
@@ -100,6 +120,11 @@ export default defineComponent({
       type: Array,
       required: true,
     },
+    buttonLabel:
+    {
+      type:String,
+      default:""
+    }
   },
   data() {
     return {
@@ -129,5 +154,4 @@ export default defineComponent({
 });
 </script>
 <style scoped lang="scss">
-
 </style>

@@ -33,6 +33,16 @@ const routes = [
           icon: "o_description",
         },
       },
+      {
+        path: "/views",
+        name: "views",
+        component: () =>
+          import("/src/pages/user_account/ViewsComponent.vue"),
+        meta: {
+          title: "Views",
+          icon: "o_drive_file_move",
+        },
+      },
     ],
   },
 

@@ -5,6 +5,7 @@
         description="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
         :columns="tableColumns"
         :rows="tableData"
+        buttonLabel="Add Table"
         @delete-row="openDeleteDialog"
     />
     </div>

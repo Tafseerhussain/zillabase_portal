@@ -35,7 +35,7 @@ const NavLinks = [
       {
         title: "Views",
         icon: "o_drive_file_move",
-        href: "/",
+        href: "/views",
       },
       {
         title: "Streams",
