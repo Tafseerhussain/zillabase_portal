@@ -43,6 +43,16 @@ const routes = [
           icon: "o_drive_file_move",
         },
       },
+      {
+        path: "/functions",
+        name: "functions",
+        component: () =>
+          import("/src/pages/user_account/FunctionComponent.vue"),
+        meta: {
+          title: "Functions",
+          icon: "o_account_tree",
+        },
+      },
     ],
   },
 

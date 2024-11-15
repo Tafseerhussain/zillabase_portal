@@ -33,102 +33,102 @@
 import { defineComponent } from "vue";
 import CommonTable from "../shared/CommonTable.vue";
 export default defineComponent({
-    name: "ViewsComponent",
-    components: {
-        CommonTable,
+name: "ViewsComponent",
+components: {
+    CommonTable,
+},
+data() {
+    return {
+        isDeleteDialogOpen: false,
+        selectedRow: null,
+        tableColumns: [
+            { name: "name", label: "View Name", align: "left", field: "name" },
+            {
+                name: "description",
+                label: "Description",
+                align: "left",
+                field: "description",
+            },
+            {
+                name: "ztable",
+                label: "Ztable",
+                align: "center",
+                field: "ztable",
+                sortable: true,
+            },
+            {
+                name: "materialized",
+                label: "Materialized",
+                align: "center",
+                field: "materialized",
+                sortable: true,
+            },
+            { name: "actions", label: "Actions", align: "center" },
+        ],
+        tableData: [
+            {
+                id: 1,
+                name: "Example Data Table",
+                description: "Lorem ipsum dolor sit amet.",
+                ztable: true,
+                materialized: false,
+            },
+            {
+                id: 2,
+                name: "Example Data Table",
+                description: "Lorem ipsum dolor sit amet.",
+                ztable: false,
+                materialized: true,
+            },
+            {
+                id: 3,
+                name: "Example Data Table",
+                description: "Lorem ipsum dolor sit amet.",
+                ztable: true,
+                materialized: false,
+            },
+            {
+                id: 4,
+                name: "Example Data Table",
+                description: "Lorem ipsum dolor sit amet.",
+                ztable: true,
+                materialized: false,
+            },
+            {
+                id: 5,
+                name: "Example Data Table",
+                description: "Lorem ipsum dolor sit amet.",
+                ztable: false,
+                materialized: true,
+            },
+        ],
+    };
+},
+methods: {
+    openDeleteDialog(row) {
+        this.selectedRow = row;
+        this.isDeleteDialogOpen = true;
     },
-    data() {
-        return {
-            isDeleteDialogOpen: false,
-            selectedRow: null,
-            tableColumns: [
-                { name: "name", label: "View Name", align: "left", field: "name" },
-                {
-                    name: "description",
-                    label: "Description",
-                    align: "left",
-                    field: "description",
-                },
-                {
-                    name: "ztable",
-                    label: "Ztable",
-                    align: "center",
-                    field: "ztable",
-                    sortable: true,
-                },
-                {
-                    name: "materialized",
-                    label: "Materialized",
-                    align: "center",
-                    field: "materialized",
-                    sortable: true,
-                },
-                { name: "actions", label: "Actions", align: "center" },
-            ],
-            tableData: [
-                {
-                    id: 1,
-                    name: "Example Data Table",
-                    description: "Lorem ipsum dolor sit amet.",
-                    ztable: true,
-                    materialized: false,
-                },
-                {
-                    id: 2,
-                    name: "Example Data Table",
-                    description: "Lorem ipsum dolor sit amet.",
-                    ztable: false,
-                    materialized: true,
-                },
-                {
-                    id: 3,
-                    name: "Example Data Table",
-                    description: "Lorem ipsum dolor sit amet.",
-                    ztable: true,
-                    materialized: false,
-                },
-                {
-                    id: 4,
-                    name: "Example Data Table",
-                    description: "Lorem ipsum dolor sit amet.",
-                    ztable: true,
-                    materialized: false,
-                },
-                {
-                    id: 5,
-                    name: "Example Data Table",
-                    description: "Lorem ipsum dolor sit amet.",
-                    ztable: false,
-                    materialized: true,
-                },
-            ],
-        };
+    confirmDelete() {
+        // Handle deletion logic here
+        this.isDeleteDialogOpen = false;
+        this.selectedRow = null;
     },
-    methods: {
-        openDeleteDialog(row) {
-            this.selectedRow = row;
-            this.isDeleteDialogOpen = true;
-        },
-        confirmDelete() {
-            // Handle deletion logic here
-            this.isDeleteDialogOpen = false;
-            this.selectedRow = null;
-        },
-    },
+},
 });
 </script>
 <style scoped lang="scss">
 .q-dialog__inner {
-    .q-card {
-        border-radius: 15px;
-        background-color: var(--q-color-bg);
-        box-shadow: none;
+.q-card {
+    border-radius: 15px;
+    background-color: var(--q-color-bg);
+    box-shadow: none;
 
-        .q-card__actions {
-            .q-btn--rectangle {
-                min-width: 80px;
-            }
+    .q-card__actions {
+        .q-btn--rectangle {
+            min-width: 80px;
         }
     }
+}
 }
 </style>

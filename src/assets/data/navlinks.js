@@ -30,7 +30,7 @@ const NavLinks = [
       {
         title: "Functions",
         icon: "o_account_tree",
-        href: "/",
+        href: "/functions",
       },
       {
         title: "Views",
