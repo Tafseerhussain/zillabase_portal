@@ -23,6 +23,16 @@ const routes = [
           icon: "o_space_dashboard",
         },
       },
+      {
+        path: "/apidoc",
+        name: "apidoc",
+        component: () =>
+          import("/src/pages/user_account/ApiDocComponent.vue"),
+        meta: {
+          title: "API Docs",
+          icon: "o_description",
+        },
+      },
     ],
   },
 

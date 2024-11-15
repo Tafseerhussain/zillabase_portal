@@ -15,7 +15,7 @@ const NavLinks = [
       {
         title: "API Docs",
         icon: "o_description",
-        href: "/",
+        href: "/apidoc",
       },
     ],
   },

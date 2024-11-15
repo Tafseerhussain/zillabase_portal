@@ -1,0 +1,25 @@
+<template>
+    <div class="q-pa-md q-gutter-sm">
+        <p class="text-custom-text-secondary text-h6 fw-600">AsyncAPI Studio</p>
+        <p class="text-custom-gray-dark text-subtitle1 text-weight-light">Lorem ipsum dolor sit amet, consectetur
+            adipiscing elit.</p>
+    </div>
+    <div class="q-pa-md">
+        <iframe :src="iframeSrc" width="100%" height="600px" frameborder="0" allowfullscreen>
+        </iframe>
+    </div>
+</template>
+<script>
+import { defineComponent } from "vue";
+export default defineComponent({
+    name: "ApiDocComponent",
+    components: {
+
+    },
+    data() {
+    return {
+      iframeSrc: 'https://editor-next.swagger.io/?url=https://raw.githubusercontent.com/aklivity/zillabase/refs/heads/feature/local-platform-api/api/openapi.yaml' // Change this URL as needed
+    };
+  }
+})
+</script>
