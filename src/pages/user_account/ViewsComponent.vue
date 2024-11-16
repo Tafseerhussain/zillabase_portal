@@ -4,7 +4,7 @@
             :columns="tableColumns" :rows="tableData" buttonLabel="Add View" searchInputPlaceholder="Views" @delete-row="openDeleteDialog" />
     </div>
     <q-dialog v-model="isDeleteDialogOpen" backdrop-filter="blur(4px)" class="delete-dialog">
-        <q-card>
+        <q-card class="highlighted-border">
             <q-card-section class="flex justify-between items-center q-pa-lg">
                 <div class="flex items-center q-gutter-sm">
                     <q-icon size="sm" name="o_delete" color="negative" />
@@ -21,9 +21,9 @@
             </q-card-section>
             <q-separator />
             <q-card-actions align="right" class="q-pa-md">
-                <q-btn label="Cancel" color="dark" class="rounded-10 text-capitalize min-w-80"
+                <q-btn label="Cancel" color="dark" unelevated class="rounded-10 text-capitalize min-w-80 highlighted-border"
                     @click="isDeleteDialogOpen = false" />
-                <q-btn label="Delete" color="negative" class="rounded-10 text-capitalize min-w-80"
+                <q-btn label="Delete" color="negative" unelevated class="rounded-10 text-capitalize min-w-80"
                     @click="confirmDelete" />
             </q-card-actions>
         </q-card>

@@ -109,28 +109,28 @@
   
       const typeOptions = ["id", "varchar()", "timestamps()", "int", "float"];
   
-      const addRow = () => {
-        rows.value.push({ name: "", type: "", defaultValue: "", primary: false });
-      };
-  
-      const removeRow = (row) => {
-        rows.value = rows.value.filter((r) => r !== row);
-      };
-  
-      const onSettingsClick = (row) => {
-        // Handle settings button click
-        console.log("Settings clicked for row:", row);
-      };
+
   
       return {
         rows,
         columns,
         typeOptions,
-        addRow,
-        removeRow,
-        onSettingsClick,
       };
     },
+    methods: {
+      addRow() {
+        rows.value.push({ name: "", type: "", defaultValue: "", primary: false });
+      },
+  
+      removeRow(row) {
+        rows.value = rows.value.filter((r) => r !== row);
+      },
+      onSettingsClick(row) {
+        // Handle settings button click
+        console.log("Settings clicked for row:", row);
+        this.$emit("setting-row", row);
+      },
+    }
   });
   </script>
   

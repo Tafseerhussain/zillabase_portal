@@ -64,6 +64,7 @@
             :key="link.title"
             class="nav-items q-py-sm"
             :class="{'active-link': isActive(link.href)}" 
+             @click="navigate(link.href)"
           >
             <q-tooltip
               v-if="!leftDrawerOpen"
@@ -77,7 +78,7 @@
               :name="link.icon"
               style="color: var(--q-color-text-custom-dark)"
             />
-            <q-item-label class="text-subtitle2 text-custom-dark text-weight-medium" @click="navigate(link.href)">
+            <q-item-label class="text-subtitle2 text-custom-dark text-weight-medium">
               {{ link.title }}</q-item-label>
           </q-item-section>
         </q-item>

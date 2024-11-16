@@ -221,7 +221,7 @@ body {
 
     .q-tr:last-child {
       td {
-        border: 1px dashed var(--q-color-highlight);
+        border: 2px dashed var(--q-color-highlight);
         border-right: none;
         border-left: none;
       }
@@ -229,19 +229,19 @@ body {
       td:first-of-type {
         border-top-left-radius: 8px;
         border-bottom-left-radius: 8px;
-        border-left: 1px dashed var(--q-color-highlight);
+        border-left: 2px dashed var(--q-color-highlight);
       }
 
       td:last-of-type {
         border-top-right-radius: 8px;
         border-bottom-right-radius: 8px;
-        border-right: 1px dashed var(--q-color-highlight);
+        border-right: 2px dashed var(--q-color-highlight);
       }
     }
 
     .row-primary {
       td {
-        border: 1px solid var(--q-color-highlight);
+        border: 2px solid var(--q-color-highlight);
         background-color: var(--q-color-bg-primary);
         border-right: none;
         border-left: none;
@@ -250,13 +250,13 @@ body {
       td:first-of-type {
         border-top-left-radius: 8px;
         border-bottom-left-radius: 8px;
-        border-left: 1px solid var(--q-color-highlight);
+        border-left: 2px solid var(--q-color-highlight);
       }
 
       td:last-of-type {
         border-top-right-radius: 8px;
         border-bottom-right-radius: 8px;
-        border-right: 1px solid var(--q-color-highlight);
+        border-right: 2px solid var(--q-color-highlight);
       }
     }
     .q-field__control {

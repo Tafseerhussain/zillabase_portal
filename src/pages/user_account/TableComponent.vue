@@ -94,10 +94,10 @@
                     self="center end">
                     Data Type Docs
                     </q-tooltip>
-                  <q-icon name="o_open_in_new" size="sm" color="light-green" />
+                  <q-btn flat icon="o_open_in_new" size="md" color="light-green" :ripple="false" />
                 </div>
               </div>
-              <data-type-table />
+              <data-type-table @setting-row="openRowSettingDialog" />
             </q-card-section>
             <q-separator />
             <q-card-section class="q-py-lg">
@@ -109,7 +109,7 @@
                     self="center end">
                     Foreign Key Docs
                     </q-tooltip>
-                  <q-icon name="o_open_in_new" size="sm" color="light-green" />
+                    <q-btn flat icon="o_open_in_new" size="md" color="light-green" :ripple="false" />
                 </div>
               </div>
               <div class="flex justify-between q-pa-md foreign-key rounded-10">
@@ -138,7 +138,7 @@
 
       <!-- Delete Dialog -->
     <q-dialog v-model="isDeleteDialogOpen" backdrop-filter="blur(4px)" class="delete-dialog">
-      <q-card>
+      <q-card class="highlighted-border">
         <q-card-section class="flex justify-between items-center q-pa-lg">
             <div class="flex items-center q-gutter-sm">
                 <q-icon size="sm" name="o_delete" color="negative" />
@@ -152,9 +152,26 @@
         </q-card-section>
         <q-separator />
         <q-card-actions align="right" class="q-pa-md">
-          <q-btn label="Cancel" color="dark" class="rounded-10 text-capitalize min-w-80" @click="isDeleteDialogOpen = false" />
-          <q-btn label="Delete" color="negative" class="rounded-10 text-capitalize min-w-80" @click="confirmDelete" />
+          <q-btn label="Cancel" unelevated color="dark" class="rounded-10 text-capitalize min-w-80 highlighted-border" @click="isDeleteDialogOpen = false" />
+          <q-btn label="Delete" unelevated color="negative" class="rounded-10 text-capitalize min-w-80" @click="confirmDelete" />
         </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+      <!-- Row Setting Dialog -->
+    <q-dialog v-model="isRowSettingDialogOpen" backdrop-filter="blur(4px)" class="row-setting-dialog">
+      <q-card class="highlighted-border">
+        <q-card-section class="flex justify-between items-center q-pa-lg">
+            <div class="flex items-center q-gutter-sm">
+                <q-icon size="sm" name="o_settings" class="text-custom-dark" />
+                <p class="text-custom-text-secondary fw-600">Row Settings</p>
+            </div>
+            <q-icon name="close" class="cursor-pointer fs-20" @click="isDeleteDialogOpen = false" />
+        </q-card-section>
+        <q-separator />
+        <q-card-section>
+            <p class="text-custom-gray-dark text-weight-light q-pa-sm w-90">Are you sure you want to delete this <span class="fw-600">Table</span>? This action is irreversible.</p>
+        </q-card-section>
       </q-card>
     </q-dialog>
 </template>
@@ -172,6 +189,7 @@ export default defineComponent({
     return {
         isDeleteDialogOpen: false,
         addNewTable: false,
+        isRowSettingDialogOpen: false,
         zTableVal: true,
         selectedRow: null,
         tableColumns: [
@@ -204,6 +222,9 @@ export default defineComponent({
     },
     openTableDialog() {
       this.addNewTable = !this.addNewTable;
+    },
+    openRowSettingDialog(row) {
+      this.isRowSettingDialogOpen = !this.isRowSettingDialogOpen;
     }
   }
   
@@ -224,6 +245,6 @@ export default defineComponent({
 }
 
 .foreign-key {
-  border: 1px dashed var(--q-color-highlight);
+  border: 2px dashed var(--q-color-highlight);
 }
 </style>
