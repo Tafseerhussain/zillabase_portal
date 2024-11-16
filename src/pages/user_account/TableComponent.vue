@@ -32,7 +32,7 @@
           />
           </q-card-section>
           <q-separator />
-          <q-card-section class="q-px-md q-py-xl">
+          <q-card-section class="q-py-xl px-28">
               <div class="row items-center">
                 <div class="col-3">
                   <span class="text-custom-gray-dark text-subtitle1 text-weight-light">Name</span>
@@ -46,7 +46,7 @@
                   />
                 </div>
               </div>
-              <div class="row items-center q-mt-lg">
+              <div class="row items-start q-mt-lg">
                 <div class="col-3">
                   <span class="text-custom-gray-dark text-subtitle1 text-weight-light">Description</span>
                 </div>
@@ -63,7 +63,7 @@
               </div>
             </q-card-section>
             <q-separator />
-            <q-card-section class="q-py-lg">
+            <q-card-section class="q-py-lg px-28">
               <div class="row items-center">
                 <div class="col-3 flex items-center">
                   <span class="text-custom-gray-dark text-subtitle1 text-weight-light">ZTable</span>
@@ -85,7 +85,7 @@
               </div>
             </q-card-section>
             <q-separator />
-            <q-card-section class="q-py-lg">
+            <q-card-section class="q-py-lg px-28">
               <div class="flex justify-between items-center q-mb-sm">
                 <p class="text-custom-text-secondary text-subtitle1 fw-600">Columns</p>
                 <div>
@@ -97,10 +97,10 @@
                   <q-btn flat icon="o_open_in_new" size="md" color="light-green" :ripple="false" />
                 </div>
               </div>
-              <data-type-table @setting-row="openRowSettingDialog" />
+              <data-type-table :columns="dataTypeColumns" :rows="dataTypeRow" :typeOptions="dataTypeOptions" @add-row="addRow"  @remove-row="removeRow" @setting-row="openRowSettingDialog" />
             </q-card-section>
             <q-separator />
-            <q-card-section class="q-py-lg">
+            <q-card-section class="q-py-lg px-28">
               <div class="flex justify-between items-center q-mb-sm">
                 <p class="text-custom-text-secondary text-subtitle1 fw-600">Foreign Keys</p>
                 <div>
@@ -125,8 +125,9 @@
             </q-card-section>
             <q-separator />
             <q-card-section class="flex justify-end q-gutter-lg q-pa-lg">
-              <q-btn label="Cancel" :ripple="false" color="dark" class="text-capitalize rounded-10 highlighted-border" />
+              <q-btn unelevated label="Cancel" :ripple="false" color="dark" class="text-capitalize rounded-10 highlighted-border" />
               <q-btn
+                unelevated
                 label="Add Table"
                 icon="add"
                 :ripple="false"
@@ -218,6 +219,20 @@ export default defineComponent({
             { id: 5, name: 'Example Data Table', description: 'Lorem ipsum dolor sit amet.', ztable: false, rows: 79, columns: "03" },
             { id: 6, name: 'Example Data Table', description: 'Lorem ipsum dolor sit amet.', ztable: true, rows: 79, columns: "03" },
         ],
+        dataTypeRow: [
+        { name: "id", type: "id", defaultValue: "id", primary: true },
+        { name: "name", type: "varchar()", defaultValue: "", primary: false },
+        { name: "created_at", type: "timestamps()", defaultValue: "", primary: false },
+        { name: "", type: "", defaultValue: "", primary: false },
+        ],
+        dataTypeColumns: [
+        { name: "name", required: true, label: "Name", align: "left", field: "name" },
+        { name: "type", label: "Type", align: "left", field: "type" },
+        { name: "defaultValue", label: "Default Value", align: "left", field: "defaultValue" },
+        { name: "primary", label: "Primary", align: "center", field: "primary" },
+        { name: "actions", label: "Actions", align: "center" },
+        ],
+        dataTypeOptions: ["id", "varchar()", "timestamps()", "int", "float"],
         rowSettingData: [
           { id: 1, primary: true, label: 'IsUnique()', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' },
           { id: 2, primary: false, label: 'IsNullable()', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' },
@@ -240,7 +255,13 @@ export default defineComponent({
     },
     openRowSettingDialog(row) {
       this.isRowSettingDialogOpen = !this.isRowSettingDialogOpen;
-    }
+    },
+    addRow() {
+      this.dataTypeRow.push({ name: "", type: "", defaultValue: "", primary: false });
+    },
+    removeRow(row) {
+      this.dataTypeColumns = this.dataTypeRow.filter((r) => r !== row);
+    },
   }
   
 })

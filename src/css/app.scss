@@ -135,6 +135,11 @@ body {
   font-size: 30px;
 }
 
+.px-28 {
+  padding-left: 28px;
+  padding-right: 28px;
+}
+
 // Header css 
 .zillbase-dashboard {
   &:has(.q-layout--prevent-focus) {
@@ -284,6 +289,9 @@ body {
       &::before {
         border-color: var(--q-color-highlight);
       }
+    }
+    textarea.q-field__native {
+      min-height: 80px;
     }
   }
 }
