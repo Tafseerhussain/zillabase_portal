@@ -50,7 +50,7 @@
             @click="leftDrawerOpen = !leftDrawerOpen"
           />
         </q-item-label>
-        <q-separator class="" />
+        <q-separator />
 
         <q-item v-for="item in NavLinks" :key="item.groupTitle" class="column q-pb-md">
           <q-item-section avatar class="q-pb-sm q-pr-none">
@@ -99,7 +99,7 @@
             style="color: var(--q-color-text-custom-dark);"
           />
         </div>
-        <q-btn label="Settings" icon="o_settings" :ripple="false" color="dark" class="text-capitalize rounded-10 highlighted-border" />
+        <q-btn unelevated label="Settings" icon="o_settings" :ripple="false" color="dark" class="text-capitalize rounded-10 highlighted-border" />
       </div>
       <q-separator />
       <router-view />

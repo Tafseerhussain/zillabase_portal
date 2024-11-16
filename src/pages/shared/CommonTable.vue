@@ -9,6 +9,7 @@
       </div>
       <div class="flex q-gutter-md">
         <q-btn
+          unelevated
           :label="buttonLabel"
           icon="add"
           :ripple="false"
@@ -65,16 +66,26 @@
         </q-td>
       </template>
 
+      <template v-slot:header-cell-type="props">
+        <q-th :props="props">
+            {{ props.col.label }}
+          <q-icon
+            name="bi-question-circle"
+            class="fs-lg text-custom-gray-dark"
+          />
+        </q-th>
+      </template>
       <template v-slot:body-cell-type="props">
         <q-td :props="props" :align="columns.align">
-          <p :class="getTextClass(props.row.type)">{{ props.row.type }}</p>
+          <p class="function-type-cell inline-block text-white"  :class="{
+            'bg-light-green': props.row.type === 'External',
+            'bg-custom-dark': props.row.type === 'Embedded',
+          }">{{ props.row.type }}</p>
         </q-td>
       </template>
       <template v-slot:body-cell-bodyOrExternalName="props">
         <q-td :props="props">
-          
-            <q-icon size="sm" name="visibility" class="icon-outline text-default-light-green" />
-
+            <q-icon size="sm" name="o_visibility" class="icon-outline text-default-light-green" />
         </q-td>
       </template>
       
@@ -148,21 +159,9 @@ export default defineComponent({
 });
 </script>
 <style scoped lang="scss">
-.external-text {
-  background-color: #1ED5A7;
-  color: #ffffff;
+.function-type-cell {
   border-radius: 6px;
   border: 1px;
-  padding: 6px 0px;
-  width: 66px;
-}
-
-.embedded-text {
-  background-color: #272727;
-  color: white;
-  border-radius: 6px;
-  border: 1px;
-  padding: 6px 0px;
-  width: 85px;
+  padding: 6px 12px;
 }
 </style>

@@ -163,14 +163,24 @@
       <q-card class="highlighted-border">
         <q-card-section class="flex justify-between items-center q-pa-lg">
             <div class="flex items-center q-gutter-sm">
-                <q-icon size="sm" name="o_settings" class="text-custom-dark" />
+                <q-icon size="sm" name="o_settings" class="text-custom-text-secondary" />
                 <p class="text-custom-text-secondary fw-600">Row Settings</p>
             </div>
-            <q-icon name="close" class="cursor-pointer fs-20" @click="isDeleteDialogOpen = false" />
+            <q-icon name="close" class="cursor-pointer fs-20" @click="isRowSettingDialogOpen = false" />
         </q-card-section>
         <q-separator />
         <q-card-section>
-            <p class="text-custom-gray-dark text-weight-light q-pa-sm w-90">Are you sure you want to delete this <span class="fw-600">Table</span>? This action is irreversible.</p>
+            <div v-for="setting in rowSettingData" :key="setting.id" class="flex items-start q-gutter-md q-pa-sm">
+              <q-checkbox
+                  v-model="setting.primary"
+                  dense
+                  color="light-green"
+                />
+                <div>
+                  <p class="text-custom-text-secondary text-weight-medium">{{ setting.label }}</p>
+                  <p class="text-custom-gray-dark text-weight-light q-mt-xs">{{ setting.description }}</p>
+                </div>
+            </div>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -208,6 +218,11 @@ export default defineComponent({
             { id: 5, name: 'Example Data Table', description: 'Lorem ipsum dolor sit amet.', ztable: false, rows: 79, columns: "03" },
             { id: 6, name: 'Example Data Table', description: 'Lorem ipsum dolor sit amet.', ztable: true, rows: 79, columns: "03" },
         ],
+        rowSettingData: [
+          { id: 1, primary: true, label: 'IsUnique()', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' },
+          { id: 2, primary: false, label: 'IsNullable()', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' },
+          { id: 3, primary: false, label: 'IsIdentity()', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' },
+        ]
     };
   },
   methods: {

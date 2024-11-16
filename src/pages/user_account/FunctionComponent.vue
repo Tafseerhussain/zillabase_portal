@@ -22,7 +22,7 @@ export default defineComponent({
                 { name: "name", label: "Name", align: "left", field: "name" },
                 { name: "parameters", label: "Parameters", align: "left", field: "parameters", },
                 { name: "returnType", label: "Return Type", align: "center", field: "returnType", sortable: true, },
-                { name: "language", label: "Language", align: "center", field: "language", sortable: true, },
+                { name: "language", label: "Language", align: "center", field: "language", sortable: true, classes: 'text-custom-dark', },
                 { name: "type", label: "Type", align: 'center' , field: "type", sortable: true, },
                 { name: "bodyOrExternalName", label: "Body/ External Name", align: "center", field: "bodyOrExternalName", sortable: true, },
                 { name: "actions", label: "Actions", align: "center" },
