@@ -37,9 +37,9 @@
           </p>
         </div>
         <q-icon
-          name="o_drive_file_move"
-          class="fs-30"
-          style="color: var(--q-color-text-custom-dark); min-height: 30px"
+            name="img:/icons/view.svg"
+            class="fs-30 filter-custom-dark"
+            style="min-height: 30px;"
         />
       </q-card-section>
       <q-separator />
@@ -104,8 +104,8 @@
             >
             <div>
               <q-icon
-                name="bi-question-circle"
-                class="fs-lg text-custom-gray-dark q-ml-sm"
+                  name="img:icons/question-circle.svg"
+                  class="fs-lg filter-gray-dark q-ml-sm"
               />
               <q-tooltip anchor="bottom middle" self="top middle">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -123,8 +123,8 @@
             >
             <div>
               <q-icon
-                name="bi-question-circle"
-                class="fs-lg text-custom-gray-dark q-ml-sm"
+                  name="img:icons/question-circle.svg"
+                  class="fs-lg filter-gray-dark q-ml-sm"
               />
               <q-tooltip anchor="bottom middle" self="top middle">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -165,8 +165,9 @@
     <q-card class="highlighted-border">
       <q-card-section class="flex justify-between items-center q-pa-lg">
         <div class="flex items-center q-gutter-sm">
-          <q-icon size="sm" name="o_delete" color="negative" />
-          <p class="text-custom-text-secondary fw-600">Delete View?</p>
+          <q-icon size="sm" name="img:/icons/trash.svg" />
+          <p class="text-custom-text-secondary fw-600 q-ml-md text-subtitle1
+">Delete View?</p>
         </div>
         <q-icon
           name="close"
@@ -225,8 +226,8 @@ export default defineComponent({
           field: "description",
         },
         {
-          name: "ztable",
-          label: "Ztable",
+          name: "zview",
+          label: "ZView",
           align: "center",
           field: "ztable",
           sortable: true,
@@ -245,35 +246,35 @@ export default defineComponent({
           id: 1,
           name: "Example Data Table",
           description: "Lorem ipsum dolor sit amet.",
-          ztable: true,
+          zview: true,
           materialized: false,
         },
         {
           id: 2,
           name: "Example Data Table",
           description: "Lorem ipsum dolor sit amet.",
-          ztable: false,
+          zview: false,
           materialized: true,
         },
         {
           id: 3,
           name: "Example Data Table",
           description: "Lorem ipsum dolor sit amet.",
-          ztable: true,
+          zview: true,
           materialized: false,
         },
         {
           id: 4,
           name: "Example Data Table",
           description: "Lorem ipsum dolor sit amet.",
-          ztable: true,
+          zview: true,
           materialized: false,
         },
         {
           id: 5,
           name: "Example Data Table",
           description: "Lorem ipsum dolor sit amet.",
-          ztable: false,
+          zview: false,
           materialized: true,
         },
       ],

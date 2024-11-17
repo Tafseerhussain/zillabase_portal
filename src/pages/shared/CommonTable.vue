@@ -24,7 +24,7 @@
           class="rounded-10 self-center search-input text-weight-light rounded-input"
         >
           <template v-slot:append>
-            <q-icon name="search" style="color: var(--q-color-gray-dark)" />
+            <q-icon name="img:/icons/search.svg" class="fs-lg filter-gray-dark" />
           </template>
         </q-input>
       </div>
@@ -36,8 +36,8 @@
         <q-th :props="props">
             {{ props.col.label }}
           <q-icon
-            name="bi-question-circle"
-            class="fs-lg text-custom-gray-dark"
+            name="img:icons/question-circle.svg"
+            class="fs-lg filter-gray-dark q-ml-xs"
           />
         </q-th>
       </template>
@@ -48,12 +48,28 @@
         </q-td>
       </template>
 
+      <template v-slot:header-cell-zview="props">
+        <q-th :props="props">
+            {{ props.col.label }}
+          <q-icon
+            name="img:icons/question-circle.svg"
+            class="fs-lg filter-gray-dark q-ml-xs"
+          />
+        </q-th>
+      </template>
+      <template v-slot:body-cell-zview="props">
+        <q-td :props="props">
+          <q-icon size="sm" :name="props.row.zview ? 'check_circle' : 'cancel'"
+            :color="props.row.zview ? '' : 'negative'" :class="props.row.zview ? 'text-default-light-green' : ''" />
+        </q-td>
+      </template>
+
       <template v-slot:header-cell-materialized="props">
         <q-th :props="props">
             {{ props.col.label }}
           <q-icon
-            name="bi-question-circle"
-            class="fs-lg text-custom-gray-dark"
+            name="img:icons/question-circle.svg"
+            class="fs-lg filter-gray-dark q-ml-xs"
           />
         </q-th>
       </template>
@@ -70,8 +86,8 @@
         <q-th :props="props">
             {{ props.col.label }}
           <q-icon
-            name="bi-question-circle"
-            class="fs-lg text-custom-gray-dark"
+            name="img:icons/question-circle.svg"
+            class="fs-lg filter-gray-dark"
           />
         </q-th>
       </template>
@@ -85,14 +101,14 @@
       </template>
       <template v-slot:body-cell-bodyOrExternalName="props">
         <q-td :props="props">
-            <q-icon size="sm" name="o_visibility" class="icon-outline text-default-light-green" />
+            <q-icon size="sm" name="img:/icons/eye.svg" class="icon-outline text-default-light-green" />
         </q-td>
       </template>
       
       <template v-slot:body-cell-actions="props">
         <q-td :props="props">
-          <q-btn flat dense icon="bi-pencil-square" class="text-custom-text-secondary" @click="editRow(props.row)" />
-          <q-btn flat dense icon="o_delete" color="negative" @click="deleteRow(props.row)" />
+          <q-btn flat dense icon="img:/icons/edit.svg" class="filter-text-secondary" @click="editRow(props.row)" />
+          <q-btn flat dense icon="img:/icons/trash.svg" class="q-ml-md" @click="deleteRow(props.row)" />
         </q-td>
       </template>
     </q-table>

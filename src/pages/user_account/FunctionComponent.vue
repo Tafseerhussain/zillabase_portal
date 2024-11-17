@@ -19,9 +19,9 @@
             <p class="text-custom-text-secondary text-h6 fw-600">Create New Function</p>
             </div>
             <q-icon
-           name="o_account_tree"
-           class="fs-30"
-            style="color: var(--q-color-text-custom-dark); min-height: 30px;"
+           name="img:/icons/function.svg"
+           class="fs-30 filter-custom-dark"
+            style="min-height: 30px;"
           />
           </q-card-section>
           <q-separator />
@@ -78,7 +78,7 @@
                     self="center end">
                     Functions Docs
                     </q-tooltip>
-                  <q-btn flat icon="o_open_in_new" size="md" color="light-green" :ripple="false" />
+                    <q-btn flat icon="img:/icons/export.svg" size="md" class="filter-light-green" :ripple="false" />
                 </div>
               </div>
               <data-type-table :columns="functionTypeColumns" :rows="functionTypeRow" :typeOptions="functionTypeOptions" @add-row="addRow"  @remove-row="removeRow" />
@@ -90,8 +90,8 @@
                   <span class="text-custom-gray-dark text-subtitle1 text-weight-light">Embedded</span>
                   <div>
                     <q-icon   
-                    name="bi-question-circle"
-                    class="fs-lg text-custom-gray-dark q-ml-sm"
+                      name="img:icons/question-circle.svg"
+                      class="fs-lg filter-gray-dark q-ml-sm"
                   />
                   </div>
                 </div>
@@ -104,8 +104,8 @@
                   <span class="text-custom-gray-dark text-subtitle1 text-weight-light">External</span>
                   <div>
                     <q-icon   
-                    name="bi-question-circle"
-                    class="fs-lg text-custom-gray-dark q-ml-sm"
+                      name="img:icons/question-circle.svg"
+                      class="fs-lg filter-gray-dark q-ml-sm"
                   />
                   </div>
                 </div>

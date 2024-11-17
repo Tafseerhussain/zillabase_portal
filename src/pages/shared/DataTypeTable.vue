@@ -13,7 +13,7 @@
         <q-td v-for="col in columns" :key="col.name" :props="props">
           <template v-if="col.name === 'name'">
             <div class="flex items-center">
-              <q-icon name="swap_vert" size="md" class="text-custom-dark" />
+              <q-icon name="img:/icons/arrow-swap.svg" size="sm" class="filter-custom-dark q-mr-sm" />
               <q-input
                 v-model="props.row.name"
                 outlined
@@ -55,17 +55,17 @@
             <!-- Show action buttons for all rows except the last one -->
             <template v-if="props.row !== rows[rows.length - 1]">
               <q-btn
-                icon="o_settings"
+                icon="img:/icons/setting-2.svg"
                 flat
                 dense
-                class="text-custom-dark"
+                class="filter-custom-dark"
                 @click="onSettingsClick(props.row)"
               />
               <q-btn
-                icon="o_disabled_by_default"
+                icon="img:/icons/close-square.svg"
                 flat
                 dense
-                color="negative"
+                class="q-ml-sm"
                 @click="removeRow(props.row)"
               />
             </template>
@@ -76,7 +76,7 @@
                 color="light-green"
                 @click="addRow"
                 style="width: 30px; min-height: 30px"
-                class="rounded-10 q-pa-none"
+                class="rounded-10 q-pa-none text-custom-dark-color"
               />
             </template>
           </template>

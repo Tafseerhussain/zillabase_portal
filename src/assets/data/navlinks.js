@@ -4,7 +4,7 @@ const NavLinks = [
     children: [
       {
         title: "Overview",
-        icon: "o_layers",
+        icon: "/icons/layer.svg",
         href: "/overview",
       },
     ],
@@ -14,7 +14,7 @@ const NavLinks = [
     children: [
       {
         title: "API Docs",
-        icon: "o_description",
+        icon: "/icons/document-text.svg",
         href: "/apidoc",
       },
     ],
@@ -24,32 +24,32 @@ const NavLinks = [
     children: [
       {
         title: "Tables",
-        icon: "o_space_dashboard",
+        icon: "/icons/grid-6.svg",
         href: "/tables",
       },
       {
         title: "Functions",
-        icon: "o_account_tree",
+        icon: "/icons/function.svg",
         href: "/functions",
       },
       {
         title: "Views",
-        icon: "o_drive_file_move",
+        icon: "/icons/view.svg",
         href: "/views",
       },
       {
         title: "Streams",
-        icon: "o_cast_connected",
+        icon: "/icons/stream.svg",
         href: "/",
       },
       {
         title: "Auth",
-        icon: "o_shield",
+        icon: "/icons/auth.svg",
         href: "/",
       },
       {
         title: "Storage",
-        icon: "o_save",
+        icon: "/icons/storage.svg",
         href: "/",
       },
     ],
@@ -59,7 +59,7 @@ const NavLinks = [
     children: [
       {
         title: "SQL Editor",
-        icon: "o_terminal",
+        icon: "/icons/editor.svg",
         href: "/",
       },
     ],

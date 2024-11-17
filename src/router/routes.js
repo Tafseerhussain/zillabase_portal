@@ -10,17 +10,7 @@ const routes = [
           import("/src/pages/user_account/OverviewComponent.vue"),
         meta: {
           title: "Overview",
-          icon: "o_layers",
-        },
-      },
-      {
-        path: "/tables",
-        name: "tables",
-        component: () =>
-          import("/src/pages/user_account/TableComponent.vue"),
-        meta: {
-          title: "Tables",
-          icon: "o_space_dashboard",
+          icon: "/icons/layer.svg",
         },
       },
       {
@@ -30,17 +20,17 @@ const routes = [
           import("/src/pages/user_account/ApiDocComponent.vue"),
         meta: {
           title: "API Docs",
-          icon: "o_description",
+          icon: "/icons/document-text.svg",
         },
       },
       {
-        path: "/views",
-        name: "views",
+        path: "/tables",
+        name: "tables",
         component: () =>
-          import("/src/pages/user_account/ViewsComponent.vue"),
+          import("/src/pages/user_account/TableComponent.vue"),
         meta: {
-          title: "Views",
-          icon: "o_drive_file_move",
+          title: "Tables",
+          icon: "/icons/grid-6.svg",
         },
       },
       {
@@ -50,7 +40,17 @@ const routes = [
           import("/src/pages/user_account/FunctionComponent.vue"),
         meta: {
           title: "Functions",
-          icon: "o_account_tree",
+          icon: "/icons/function.svg",
+        },
+      },
+      {
+        path: "/views",
+        name: "views",
+        component: () =>
+          import("/src/pages/user_account/ViewsComponent.vue"),
+        meta: {
+          title: "Views",
+          icon: "/icons/view.svg",
         },
       },
     ],

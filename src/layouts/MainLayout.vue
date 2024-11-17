@@ -6,12 +6,13 @@
           <dynamic-bread-crumb />
         </q-toolbar-title>
         <q-space />
-        <q-btn flat color="grey" :icon="darkModeIcon ? 'o_light_mode' : 'o_bedtime'" :ripple="false"
-         style="color: var(--q-color-text-secondary) !important;" @click="toggleDarkMode" />
         <q-separator vertical />
-        <q-btn flat color="grey" icon="o_notifications" :ripple="false" style="color: var(--q-color-text-secondary) !important;" />
+        <q-btn flat :icon="darkModeIcon ? 'img:/icons/sun.svg' : 'img:/icons/moon.svg'" :ripple="false"
+        class="filter-text-secondary" @click="toggleDarkMode" />
         <q-separator vertical />
-        <q-btn flat color="grey" icon="o_contact_support" :ripple="false" style="color: var(--q-color-text-secondary) !important;" />
+        <q-btn flat icon='img:/icons/notification-bing.svg' :ripple="false" class="filter-text-secondary" />
+        <q-separator vertical />
+        <q-btn flat icon='img:/icons/message-question.svg' :ripple="false" class="filter-text-secondary" />
         <q-separator vertical />
         <div class="row no-wrap items-center">
           <q-avatar size="42px" class="q-mr-sm">
@@ -23,7 +24,7 @@
             </div>
             <div class="text-caption text-custom-gray-dark text-weight-light">Web Developer</div>
           </div>
-          <q-btn flat icon="arrow_drop_down" color="grey" :ripple="false" />
+          <q-btn flat icon="img:/icons/arrow-down.svg" class="filter-text-secondary text-caption" :ripple="false" />
         </div>
       </q-toolbar>
     </q-header>
@@ -62,7 +63,7 @@
           <q-item-section
             v-for="link in item.children"
             :key="link.title"
-            class="nav-items q-py-sm"
+            class="nav-items q-py-md"
             :class="{'active-link': isActive(link.href)}" 
              @click="navigate(link.href)"
           >
@@ -74,9 +75,8 @@
               {{ link.title }}
             </q-tooltip>
             <q-icon
-              size="sm"
-              :name="link.icon"
-              style="color: var(--q-color-text-custom-dark)"
+              class="fs-22"
+              :name='`img:${link.icon}`'
             />
             <q-item-label class="text-subtitle2 text-custom-dark text-weight-medium">
               {{ link.title }}</q-item-label>
@@ -94,12 +94,11 @@
           {{ route.meta.title }}
           </h6>
           <q-icon
-           :name="route.meta.icon"
-           class="fs-30"
-            style="color: var(--q-color-text-custom-dark);"
+           :name='`img:${route.meta.icon}`'
+           class="fs-30 filter-text-secondary"
           />
         </div>
-        <q-btn unelevated label="Settings" icon="o_settings" :ripple="false" color="dark" class="text-capitalize rounded-10 highlighted-border" />
+        <q-btn unelevated label="Settings" icon="img:/icons/setting.svg" :ripple="false" color="dark" class="text-capitalize rounded-10 highlighted-border" />
       </div>
       <q-separator />
       <router-view />
@@ -188,10 +187,16 @@ export default defineComponent({
       transition: color 0.3s ease, filter 0.3s ease;
     }
 
+    .q-icon {
+      filter: var(--q-color-filter-custom-dark);
+    }
+
     &:hover, &.active-link {
-      .q-item__label,
-      .q-icon {
+      .q-item__label {
         color: $light-green !important;
+      }
+      .q-icon {
+        filter: var(--q-color-filter-light-green);
       }
     }
   }

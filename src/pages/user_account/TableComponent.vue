@@ -26,9 +26,9 @@
             <p class="text-custom-text-secondary text-h6 fw-600">Create New Table</p>
             </div>
             <q-icon
-           name="o_space_dashboard"
-           class="fs-30"
-            style="color: var(--q-color-text-custom-dark); min-height: 30px;"
+              name="img:/icons/grid-6.svg"
+              class="fs-30 filter-custom-dark"
+              style="min-height: 30px;"
           />
           </q-card-section>
           <q-separator />
@@ -69,8 +69,8 @@
                   <span class="text-custom-gray-dark text-subtitle1 text-weight-light">ZTable</span>
                   <div>
                     <q-icon   
-                    name="bi-question-circle"
-                    class="fs-lg text-custom-gray-dark q-ml-sm"
+                    name="img:icons/question-circle.svg"
+                    class="fs-lg filter-gray-dark q-ml-sm"
                   />
                   <q-tooltip  
                   anchor="bottom middle"
@@ -94,7 +94,7 @@
                     self="center end">
                     Data Type Docs
                     </q-tooltip>
-                  <q-btn flat icon="o_open_in_new" size="md" color="light-green" :ripple="false" />
+                  <q-btn flat icon="img:/icons/export.svg" size="md" class="filter-light-green" :ripple="false" />
                 </div>
               </div>
               <data-type-table :columns="dataTypeColumns" :rows="dataTypeRow" :typeOptions="dataTypeOptions" @add-row="addRow"  @remove-row="removeRow" @setting-row="openRowSettingDialog" />
@@ -109,7 +109,7 @@
                     self="center end">
                     Foreign Key Docs
                     </q-tooltip>
-                    <q-btn flat icon="o_open_in_new" size="md" color="light-green" :ripple="false" />
+                    <q-btn flat icon="img:/icons/export.svg" size="md" class="filter-light-green" :ripple="false" />
                 </div>
               </div>
               <div class="flex justify-between q-pa-md foreign-key rounded-10">
@@ -119,7 +119,7 @@
                   color="light-green"
                   icon="add"
                   style="width: 30px; min-height: 30px"
-                  class="rounded-10 q-pa-none"
+                  class="rounded-10 q-pa-none text-custom-dark-color"
                 />
               </div>
             </q-card-section>
@@ -142,8 +142,9 @@
       <q-card class="highlighted-border">
         <q-card-section class="flex justify-between items-center q-pa-lg">
             <div class="flex items-center q-gutter-sm">
-                <q-icon size="sm" name="o_delete" color="negative" />
-                <p class="text-custom-text-secondary fw-600">Delete Table?</p>
+                <q-icon size="sm" name="img:/icons/trash.svg" />
+                <p class="text-custom-text-secondary fw-600 q-ml-md text-subtitle1
+">Delete Table?</p>
             </div>
             <q-icon name="close" class="cursor-pointer fs-20" @click="isDeleteDialogOpen = false" />
         </q-card-section>
@@ -163,9 +164,10 @@
     <q-dialog v-model="isRowSettingDialogOpen" backdrop-filter="blur(4px)" class="row-setting-dialog">
       <q-card class="highlighted-border">
         <q-card-section class="flex justify-between items-center q-pa-lg">
-            <div class="flex items-center q-gutter-sm">
-                <q-icon size="sm" name="o_settings" class="text-custom-text-secondary" />
-                <p class="text-custom-text-secondary fw-600">Row Settings</p>
+            <div class="flex items-center q-gutter-md">
+                <q-icon size="sm" name="img:/icons/setting-2.svg" class="filter-custom-white-dark" />
+                <p class="text-custom-text-secondary fw-600 text-subtitle1
+">Row Settings</p>
             </div>
             <q-icon name="close" class="cursor-pointer fs-20" @click="isRowSettingDialogOpen = false" />
         </q-card-section>

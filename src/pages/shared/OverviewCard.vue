@@ -2,9 +2,9 @@
  <div class="q-pa-md row q-gutter-md">
     <q-card bordered v-for="(card, index) in cards" :key="index" class="q-mx-sm col no-shadow rounded-15">
       <!-- Icon and Title Section -->
-      <q-card-section class="flex items-center q-gutter-x-sm">
-        <q-icon :name="card.icon" color="light-green" size="sm" />
-        <p class="text-subtitle1 text-default-light-green q-mt-xs text-weight-medium">{{ card.title }}</p>
+      <q-card-section class="flex items-center">
+        <q-icon :name='`img:${card.icon}`' class="filter-light-green " size="sm" />
+        <p class="text-subtitle1 text-default-light-green q-mt-xs text-weight-medium q-ml-md">{{ card.title }}</p>
       </q-card-section>
 
       <!-- Description Section -->
@@ -35,21 +35,21 @@
     return {
       cards: [
         {
-          icon: 'o_description',
+          icon: '/icons/document-text.svg',
           title: 'API Docs',
           description: 'Interact with your database through the ZillBase client libraries with your API keys.',
           statLabel: 'Total API\'s',
           statValue: '32'
         },
         {
-          icon: 'o_description',
+          icon: '/icons/document-text.svg',
           title: 'Programming Docs',
           description: 'Interact with your database through the ZillBase client libraries with our Programming Docs.',
           statLabel: 'Programming Docs',
           statValue: '79'
         },
         {
-          icon: 'o_description',
+          icon: '/icons/document-text.svg',
           title: 'Other Docs',
           description: 'Interact with your database through the ZillBase client libraries with our Other Docs.',
           statLabel: 'Other Docs',
