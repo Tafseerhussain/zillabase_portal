@@ -260,7 +260,7 @@ export default defineComponent({
       this.dataTypeRow.push({ name: "", type: "", defaultValue: "", primary: false });
     },
     removeRow(row) {
-      this.dataTypeColumns = this.dataTypeRow.filter((r) => r !== row);
+      this.dataTypeRow = this.dataTypeRow.filter((r) => r !== row);
     },
   }
   

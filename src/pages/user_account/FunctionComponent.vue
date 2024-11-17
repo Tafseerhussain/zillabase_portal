@@ -215,7 +215,7 @@ export default defineComponent({
             this.functionTypeRow.push({ name: "", type: "", defaultValue: "" });
         },
         removeRow(row) {
-            this.functionTypeColumns = this.functionTypeColumns.filter((r) => r !== row);
+            this.functionTypeRow = this.functionTypeRow.filter((r) => r !== row);
         },
     },
 
