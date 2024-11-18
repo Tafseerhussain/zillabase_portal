@@ -13,7 +13,7 @@
           :label="buttonLabel"
           icon="add"
           :ripple="false"
-          class="bg-light-green rounded-10 text-white text-capitalize self-center"
+          class="bg-light-green rounded-10 text-white text-capitalize self-center btn-add-new"
           @click="handleClick"
         />
         <q-input
@@ -104,6 +104,15 @@
             <q-icon size="sm" name="img:/icons/eye.svg" class="icon-outline text-default-light-green" />
         </q-td>
       </template>
+
+      <template v-slot:body-cell-enabled="props">
+        <q-td :props="props">
+          <q-icon size="sm" :name="props.row.enabled ? 'check_circle' : 'cancel'"
+            :color="props.row.enabled ? '' : 'negative'"
+            :class="props.row.enabled ? 'text-default-light-green' : ''" />
+        </q-td>
+      </template>
+
       
       <template v-slot:body-cell-actions="props">
         <q-td :props="props">
@@ -179,5 +188,9 @@ export default defineComponent({
   border-radius: 6px;
   border: 1px;
   padding: 6px 12px;
+}
+
+.q-btn.btn-add-new {
+  padding: 4px 10px;
 }
 </style>

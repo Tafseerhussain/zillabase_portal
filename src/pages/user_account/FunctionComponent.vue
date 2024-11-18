@@ -64,6 +64,7 @@
                     dense
                     placeholder="Select Language"
                     dropdown-icon="keyboard_arrow_down"
+                    class="rounded-input"
                     />
                 </div>
               </div>

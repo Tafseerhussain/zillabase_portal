@@ -53,6 +53,26 @@ const routes = [
           icon: "/icons/view.svg",
         },
       },
+      {
+        path: "/streams",
+        name: "Streams",
+        component: () =>
+          import("/src/pages/user_account/StreamsComponent.vue"),
+        meta: {
+          title: "Streams",
+          icon: "/icons/stream.svg",
+        },
+      },
+      {
+        path: "/auth",
+        name: "Auth",
+        component: () =>
+          import("/src/pages/user_account/AuthComponent.vue"),
+        meta: {
+          title: "Auth",
+          icon: "/icons/auth.svg",
+        },
+      },
     ],
   },
 

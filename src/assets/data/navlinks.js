@@ -40,12 +40,12 @@ const NavLinks = [
       {
         title: "Streams",
         icon: "/icons/stream.svg",
-        href: "/",
+        href: "/streams",
       },
       {
         title: "Auth",
         icon: "/icons/auth.svg",
-        href: "/",
+        href: "/auth",
       },
       {
         title: "Storage",
