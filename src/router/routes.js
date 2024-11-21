@@ -73,6 +73,16 @@ const routes = [
           icon: "/icons/auth.svg",
         },
       },
+      {
+        path: "/storage",
+        name: "Storage",
+        component: () =>
+          import("/src/pages/user_account/StorageComponent.vue"),
+        meta: {
+          title: "Storage",
+          icon: "/icons/storage.svg",
+        },
+      },
     ],
   },
 

@@ -19,7 +19,8 @@
                 </div>
                 <q-icon name="img:/icons/stream.svg" class="fs-30 filter-custom-dark" style="min-height: 30px;" />
             </q-card-section>
-            <q-card-section class="-py-xl px-28">
+            <q-separator />
+            <q-card-section class="q-py-xl px-28">
                 <div class="row items-center">
                     <div class="col-3">
                         <span class="text-custom-gray-dark text-subtitle1 text-weight-light">Name</span>
@@ -29,7 +30,7 @@
                             class="rounded-10 self-center text-weight-light rounded-input" />
                     </div>
                 </div>
-                <div class="row items-start q-mt-lg">
+                <div class="row items-start q-mt-lg q-pt-md">
                     <div class="col-3">
                         <span class="text-custom-gray-dark text-subtitle1 text-weight-light">Type</span>
                     </div>
@@ -45,7 +46,7 @@
                             />
                     </div>
                 </div>
-                <div class="row items-start q-mt-lg">
+                <div class="row items-start q-mt-lg q-pt-md">
                     <div class="col-3">
                         <span class="text-custom-gray-dark text-subtitle1 text-weight-light">Target Function</span>
                     </div>
@@ -61,19 +62,16 @@
                             />
                     </div>
                 </div>
-            </q-card-section>
-            <q-card-section class="q-py-lg px-28">
-                <div class="row items-center">
+                <div class="row items-center q-mt-lg q-pt-md">
                     <div class="col-3 flex items-center">
                         <span class="text-custom-gray-dark text-subtitle1 text-weight-light">Messages</span>
-
+    
                     </div>
                     <div class="col-9">
                         <q-input dense outlined placeholder="34"
                             class="rounded-10 self-center text-weight-light rounded-input" />
                     </div>
                 </div>
-
             </q-card-section>
             <q-separator />
             <q-card-section class="flex justify-end q-gutter-lg q-pa-lg">
@@ -84,6 +82,54 @@
             </q-card-section>
         </q-card>
     </q-dialog>
+    
+
+    <!-- Delete Dialog -->
+    <q-dialog
+    v-model="isDeleteDialogOpen"
+    backdrop-filter="blur(4px)"
+    class="delete-dialog"
+  >
+    <q-card class="highlighted-border">
+      <q-card-section class="flex justify-between items-center q-pa-lg">
+        <div class="flex items-center q-gutter-sm">
+          <q-icon size="sm" name="img:/icons/trash.svg" />
+          <p class="text-custom-text-secondary fw-600 q-ml-md text-subtitle1
+">Delete Stream?</p>
+        </div>
+        <q-icon
+          name="close"
+          class="cursor-pointer fs-20"
+          @click="isDeleteDialogOpen = false"
+        />
+      </q-card-section>
+      <q-separator />
+      <q-card-section>
+        <p class="text-custom-gray-dark text-weight-light q-pa-sm w-90">
+            Are you sure you want to delete this <span class="fw-600">Stream</span>?
+            This action is irreversible.
+        </p>
+      </q-card-section>
+      <q-separator />
+      <q-card-actions align="right" class="q-pa-md">
+        <q-btn
+          label="Cancel"
+          color="dark"
+          unelevated
+          class="rounded-10 text-capitalize min-w-80 highlighted-border"
+          @click="isDeleteDialogOpen = false"
+        />
+        <q-btn
+          label="Delete"
+          color="negative"
+          unelevated
+          class="rounded-10 text-capitalize min-w-80"
+          @click="confirmDelete"
+        />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
+
 </template>
 <script>
 import CommonTable from "../shared/CommonTable.vue";

@@ -187,11 +187,21 @@ body {
   padding-right: 28px;
 }
 
+.fs-60 {
+  font-size: 60px;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+
 // Header css 
 .zillbase-dashboard {
   &:has(.q-layout--prevent-focus) {
     .q-header.zillbase-header {
       left: 150px;
+      border-bottom: 1px solid var(--q-color-highlight);
     }
 
     .q-page-container {
@@ -259,6 +269,15 @@ body {
             height: 52px;
           }
       }
+  }
+  .q-table__bottom {
+    justify-content: center;
+    .q-table__separator {
+      display: none;
+      &+.q-table__control {
+        display: none;
+      }
+    }
   }
 }
 
@@ -352,4 +371,39 @@ body {
     font-size: 18px;
     margin-right: 6px;
   }
+}
+
+// Tab Css
+.storage-tab-splitter {
+  height: calc(100vh - 22vh);
+  .q-tab__content {
+      flex-direction: row;
+      width: 100%;
+      justify-content: space-between;
+  }
+
+  .q-tab__indicator {
+    display: none;
+  }
+
+  .q-tab-panels {
+    background-color: transparent;
+  }
+
+  .q-tab.q-tab--active {
+    .q-tab__content {
+      span {
+        color: var(--q-color-light-green);
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+// Menu Css
+.zillabase-menu {
+  background-color: var(--q-color-bg);
+  border: 1px solid var(--q-color-highlight);
+  box-shadow: none;
+  box-shadow: 0px 12px 24px -12px var(--q-color-highlight);
 }

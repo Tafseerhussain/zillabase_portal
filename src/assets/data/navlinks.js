@@ -50,7 +50,7 @@ const NavLinks = [
       {
         title: "Storage",
         icon: "/icons/storage.svg",
-        href: "/",
+        href: "/storage",
       },
     ],
   },

@@ -89,12 +89,10 @@
               <div class="row items-center">
                 <div class="col-3 flex items-center">
                   <span class="text-custom-gray-dark text-subtitle1 text-weight-light">Embedded</span>
-                  <div>
                     <q-icon   
                       name="img:icons/question-circle.svg"
                       class="fs-lg filter-gray-dark q-ml-sm"
-                  />
-                  </div>
+                    />
                 </div>
                 <div class="col-9">
                   <q-radio dense v-model="functionTypeVal" val="embedded" color="light-green" />
@@ -103,12 +101,10 @@
               <div class="row items-center q-mt-md">
                 <div class="col-3 flex items-center">
                   <span class="text-custom-gray-dark text-subtitle1 text-weight-light">External</span>
-                  <div>
                     <q-icon   
                       name="img:icons/question-circle.svg"
                       class="fs-lg filter-gray-dark q-ml-sm"
-                  />
-                  </div>
+                    />
                 </div>
                 <div class="col-9">
                   <q-radio dense v-model="functionTypeVal" val="external" color="light-green" />
