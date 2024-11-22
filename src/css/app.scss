@@ -365,6 +365,46 @@ body {
   }
 }
 
+.sql-editor {
+  .sql-editor-area {
+    height: 150px;
+    overflow-y: auto;
+    border: 1px solid var(--q-color-highlight);
+    border-radius: 20px;
+
+    scrollbar-width: thin;
+    scrollbar-color: var(--q-color-highlight) var(-q-color-bg);
+
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+  
+    ::-webkit-scrollbar-track {
+      background: var(--q-color-bg);
+    }
+  
+    ::-webkit-scrollbar-thumb {
+      background: var(--q-color-highlight);
+      border-radius: 10px;
+    }
+  
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--q-color-secondary);
+    }
+
+  }
+
+  .q-field__control {
+    height: 300px;
+    overflow-y: auto;
+    &::before, &::after {
+      border: none;
+    }
+  }
+}
+
+
+
 //Button Css
 .q-btn {
   .on-left {

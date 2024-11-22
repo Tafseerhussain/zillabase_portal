@@ -51,7 +51,7 @@
             @click="leftDrawerOpen = !leftDrawerOpen"
           />
         </q-item-label>
-        <q-separator />
+        <!-- <q-separator /> -->
 
         <q-item v-for="item in NavLinks" :key="item.groupTitle" class="column q-pb-md">
           <q-item-section avatar class="q-pb-sm q-pr-none">
@@ -167,10 +167,11 @@ export default defineComponent({
   .q-drawer__content {
     .left-sidebar-log {
       min-height: 61px;
+      z-index: 5;
     }
     .q-list {
-      .q-item.q-item-type:nth-child(3) {
-      margin-top: 4.50rem;
+      .q-item.q-item-type:nth-child(2) {
+      padding-top: 5rem;
     }
     }
   }
