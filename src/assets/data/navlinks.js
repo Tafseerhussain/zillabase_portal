@@ -60,7 +60,7 @@ const NavLinks = [
       {
         title: "SQL Editor",
         icon: "/icons/editor.svg",
-        href: "/",
+        href: "/sql",
       },
     ],
   },

@@ -83,6 +83,16 @@ const routes = [
           icon: "/icons/storage.svg",
         },
       },
+      {
+        path: "/sql",
+        name: "Sql",
+        component: () =>
+          import("/src/pages/user_account/SqlComponent.vue"),
+        meta: {
+          title: "Sql Editor",
+          icon: "/icons/editor.svg",
+        },
+      },
     ],
   },
 

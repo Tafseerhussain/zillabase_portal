@@ -147,9 +147,7 @@ export default defineComponent({
     },
     data() {
         return {
-            addNewList: false,
             selectedTab: "initialTab",
-            file: null,
             searchLabel: "Bucket",
             isMovingRow: false,
             isRenameRow: false,
@@ -282,11 +280,7 @@ export default defineComponent({
     },
     methods: {
         handleClick() {
-        },
-        onFileAdded(file) {
-            // Handle the added file here (can be processed or uploaded)
-            console.log("File added:", file);
-        },
+        },        
         openTableDialog() {
             this.addNewView = !this.addNewView;
         },
@@ -307,7 +301,6 @@ export default defineComponent({
     },
     setup() {
         return {
-            tab: ref("mails"),
             splitterModel: ref(20),
         };
     },

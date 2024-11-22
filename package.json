@@ -1,8 +1,8 @@
 {
   "name": "zillabase-portal-quasar",
   "version": "0.0.1",
-  "description": "A Quasar Project",
-  "productName": "Quasar App",
+  "description": "An event-driven backend for the next generation of web, mobile and AI applications.",
+  "productName": "Zillabase",
   "author": "Shaikh Irshad <shaikhij2000@gmail.com>",
   "private": true,
   "scripts": {
