@@ -96,7 +96,7 @@
             >
               {{ link.title }}
             </q-tooltip>
-            <q-icon class="fs-28" :name="`img:${link.icon}`" />
+            <q-icon class="fs-22" :name="`img:${link.icon}`" />
             <q-item-label
               class="text-subtitle2 text-custom-dark text-weight-medium"
             >
