@@ -8,87 +8,157 @@
         </p>
       </div>
       <div class="flex q-gutter-md">
-        <q-btn unelevated :label="buttonLabel" icon="add" :ripple="false"
-          class="bg-light-green rounded-10 text-white text-capitalize self-center btn-add-new" @click="handleClick"
-          v-if="showAddButton" />
-        
-        <q-btn unelevated icon="img:icons/trash-white.svg" :ripple="false"
-          v-if="showStorage" color="negative" class="rounded-10 text-white text-capitalize self-center btn-add-new" @click="handleClick" />
-        
-        <q-btn unelevated icon="img:/icons/login.svg" :ripple="false"
-          v-if="showStorage" color="dark" class="rounded-10 text-white text-capitalize self-center btn-add-new highlighted-border" @click="handleClick" />
-        
-        <q-btn unelevated icon="img:/icons/export-bucket.svg" :ripple="false"
-          v-if="showStorage" color="light-green" class="rounded-10 text-white text-capitalize self-center btn-add-new" @click="handleClick" />
-        
-        <q-btn unelevated icon="img:/icons/folder-add.svg" :ripple="false"
-          v-if="showStorage" color="dark" class="rounded-10 text-white text-capitalize self-center btn-add-new highlighted-border" @click="handleClick" />
-        
-        <q-input outlined v-model="searchQuery" dense :placeholder="`Search ${searchInputPlaceholder}..`"
-          class="rounded-10 self-center search-input text-weight-light rounded-input">
+        <q-btn
+          unelevated
+          :label="buttonLabel"
+          icon="add"
+          :ripple="false"
+          class="bg-light-green rounded-10 text-white text-capitalize self-center btn-add-new"
+          @click="handleClick"
+          v-if="showAddButton"
+        />
+
+        <q-btn
+          unelevated
+          icon="img:icons/trash-white.svg"
+          :ripple="false"
+          v-if="showStorage"
+          color="negative"
+          class="rounded-10 text-white text-capitalize self-center btn-add-new"
+          @click="handleClick"
+        />
+
+        <q-btn
+          unelevated
+          icon="img:/icons/login.svg"
+          :ripple="false"
+          v-if="showStorage"
+          color="dark"
+          class="rounded-10 text-white text-capitalize self-center btn-add-new highlighted-border"
+          @click="handleClick"
+        />
+
+        <q-btn
+          unelevated
+          icon="img:/icons/export-bucket.svg"
+          :ripple="false"
+          v-if="showStorage"
+          color="light-green"
+          class="rounded-10 text-white text-capitalize self-center btn-add-new"
+          @click="handleClick"
+        />
+
+        <q-btn
+          unelevated
+          icon="img:/icons/folder-add.svg"
+          :ripple="false"
+          v-if="showStorage"
+          color="dark"
+          class="rounded-10 text-white text-capitalize self-center btn-add-new highlighted-border"
+          @click="handleClick"
+        />
+
+        <q-input
+          outlined
+          v-model="searchQuery"
+          dense
+          :placeholder="`Search ${searchInputPlaceholder}..`"
+          class="rounded-10 self-center search-input text-weight-light rounded-input"
+        >
           <template v-slot:append>
-            <q-icon name="img:/icons/search.svg" class="fs-lg filter-gray-dark" />
+            <q-icon
+              name="img:/icons/search.svg"
+              class="fs-lg filter-gray-dark"
+            />
           </template>
         </q-input>
       </div>
     </div>
 
-    <q-table :rows="paginatedRows" :columns="columns" row-key="id" flat bordered
-      :rows-per-page-options="showPagination ? [5, 10, 20] : [0]" :hide-bottom="hideBottom" :no-data-label="noDataLabel"
-      :selection="isMultipleChecked ? 'multiple' : 'none'" v-model:selected="selectedRows"
-      class="rounded-15 data-table">
-
+    <q-table
+      :rows="paginatedRows"
+      :columns="columns"
+      row-key="id"
+      flat
+      bordered
+      :rows-per-page-options="showPagination ? [5, 10, 20] : [0]"
+      :hide-bottom="hideBottom"
+      :no-data-label="noDataLabel"
+      :selection="isMultipleChecked ? 'multiple' : 'none'"
+      v-model:selected="selectedRows"
+      class="rounded-15 data-table"
+    >
       <template v-slot:header-selection="scope">
         <q-checkbox v-model="scope.selected" dense color="light-green" />
       </template>
 
       <template v-slot:body-selection="scope">
-        <q-checkbox :model-value="scope.selected" dense color="light-green" @update:model-value="(val, evt) => { Object.getOwnPropertyDescriptor(scope, 'selected').set(val, evt) }" />
+        <q-checkbox
+          :model-value="scope.selected"
+          dense
+          color="light-green"
+          @update:model-value="
+            (val, evt) => {
+              Object.getOwnPropertyDescriptor(scope, 'selected').set(val, evt);
+            }
+          "
+        />
       </template>
 
       <template v-slot:header-cell-ztable="props">
         <q-th :props="props">
           {{ props.col.label }}
-          <q-icon name="img:icons/question-circle.svg" class="fs-lg filter-gray-dark q-ml-xs" />
-          <q-tooltip  
-            anchor="bottom middle"
-            self="top middle">
+          <q-icon
+            name="img:icons/question-circle.svg"
+            class="fs-lg filter-gray-dark q-ml-xs"
+          />
+          <q-tooltip anchor="bottom middle" self="top middle">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
           </q-tooltip>
         </q-th>
       </template>
       <template v-slot:body-cell-ztable="props">
         <q-td :props="props">
-          <q-icon size="sm" :name="props.row.ztable ? 'check_circle' : 'cancel'"
-            :color="props.row.ztable ? '' : 'negative'" :class="props.row.ztable ? 'text-default-light-green' : ''" />
+          <q-icon
+            size="sm"
+            :name="props.row.ztable ? 'check_circle' : 'cancel'"
+            :color="props.row.ztable ? '' : 'negative'"
+            :class="props.row.ztable ? 'text-default-light-green' : ''"
+          />
         </q-td>
       </template>
 
       <template v-slot:header-cell-zview="props">
         <q-th :props="props">
           {{ props.col.label }}
-          <q-icon name="img:icons/question-circle.svg" class="fs-lg filter-gray-dark q-ml-xs" />
-          <q-tooltip  
-            anchor="bottom middle"
-            self="top middle">
+          <q-icon
+            name="img:icons/question-circle.svg"
+            class="fs-lg filter-gray-dark q-ml-xs"
+          />
+          <q-tooltip anchor="bottom middle" self="top middle">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
           </q-tooltip>
         </q-th>
       </template>
       <template v-slot:body-cell-zview="props">
         <q-td :props="props">
-          <q-icon size="sm" :name="props.row.zview ? 'check_circle' : 'cancel'"
-            :color="props.row.zview ? '' : 'negative'" :class="props.row.zview ? 'text-default-light-green' : ''" />
+          <q-icon
+            size="sm"
+            :name="props.row.zview ? 'check_circle' : 'cancel'"
+            :color="props.row.zview ? '' : 'negative'"
+            :class="props.row.zview ? 'text-default-light-green' : ''"
+          />
         </q-td>
       </template>
 
       <template v-slot:header-cell-materialized="props">
         <q-th :props="props">
           {{ props.col.label }}
-          <q-icon name="img:icons/question-circle.svg" class="fs-lg filter-gray-dark q-ml-xs" />
-          <q-tooltip  
-            anchor="bottom middle"
-            self="top middle">
+          <q-icon
+            name="img:icons/question-circle.svg"
+            class="fs-lg filter-gray-dark q-ml-xs"
+          />
+          <q-tooltip anchor="bottom middle" self="top middle">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
           </q-tooltip>
         </q-th>
@@ -96,61 +166,102 @@
 
       <template v-slot:body-cell-materialized="props">
         <q-td :props="props">
-          <q-icon size="sm" :name="props.row.materialized ? 'check_circle' : 'cancel'"
+          <q-icon
+            size="sm"
+            :name="props.row.materialized ? 'check_circle' : 'cancel'"
             :color="props.row.materialized ? '' : 'negative'"
-            :class="props.row.materialized ? 'text-default-light-green' : ''" />
+            :class="props.row.materialized ? 'text-default-light-green' : ''"
+          />
         </q-td>
       </template>
 
       <template v-slot:header-cell-type="props">
         <q-th :props="props">
           {{ props.col.label }}
-          <q-icon name="img:icons/question-circle.svg" class="fs-lg filter-gray-dark" />
-          <q-tooltip  
-            anchor="bottom middle"
-            self="top middle">
+          <q-icon
+            name="img:icons/question-circle.svg"
+            class="fs-lg filter-gray-dark"
+          />
+          <q-tooltip anchor="bottom middle" self="top middle">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
           </q-tooltip>
         </q-th>
       </template>
       <template v-slot:body-cell-type="props">
         <q-td :props="props" :align="columns.align">
-          <p class="function-type-cell inline-block text-white" :class="{
-            'bg-light-green': props.row.type === 'External',
-            'bg-custom-dark': props.row.type === 'Embedded',
-          }">{{ props.row.type }}</p>
+          <p
+            class="function-type-cell inline-block text-white"
+            :class="{
+              'bg-light-green': props.row.type === 'External',
+              'bg-custom-dark': props.row.type === 'Embedded',
+            }"
+          >
+            {{ props.row.type }}
+          </p>
         </q-td>
       </template>
       <template v-slot:body-cell-bodyOrExternalName="props">
         <q-td :props="props">
-          <q-icon size="sm" name="img:/icons/eye.svg" class="icon-outline text-default-light-green" />
+          <q-icon
+            size="sm"
+            name="img:/icons/eye.svg"
+            class="icon-outline text-default-light-green"
+          />
         </q-td>
       </template>
 
       <template v-slot:body-cell-enabled="props">
         <q-td :props="props">
-          <q-icon size="sm" :name="props.row.enabled ? 'check_circle' : 'cancel'"
-            :color="props.row.enabled ? '' : 'negative'" :class="props.row.enabled ? 'text-default-light-green' : ''" />
+          <q-icon
+            size="sm"
+            :name="props.row.enabled ? 'check_circle' : 'cancel'"
+            :color="props.row.enabled ? '' : 'negative'"
+            :class="props.row.enabled ? 'text-default-light-green' : ''"
+          />
         </q-td>
       </template>
 
-
       <template v-slot:body-cell-actions="props">
         <q-td :props="props">
-          <q-btn flat dense icon="img:/icons/edit.svg" class="filter-text-secondary" @click="editRow(props.row)" />
-          <q-btn flat dense icon="img:/icons/trash.svg" class="q-ml-md" @click="deleteRow(props.row)" />
+          <q-btn
+            flat
+            dense
+            icon="img:/icons/edit.svg"
+            class="filter-text-secondary"
+            @click="editRow(props.row)"
+          />
+          <q-btn
+            flat
+            dense
+            icon="img:/icons/trash.svg"
+            class="q-ml-md"
+            @click="deleteRow(props.row)"
+          />
         </q-td>
       </template>
       <template v-slot:body-cell-tabActions="props">
         <q-td :props="props">
-          <q-btn flat dense round icon="img:/icons/more.svg" ref="menuButton" class="filter-text-secondary">
+          <q-btn
+            flat
+            dense
+            round
+            icon="img:/icons/more.svg"
+            ref="menuButton"
+            class="filter-text-secondary"
+          >
             <q-menu class="zillabase-menu">
-              <q-list style="min-width: 150px;">
+              <q-list style="min-width: 150px">
                 <q-item clickable v-close-popup @click="onMoveRow(props.row)">
                   <q-item-section>
                     <div class="flex">
-                      <q-icon name="img:/icons/more-menu-move.svg" size="sm" class="q-pr-md filter-gray-dark" />
-                      <span class="text-custom-gray-dark text-weight-light">Move</span>
+                      <q-icon
+                        name="img:/icons/more-menu-move.svg"
+                        size="sm"
+                        class="q-pr-md filter-gray-dark"
+                      />
+                      <span class="text-custom-gray-dark text-weight-light"
+                        >Move</span
+                      >
                     </div>
                   </q-item-section>
                 </q-item>
@@ -158,8 +269,14 @@
                 <q-item clickable v-close-popup>
                   <q-item-section>
                     <div class="flex">
-                      <q-icon name="img:/icons/more-menu-copy.svg" size="sm" class="q-pr-md filter-gray-dark" />
-                      <span class="text-custom-gray-dark text-weight-light">Copy URL</span>
+                      <q-icon
+                        name="img:/icons/more-menu-copy.svg"
+                        size="sm"
+                        class="q-pr-md filter-gray-dark"
+                      />
+                      <span class="text-custom-gray-dark text-weight-light"
+                        >Copy URL</span
+                      >
                     </div>
                   </q-item-section>
                 </q-item>
@@ -167,8 +284,14 @@
                 <q-item clickable v-close-popup @click="onRenameRow(props.row)">
                   <q-item-section>
                     <div class="flex">
-                      <q-icon name="img:/icons/more-menu-rename.svg" size="sm" class="q-pr-md filter-gray-dark" />
-                      <span class="text-custom-gray-dark text-weight-light">Rename</span>
+                      <q-icon
+                        name="img:/icons/more-menu-rename.svg"
+                        size="sm"
+                        class="q-pr-md filter-gray-dark"
+                      />
+                      <span class="text-custom-gray-dark text-weight-light"
+                        >Rename</span
+                      >
                     </div>
                   </q-item-section>
                 </q-item>
@@ -176,35 +299,68 @@
                 <q-item clickable v-close-popup>
                   <q-item-section>
                     <div class="flex">
-                      <q-icon name="img:/icons/more-menu-download.svg" size="sm" class="q-pr-md filter-gray-dark" />
-                      <span class="text-custom-gray-dark text-weight-light">Download</span>
+                      <q-icon
+                        name="img:/icons/more-menu-download.svg"
+                        size="sm"
+                        class="q-pr-md filter-gray-dark"
+                      />
+                      <span class="text-custom-gray-dark text-weight-light"
+                        >Download</span
+                      >
                     </div>
                   </q-item-section>
                 </q-item>
               </q-list>
             </q-menu>
           </q-btn>
-          <q-btn flat dense icon="img:/icons/trash.svg" class="q-ml-sm" @click="deleteRow(props.row)" />
+          <q-btn
+            flat
+            dense
+            icon="img:/icons/trash.svg"
+            class="q-ml-sm"
+            @click="deleteRow(props.row)"
+          />
         </q-td>
       </template>
       <!-- Custom Bottom Slot for Pagination -->
       <template v-slot:pagination>
-        <q-btn icon="img:/icons/arrow-circle-right.svg" color="grey-8" round dense flat :disable="pagination.page === 1"
-          @click="prevPage" />
+        <q-btn
+          icon="img:/icons/arrow-circle-right.svg"
+          color="grey-8"
+          round
+          dense
+          flat
+          :disable="pagination.page === 1"
+          @click="prevPage"
+        />
         <!-- Page Numbers -->
         <div class="q-px-sm row">
-          <div v-for="page in totalPages" :key="page" class="q-px-md cursor-pointer"
-            :class="page === pagination.page ? 'text-custom-text-secondary' : 'text-custom-gray-dark'"
-            @click="goToPage(page)">
+          <div
+            v-for="page in totalPages"
+            :key="page"
+            class="q-px-md cursor-pointer"
+            :class="
+              page === pagination.page
+                ? 'text-custom-text-secondary'
+                : 'text-custom-gray-dark'
+            "
+            @click="goToPage(page)"
+          >
             {{ page }}
           </div>
         </div>
-        <q-btn icon="img:/icons/arrow-circle-left.svg" color="grey-8" round dense flat
-          :disable="pagination.page === totalPages" @click="nextPage" />
+        <q-btn
+          icon="img:/icons/arrow-circle-left.svg"
+          color="grey-8"
+          round
+          dense
+          flat
+          :disable="pagination.page === totalPages"
+          @click="nextPage"
+        />
       </template>
       <template v-slot:no-data="{ message }">
-
-        <p style="  color:#868686"> {{ message }}</p>
+        <p style="color: #868686">{{ message }}</p>
       </template>
     </q-table>
   </div>
@@ -232,15 +388,15 @@ export default defineComponent({
     },
     buttonLabel: {
       type: String,
-      default: ""
+      default: "",
     },
     searchInputPlaceholder: {
       type: String,
-      default: "Data"
+      default: "Data",
     },
     showAddButton: {
       type: Boolean,
-      default: true
+      default: true,
     },
     showPagination: {
       type: Boolean,
@@ -254,27 +410,24 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
-    showNoData:
-    {
+    showNoData: {
       type: Boolean,
-      default: false
+      default: false,
     },
-    hideBottom:
-    {
+    hideBottom: {
       type: Boolean,
-      default: true
+      default: true,
     },
-    noDataLabel:
-    {
+    noDataLabel: {
       type: String,
-      default: ""
-    }
+      default: "",
+    },
   },
   data() {
     return {
       searchQuery: "",
       menuTarget: null,
-      selectedRows: [], 
+      selectedRows: [],
       pagination: {
         page: 1,
         rowsPerPage: 5, // Show 5 rows per page
@@ -313,7 +466,7 @@ export default defineComponent({
       this.$emit("delete-row", row);
     },
     handleClick() {
-      this.$emit("add-new")
+      this.$emit("add-new");
     },
     goToPage(page) {
       if (page >= 1 && page <= this.totalPages) {

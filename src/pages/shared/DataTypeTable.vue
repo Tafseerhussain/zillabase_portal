@@ -13,7 +13,11 @@
         <q-td v-for="col in columns" :key="col.name" :props="props">
           <template v-if="col.name === 'name'">
             <div class="flex items-center">
-              <q-icon name="img:/icons/arrow-swap.svg" size="sm" class="filter-custom-dark q-mr-sm" />
+              <q-icon
+                name="img:/icons/arrow-swap.svg"
+                size="sm"
+                class="filter-custom-dark q-mr-sm"
+              />
               <q-input
                 v-model="props.row.name"
                 outlined
@@ -45,11 +49,7 @@
           </template>
 
           <template v-else-if="col.name === 'primary'">
-            <q-checkbox
-              v-model="props.row.primary"
-              dense
-              color="light-green"
-            />
+            <q-checkbox v-model="props.row.primary" dense color="light-green" />
           </template>
 
           <template v-else-if="col.name === 'actions'">
@@ -115,8 +115,7 @@ export default defineComponent({
     },
     onSettingsClick(row) {
       this.$emit("setting-row", row);
-    }
-
+    },
   },
 });
 </script>

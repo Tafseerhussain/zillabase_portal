@@ -7,12 +7,27 @@
         </q-toolbar-title>
         <q-space />
         <q-separator vertical />
-        <q-btn flat :icon="darkModeIcon ? 'img:/icons/sun.svg' : 'img:/icons/moon.svg'" :ripple="false"
-        class="filter-text-secondary" @click="toggleDarkMode" />
+        <q-btn
+          flat
+          :icon="darkModeIcon ? 'img:/icons/sun.svg' : 'img:/icons/moon.svg'"
+          :ripple="false"
+          class="filter-text-secondary"
+          @click="toggleDarkMode"
+        />
         <q-separator vertical />
-        <q-btn flat icon='img:/icons/notification-bing.svg' :ripple="false" class="filter-text-secondary" />
+        <q-btn
+          flat
+          icon="img:/icons/notification-bing.svg"
+          :ripple="false"
+          class="filter-text-secondary"
+        />
         <q-separator vertical />
-        <q-btn flat icon='img:/icons/message-question.svg' :ripple="false" class="filter-text-secondary" />
+        <q-btn
+          flat
+          icon="img:/icons/message-question.svg"
+          :ripple="false"
+          class="filter-text-secondary"
+        />
         <!-- <q-separator vertical />
         <div class="row no-wrap items-center">
           <q-avatar size="42px" class="q-mr-sm">
@@ -37,7 +52,10 @@
       side="left"
     >
       <q-list>
-        <q-item-label header class="flex justify-between items-center q-pb-sm fixed q-mb-xl border-bottom-custom-highlight w-full left-sidebar-log">
+        <q-item-label
+          header
+          class="flex justify-between items-center q-pb-sm fixed q-mb-xl border-bottom-custom-highlight w-full left-sidebar-log"
+        >
           <q-img
             :src="logoSrc"
             fit="contain"
@@ -53,7 +71,11 @@
         </q-item-label>
         <!-- <q-separator /> -->
 
-        <q-item v-for="item in NavLinks" :key="item.groupTitle" class="column q-pb-md">
+        <q-item
+          v-for="item in NavLinks"
+          :key="item.groupTitle"
+          class="column q-pb-md"
+        >
           <q-item-section avatar class="q-pb-sm q-pr-none">
             <q-item-label
               class="text-uppercase text-custom-gray-light text-subtitle2 text-weight-light"
@@ -64,8 +86,8 @@
             v-for="link in item.children"
             :key="link.title"
             class="nav-items q-py-md"
-            :class="{'active-link': isActive(link.href)}" 
-             @click="navigate(link.href)"
+            :class="{ 'active-link': isActive(link.href) }"
+            @click="navigate(link.href)"
           >
             <q-tooltip
               v-if="!leftDrawerOpen"
@@ -74,12 +96,12 @@
             >
               {{ link.title }}
             </q-tooltip>
-            <q-icon
-              class="fs-28"
-              :name='`img:${link.icon}`'
-            />
-            <q-item-label class="text-subtitle2 text-custom-dark text-weight-medium">
-              {{ link.title }}</q-item-label>
+            <q-icon class="fs-28" :name="`img:${link.icon}`" />
+            <q-item-label
+              class="text-subtitle2 text-custom-dark text-weight-medium"
+            >
+              {{ link.title }}</q-item-label
+            >
           </q-item-section>
         </q-item>
       </q-list>
@@ -88,14 +110,12 @@
     <q-page-container>
       <div class="q-px-md q-py-lg flex justify-between">
         <div class="flex items-center q-gutter-md">
-          <h6
-            class="text-custom-text-secondary text-weight-bold text-h4"
-          >
-          {{ route.meta.title }}
+          <h6 class="text-custom-text-secondary text-weight-bold text-h4">
+            {{ route.meta.title }}
           </h6>
           <q-icon
-           :name='`img:${route.meta.icon}`'
-           class="fs-30 filter-text-secondary"
+            :name="`img:${route.meta.icon}`"
+            class="fs-30 filter-text-secondary"
           />
         </div>
         <!-- <q-btn unelevated label="Settings" icon="img:/icons/setting.svg" :ripple="false" color="dark" class="text-capitalize rounded-10 highlighted-border" /> -->
@@ -133,11 +153,11 @@ export default defineComponent({
       if (href) {
         this.$router.push(href);
       }
-    }
+    },
   },
 
   setup() {
-    const route = useRoute  ();
+    const route = useRoute();
 
     const isActive = (href) => {
       return route.path === href;
@@ -146,62 +166,67 @@ export default defineComponent({
       leftDrawerOpen: ref(false),
       NavLinks: NavLinks,
       isActive,
-      route
+      route,
     };
   },
   computed: {
     logoSrc() {
       if (this.leftDrawerOpen) {
-        return this.darkModeIcon ? '/images/light-logo.svg' : '/images/logo.svg';
+        return this.darkModeIcon
+          ? "/images/light-logo.svg"
+          : "/images/logo.svg";
       } else {
-        return this.darkModeIcon ? '/images/short-light-logo.svg' : '/images/short-logo.svg';
+        return this.darkModeIcon
+          ? "/images/short-light-logo.svg"
+          : "/images/short-logo.svg";
       }
-    }
-  }
+    },
+  },
 });
 </script>
 <style scoped lang="scss">
-  .q-toolbar {
-    min-height: 70px;
+.q-toolbar {
+  min-height: 70px;
+}
+.q-drawer__content {
+  .left-sidebar-log {
+    min-height: 71px;
+    z-index: 5;
   }
-  .q-drawer__content {
-    .left-sidebar-log {
-      min-height: 71px;
-      z-index: 5;
-    }
-    .q-list {
-      .q-item.q-item-type:nth-child(2) {
+  .q-list {
+    .q-item.q-item-type:nth-child(2) {
       padding-top: 5rem;
     }
-    }
   }
-  .nav-items {
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 12px;
-    margin-left: 0 !important;
-    cursor: pointer;
+}
+.nav-items {
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 12px;
+  margin-left: 0 !important;
+  cursor: pointer;
 
-    .q-item__label,
+  .q-item__label,
+  .q-icon {
+    transition: color 0.3s ease, filter 0.3s ease;
+  }
+
+  .q-icon {
+    filter: var(--q-color-filter-custom-dark);
+  }
+
+  &:hover,
+  &.active-link {
+    .q-item__label {
+      color: $light-green !important;
+    }
     .q-icon {
-      transition: color 0.3s ease, filter 0.3s ease;
-    }
-
-    .q-icon {
-      filter: var(--q-color-filter-custom-dark);
-    }
-
-    &:hover, &.active-link {
-      .q-item__label {
-        color: $light-green !important;
-      }
-      .q-icon {
-        filter: var(--q-color-filter-light-green);
-      }
+      filter: var(--q-color-filter-light-green);
     }
   }
-  .border-bottom-custom-highlight {
-    border-bottom: 1px solid var(--q-color-highlight);
-  }
+}
+.border-bottom-custom-highlight {
+  border-bottom: 1px solid var(--q-color-highlight);
+}
 </style>

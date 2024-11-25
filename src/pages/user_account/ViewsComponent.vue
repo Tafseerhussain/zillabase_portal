@@ -21,7 +21,7 @@
     backdrop-filter="blur(4px)"
     class="add-new-dialog"
   >
-    <q-card class="full-height" style="width: 871px; max-width: 80vw;">
+    <q-card class="full-height" style="width: 871px; max-width: 80vw">
       <q-card-section class="flex justify-between items-center q-pa-lg">
         <div class="flex q-gutter-lg">
           <q-btn
@@ -37,9 +37,9 @@
           </p>
         </div>
         <q-icon
-            name="img:/icons/view.svg"
-            class="fs-30 filter-custom-dark"
-            style="min-height: 30px;"
+          name="img:/icons/view.svg"
+          class="fs-30 filter-custom-dark"
+          style="min-height: 30px"
         />
       </q-card-section>
       <q-separator />
@@ -104,8 +104,8 @@
             >
             <div>
               <q-icon
-                  name="img:icons/question-circle.svg"
-                  class="fs-lg filter-gray-dark q-ml-sm"
+                name="img:icons/question-circle.svg"
+                class="fs-lg filter-gray-dark q-ml-sm"
               />
               <q-tooltip anchor="bottom middle" self="top middle">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -123,8 +123,8 @@
             >
             <div>
               <q-icon
-                  name="img:icons/question-circle.svg"
-                  class="fs-lg filter-gray-dark q-ml-sm"
+                name="img:icons/question-circle.svg"
+                class="fs-lg filter-gray-dark q-ml-sm"
               />
               <q-tooltip anchor="bottom middle" self="top middle">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -166,8 +166,9 @@
       <q-card-section class="flex justify-between items-center q-pa-lg">
         <div class="flex items-center q-gutter-sm">
           <q-icon size="sm" name="img:/icons/trash.svg" />
-          <p class="text-custom-text-secondary fw-600 q-ml-md text-subtitle1
-">Delete View?</p>
+          <p class="text-custom-text-secondary fw-600 q-ml-md text-subtitle1">
+            Delete View?
+          </p>
         </div>
         <q-icon
           name="close"

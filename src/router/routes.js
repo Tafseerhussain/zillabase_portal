@@ -16,8 +16,7 @@ const routes = [
       {
         path: "/apidoc",
         name: "apidoc",
-        component: () =>
-          import("/src/pages/user_account/ApiDocComponent.vue"),
+        component: () => import("/src/pages/user_account/ApiDocComponent.vue"),
         meta: {
           title: "API Docs",
           icon: "/icons/document-text.svg",
@@ -26,8 +25,7 @@ const routes = [
       {
         path: "/tables",
         name: "tables",
-        component: () =>
-          import("/src/pages/user_account/TableComponent.vue"),
+        component: () => import("/src/pages/user_account/TableComponent.vue"),
         meta: {
           title: "Tables",
           icon: "/icons/grid-6.svg",
@@ -46,8 +44,7 @@ const routes = [
       {
         path: "/views",
         name: "views",
-        component: () =>
-          import("/src/pages/user_account/ViewsComponent.vue"),
+        component: () => import("/src/pages/user_account/ViewsComponent.vue"),
         meta: {
           title: "Views",
           icon: "/icons/view.svg",
@@ -56,8 +53,7 @@ const routes = [
       {
         path: "/streams",
         name: "Streams",
-        component: () =>
-          import("/src/pages/user_account/StreamsComponent.vue"),
+        component: () => import("/src/pages/user_account/StreamsComponent.vue"),
         meta: {
           title: "Streams",
           icon: "/icons/stream.svg",
@@ -66,8 +62,7 @@ const routes = [
       {
         path: "/auth",
         name: "Auth",
-        component: () =>
-          import("/src/pages/user_account/AuthComponent.vue"),
+        component: () => import("/src/pages/user_account/AuthComponent.vue"),
         meta: {
           title: "Auth",
           icon: "/icons/auth.svg",
@@ -76,8 +71,7 @@ const routes = [
       {
         path: "/storage",
         name: "Storage",
-        component: () =>
-          import("/src/pages/user_account/StorageComponent.vue"),
+        component: () => import("/src/pages/user_account/StorageComponent.vue"),
         meta: {
           title: "Storage",
           icon: "/icons/storage.svg",
@@ -86,8 +80,7 @@ const routes = [
       {
         path: "/sql",
         name: "Sql",
-        component: () =>
-          import("/src/pages/user_account/SqlComponent.vue"),
+        component: () => import("/src/pages/user_account/SqlComponent.vue"),
         meta: {
           title: "Sql Editor",
           icon: "/icons/editor.svg",
