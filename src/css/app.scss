@@ -461,3 +461,7 @@ body.desktop .q-focus-helper {
 .q-tooltip--style {
   background: var(--q-color-text-custom-dark);
 }
+
+body.body--dark .q-header, body.body--dark .q-footer, body.body--dark .q-drawer {
+  border-color: var(--q-color-highlight);
+}
