@@ -3,12 +3,12 @@
         <div class="row no-wrap">
             <div class="col-6 q-pr-md q-pt-md">
                 <common-table title="Users" description="" :columns="userTableColumns" :rows="userTableData"
-                    buttonLabel="" searchInputPlaceholder="Users"  @add-new="openUserDialog" showPagination />
+                    buttonLabel="" searchInputPlaceholder="Users"  @add-new="openUserDialog" showPagination  :hideBottom="false"/>
             </div>
             <q-separator vertical />
             <div class="col-6 q-pl-md q-pt-md">
                 <common-table title="SSO Providers" description="" :columns="ssoTableColumns" :rows="ssoTableData"
-                    buttonLabel="" searchInputPlaceholder="Providers" @add-new="openProviderDialog" showPagination />
+                    buttonLabel="" searchInputPlaceholder="Providers" @add-new="openProviderDialog" showPagination  :hideBottom="false"/>
             </div>
 
         </div>

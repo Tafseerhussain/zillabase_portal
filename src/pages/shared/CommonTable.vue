@@ -34,8 +34,9 @@
     </div>
 
     <q-table :rows="paginatedRows" :columns="columns" row-key="id" flat bordered
-      :rows-per-page-options="showPagination ? [5, 10, 20] : [0]" :hideBottom="!showPagination"
-      :selection="isMultipleChecked ? 'multiple' : 'none'" v-model:selected="selectedRows" class="rounded-15 data-table">
+      :rows-per-page-options="showPagination ? [5, 10, 20] : [0]" :hide-bottom="hideBottom" :no-data-label="noDataLabel"
+      :selection="isMultipleChecked ? 'multiple' : 'none'" v-model:selected="selectedRows"
+      class="rounded-15 data-table">
 
       <template v-slot:header-selection="scope">
         <q-checkbox v-model="scope.selected" dense color="light-green" />
@@ -181,6 +182,10 @@
         <q-btn icon="img:/icons/arrow-circle-left.svg" color="grey-8" round dense flat
           :disable="pagination.page === totalPages" @click="nextPage" />
       </template>
+      <template v-slot:no-data="{ message }">
+
+        <p style="  color:#868686"> {{ message }}</p>
+      </template>
     </q-table>
   </div>
 </template>
@@ -229,6 +234,21 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    showNoData:
+    {
+      type: Boolean,
+      default: false
+    },
+    hideBottom:
+    {
+      type: Boolean,
+      default: true
+    },
+    noDataLabel:
+    {
+      type: String,
+      default: ""
+    }
   },
   data() {
     return {

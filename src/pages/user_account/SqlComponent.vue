@@ -60,7 +60,7 @@
                                 <div class="text-caption text-custom-text-secondary q-my-sm">
                                     OR
                                 </div>
-                                <q-btn unelevated label="Add A Snippet" icon="add" :ripple="false"
+                                <q-btn unelevated label="Add A Snippet" icon="add" :ripple="false" @click="addNewSnippetDialog"
                                     class="bg-light-green rounded-10 text-white text-capitalize self-center btn-add-new q-mt-sm"
                                     />
                             </div>
