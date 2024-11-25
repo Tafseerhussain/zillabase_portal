@@ -91,6 +91,11 @@
                             name="img:icons/question-circle.svg"
                             class="fs-lg filter-gray-dark q-ml-sm"
                         />
+                        <q-tooltip  
+                          anchor="bottom middle"
+                          self="top middle">
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        </q-tooltip>
                     </div>
                     <div class="col-9">
                         <q-checkbox dense v-model="isEnabled" color="light-green" />
@@ -124,7 +129,7 @@ export default defineComponent({
             userTableColumns: [
                 { name: "id", label: "ID", align: "left", field: "id", sortable: true },
                 { name: "name", label: "Name", align: "left", field: "name", },
-                { name: "email", label: "Email", align: "left", field: "email", classes: 'text-custom-dark', },
+                { name: "email", label: "Email", align: "left", field: "email" },
                 { name: "actions", label: "Actions", align: "center" },
             ],
             userTableData: [

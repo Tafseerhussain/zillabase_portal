@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf" class="zillbase-dashboard">
     <q-header bordered class="zillbase-header bg-custom-dark-color">
-      <q-toolbar>
+      <q-toolbar class="q-pl-lg">
         <q-toolbar-title>
           <dynamic-bread-crumb />
         </q-toolbar-title>
@@ -13,7 +13,7 @@
         <q-btn flat icon='img:/icons/notification-bing.svg' :ripple="false" class="filter-text-secondary" />
         <q-separator vertical />
         <q-btn flat icon='img:/icons/message-question.svg' :ripple="false" class="filter-text-secondary" />
-        <q-separator vertical />
+        <!-- <q-separator vertical />
         <div class="row no-wrap items-center">
           <q-avatar size="42px" class="q-mr-sm">
             <q-img src="/icons/person-01.svg" height="28px" width="28px" />
@@ -25,7 +25,7 @@
             <div class="text-caption text-custom-gray-dark text-weight-light">Web Developer</div>
           </div>
           <q-btn flat icon="img:/icons/arrow-down.svg" class="filter-text-secondary text-caption" :ripple="false" />
-        </div>
+        </div> -->
       </q-toolbar>
     </q-header>
 
@@ -75,7 +75,7 @@
               {{ link.title }}
             </q-tooltip>
             <q-icon
-              class="fs-22"
+              class="fs-28"
               :name='`img:${link.icon}`'
             />
             <q-item-label class="text-subtitle2 text-custom-dark text-weight-medium">
@@ -98,7 +98,7 @@
            class="fs-30 filter-text-secondary"
           />
         </div>
-        <q-btn unelevated label="Settings" icon="img:/icons/setting.svg" :ripple="false" color="dark" class="text-capitalize rounded-10 highlighted-border" />
+        <!-- <q-btn unelevated label="Settings" icon="img:/icons/setting.svg" :ripple="false" color="dark" class="text-capitalize rounded-10 highlighted-border" /> -->
       </div>
       <q-separator />
       <router-view />
@@ -162,11 +162,11 @@ export default defineComponent({
 </script>
 <style scoped lang="scss">
   .q-toolbar {
-    min-height: 60px;
+    min-height: 70px;
   }
   .q-drawer__content {
     .left-sidebar-log {
-      min-height: 61px;
+      min-height: 71px;
       z-index: 5;
     }
     .q-list {

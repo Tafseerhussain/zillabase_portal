@@ -93,6 +93,11 @@
                       name="img:icons/question-circle.svg"
                       class="fs-lg filter-gray-dark q-ml-sm"
                     />
+                    <q-tooltip  
+                      anchor="bottom middle"
+                      self="top middle">
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    </q-tooltip>
                 </div>
                 <div class="col-9">
                   <q-radio dense v-model="functionTypeVal" val="embedded" color="light-green" />
@@ -105,6 +110,11 @@
                       name="img:icons/question-circle.svg"
                       class="fs-lg filter-gray-dark q-ml-sm"
                     />
+                    <q-tooltip  
+                      anchor="bottom middle"
+                      self="top middle">
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    </q-tooltip>
                 </div>
                 <div class="col-9">
                   <q-radio dense v-model="functionTypeVal" val="external" color="light-green" />
@@ -167,7 +177,7 @@ export default defineComponent({
                 { name: "name", label: "Name", align: "left", field: "name" },
                 { name: "parameters", label: "Parameters", align: "left", field: "parameters", },
                 { name: "returnType", label: "Return Type", align: "center", field: "returnType", sortable: true, },
-                { name: "language", label: "Language", align: "center", field: "language", sortable: true, classes: 'text-custom-dark', },
+                { name: "language", label: "Language", align: "center", field: "language", sortable: true, },
                 { name: "type", label: "Type", align: 'center' , field: "type", sortable: true, },
                 { name: "bodyOrExternalName", label: "Body/ External Name", align: "center", field: "bodyOrExternalName", sortable: true, },
                 { name: "actions", label: "Actions", align: "center" },

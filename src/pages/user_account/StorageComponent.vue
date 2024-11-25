@@ -4,6 +4,7 @@
             <template v-slot:before>
                 <q-tabs v-model="selectedTab" vertical class="text-primary" align="left" animated>
                     <q-card-section class="flex justify-between q-pa-sm q-mt-md q-mb-sm">
+                        <div class="flex justify-between full-width">
                         <div class="flex">
                             <p class="text-custom-text-secondary text-h6 fw-600 text-left">
                                 All Buckets
@@ -12,9 +13,10 @@
                         <q-btn unelevated icon="add" :ripple="false"
                             class="bg-light-green rounded-10 text-white text-capitalize self-center q-pa-sm"
                             @click="addNewBucketDialog" />
-                        <div class="row q-mt-md">
+                        </div>
+                        <div class="row q-mt-md full-width">
                             <q-input outlined dense :placeholder="`Search Bucket..`"
-                                class="rounded-10 self-center search-input text-weight-light rounded-input">
+                                class="rounded-10 self-center search-input text-weight-light rounded-input full-width">
                                 <template v-slot:append>
                                     <q-icon name="img:/icons/search.svg" class="fs-lg filter-gray-dark" />
                                 </template>
@@ -366,7 +368,7 @@ export default defineComponent({
 }
 
 .select-bucket {
-    border: 2px dashed var(--q-color-gray-dark);
+    border: 1px dashed var(--q-color-gray-dark);
     border-radius: 20px;
     width: 400px;
 }

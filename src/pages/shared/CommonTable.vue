@@ -50,6 +50,11 @@
         <q-th :props="props">
           {{ props.col.label }}
           <q-icon name="img:icons/question-circle.svg" class="fs-lg filter-gray-dark q-ml-xs" />
+          <q-tooltip  
+            anchor="bottom middle"
+            self="top middle">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          </q-tooltip>
         </q-th>
       </template>
       <template v-slot:body-cell-ztable="props">
@@ -63,6 +68,11 @@
         <q-th :props="props">
           {{ props.col.label }}
           <q-icon name="img:icons/question-circle.svg" class="fs-lg filter-gray-dark q-ml-xs" />
+          <q-tooltip  
+            anchor="bottom middle"
+            self="top middle">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          </q-tooltip>
         </q-th>
       </template>
       <template v-slot:body-cell-zview="props">
@@ -76,6 +86,11 @@
         <q-th :props="props">
           {{ props.col.label }}
           <q-icon name="img:icons/question-circle.svg" class="fs-lg filter-gray-dark q-ml-xs" />
+          <q-tooltip  
+            anchor="bottom middle"
+            self="top middle">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          </q-tooltip>
         </q-th>
       </template>
 
@@ -91,6 +106,11 @@
         <q-th :props="props">
           {{ props.col.label }}
           <q-icon name="img:icons/question-circle.svg" class="fs-lg filter-gray-dark" />
+          <q-tooltip  
+            anchor="bottom middle"
+            self="top middle">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          </q-tooltip>
         </q-th>
       </template>
       <template v-slot:body-cell-type="props">

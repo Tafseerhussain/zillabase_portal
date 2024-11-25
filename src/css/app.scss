@@ -151,8 +151,8 @@ body {
   font-size: 20px;
 }
 
-.fs-22 {
-  font-size: 22px;
+.fs-28 {
+  font-size: 28px;
 }
 
 .fw-600 {
@@ -202,6 +202,7 @@ body {
     .q-header.zillbase-header {
       left: 150px;
       border-bottom: 1px solid var(--q-color-highlight);
+      z-index: 1;
     }
 
     .q-page-container {
@@ -213,10 +214,11 @@ body {
         width: 150px !important;
         transform: translateX(0px) !important;
         visibility: visible;
+        border-color: var(--q-color-highlight);
   
         .q-btn.q-btn-item {
           position: absolute;
-          right: 0;
+          right: -15px;
         }
     }
     }
@@ -446,4 +448,16 @@ body {
   border: 1px solid var(--q-color-highlight);
   box-shadow: none;
   box-shadow: 0px 12px 24px -12px var(--q-color-highlight);
+}
+
+body.desktop .q-focus-helper {
+  opacity: 0 !important;
+}
+
+.q-separator--dark, .q-separator {
+  background: var(--q-color-highlight);
+}
+
+.q-tooltip--style {
+  background: var(--q-color-text-custom-dark);
 }

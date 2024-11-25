@@ -66,12 +66,17 @@
             <q-card-section class="q-py-lg px-28">
               <div class="row items-center">
                 <div class="col-3 flex items-center">
-                  <span class="text-custom-gray-dark text-subtitle1 text-weight-light">ZTable</span>
+                  <span class="text-custom-gray-dark text-subtitle1 text-weight-light">ZView</span>
                   <div>
                     <q-icon   
-                    name="img:icons/question-circle.svg"
-                    class="fs-lg filter-gray-dark q-ml-sm"
-                  />
+                      name="img:icons/question-circle.svg"
+                      class="fs-lg filter-gray-dark q-ml-sm"
+                    />
+                    <q-tooltip  
+                      anchor="bottom middle"
+                      self="top middle">
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    </q-tooltip>
                   <q-tooltip  
                   anchor="bottom middle"
                   self="top middle">
@@ -208,7 +213,7 @@ export default defineComponent({
         tableColumns: [
             { name: 'name', label: 'Table Name', align: 'left', field: 'name' },
             { name: 'description', label: 'Description', align: 'left', field: 'description' },
-            { name: 'ztable', label: 'Ztable', align: 'center', field: 'ztable' },
+            { name: 'ztable', label: 'ZView', align: 'center', field: 'ztable' },
             { name: 'rows', label: 'Rows', align: 'right', field: 'rows' },
             { name: 'columns', label: 'Columns', align: 'right', field: 'columns' },
             { name: 'actions', label: 'Actions', align: 'center' },

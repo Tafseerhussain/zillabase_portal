@@ -1,5 +1,5 @@
 <template>
-  <q-breadcrumbs separator-color="grey" class="text-subtitle2">
+  <q-breadcrumbs separator-color="grey" class="text-subtitle2 q-mt-sm">
     <q-breadcrumbs-el
       v-for="(crumb, index) in breadcrumbs"
       :key="index"
@@ -17,7 +17,7 @@ export default defineComponent({
   props: {
     staticCrumbs: {
       type: Array,
-      default: () => ["Zillabase", "user_account"],
+      default: () => ["Zillabase"],
     },
     dynamicLabel: {
       type: String,

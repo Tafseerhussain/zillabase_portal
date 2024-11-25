@@ -159,7 +159,6 @@ export default defineComponent({
                     align: "left",
                     field: "streamFunction",
                     sortable: true,
-                    classes: 'text-custom-dark',
                 },
                 {
                     name: "messages",

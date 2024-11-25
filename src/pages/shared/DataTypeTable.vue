@@ -31,6 +31,7 @@
               dense
               placeholder="Select type"
               dropdown-icon="keyboard_arrow_down"
+              style="min-width: 180px"
             />
           </template>
 
