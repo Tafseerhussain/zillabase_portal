@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf" class="zillbase-dashboard">
     <q-header bordered class="zillbase-header bg-custom-dark-color">
-      <q-toolbar class="q-pl-lg">
+      <q-toolbar class="q-pl-lg q-px-none">
         <q-toolbar-title>
           <dynamic-bread-crumb />
         </q-toolbar-title>
@@ -11,7 +11,7 @@
           flat
           :icon="darkModeIcon ? 'img:/icons/sun.svg' : 'img:/icons/moon.svg'"
           :ripple="false"
-          class="filter-text-secondary"
+          class="filter-text-secondary w-70px"
           @click="toggleDarkMode"
         />
         <q-separator vertical />
@@ -19,14 +19,14 @@
           flat
           icon="img:/icons/notification-bing.svg"
           :ripple="false"
-          class="filter-text-secondary"
+          class="filter-text-secondary w-70px"
         />
         <q-separator vertical />
         <q-btn
           flat
           icon="img:/icons/message-question.svg"
           :ripple="false"
-          class="filter-text-secondary"
+          class="filter-text-secondary w-70px"
         />
         <!-- <q-separator vertical />
         <div class="row no-wrap items-center">
@@ -54,9 +54,10 @@
       <q-list>
         <q-item-label
           header
-          class="flex justify-between items-center q-pb-sm fixed q-mb-xl border-bottom-custom-highlight w-full left-sidebar-log"
+          class="flex items-center w-full q-pb-sm fixed q-mb-xl border-bottom-custom-highlight w-full left-sidebar-log"
         >
-          <q-img
+          <div class="flex justify-between items-center w-full -margin-sm">
+            <q-img
             :src="logoSrc"
             fit="contain"
             style="width: 150px; height: 22px"
@@ -68,6 +69,7 @@
             style="width: 30px; min-height: 30px; border-radius: 10px"
             @click="leftDrawerOpen = !leftDrawerOpen"
           />
+          </div>
         </q-item-label>
         <!-- <q-separator /> -->
 
@@ -108,14 +110,14 @@
     </q-drawer>
 
     <q-page-container>
-      <div class="q-px-md q-py-lg flex justify-between">
-        <div class="flex items-center q-gutter-md">
+      <div class="q-pa-lg flex justify-between">
+        <div class="flex items-center">
           <h6 class="text-custom-text-secondary text-weight-bold text-h4">
             {{ route.meta.title }}
           </h6>
           <q-icon
             :name="`img:${route.meta.icon}`"
-            class="fs-30 filter-text-secondary"
+            class="fs-30 filter-text-secondary q-pl-lg"
           />
         </div>
         <!-- <q-btn unelevated label="Settings" icon="img:/icons/setting.svg" :ripple="false" color="dark" class="text-capitalize rounded-10 highlighted-border" /> -->

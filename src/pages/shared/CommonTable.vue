@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex justify-between q-pb-lg">
+    <div class="flex justify-between items-center q-pb-lg">
       <div class="">
         <p class="text-custom-text-secondary text-h6 fw-600">{{ title }}</p>
         <p class="text-custom-gray-dark text-subtitle1 text-weight-light">

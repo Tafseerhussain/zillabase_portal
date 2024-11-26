@@ -1,5 +1,5 @@
 <template>
-  <div class="q-px-md q-gutter-sm">
+  <div class="q-px-lg">
     <div class="row no-wrap">
       <div class="col-6 q-pr-md q-pt-md">
         <common-table
@@ -15,7 +15,7 @@
         />
       </div>
       <q-separator vertical />
-      <div class="col-6 q-pl-md q-pt-md">
+      <div class="col-6 q-pl-lg q-pt-md">
         <common-table
           title="SSO Providers"
           description=""

@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md q-gutter-sm">
+  <div class="q-pa-lg">
     <common-table
       title="External & Embedded"
       description="Lorem ipsum dolor sit amet, consectetur adipiscing elit."

@@ -4,7 +4,8 @@
       bordered
       v-for="(card, index) in cards"
       :key="index"
-      class="q-mx-sm col no-shadow rounded-15"
+      class="col no-shadow rounded-15"
+      :class="index === 0 ? 'q-ml-none q-mr-sm' : 'q-mx-sm '"
     >
       <!-- Icon and Title Section -->
       <q-card-section class="flex items-center">

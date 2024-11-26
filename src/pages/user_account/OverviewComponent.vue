@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md q-gutter-sm">
+  <div class="q-pa-lg">
     <p class="text-custom-text-secondary text-h6 fw-600">Docs</p>
     <p class="text-custom-gray-dark text-subtitle1 text-weight-light">
       Lorem ipsum dolor sit amet, consectetur adipiscing elit.

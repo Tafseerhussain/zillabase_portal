@@ -10,7 +10,7 @@
           animated
         >
           <q-card-section class="flex justify-between q-pa-sm q-mt-md q-mb-sm">
-            <div class="flex justify-between full-width">
+            <div class="flex justify-between items-center full-width">
               <div class="flex">
                 <p class="text-custom-text-secondary text-h6 fw-600 text-left">
                   All Buckets

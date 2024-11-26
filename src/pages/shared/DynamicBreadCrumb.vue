@@ -1,5 +1,5 @@
 <template>
-  <q-breadcrumbs separator-color="grey" class="text-subtitle2 q-mt-sm">
+  <q-breadcrumbs separator-color="grey" class="text-subtitle2">
     <q-breadcrumbs-el
       v-for="(crumb, index) in breadcrumbs"
       :key="index"
