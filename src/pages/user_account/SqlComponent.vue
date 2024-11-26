@@ -171,7 +171,7 @@
     >
       <q-card class="highlighted-border">
         <q-card-section class="flex justify-between items-center q-pa-lg">
-          <div class="flex items-center q-gutter-sm">
+          <div class="flex items-center">
             <q-icon size="sm" name="add" class="filter-custom-dark" />
             <p class="text-custom-text-secondary fw-600 q-ml-md text-subtitle1">
               Add New Snippet

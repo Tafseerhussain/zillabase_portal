@@ -126,7 +126,7 @@
   >
     <q-card class="full-height" style="width: 871px; max-width: 80vw">
       <q-card-section class="flex justify-between items-center q-pa-lg">
-        <div class="flex q-gutter-lg">
+        <div class="flex q-gutter-x-lg">
           <q-btn
             unelevated
             color="light-green"
@@ -181,7 +181,7 @@
         </div>
       </q-card-section>
       <q-separator />
-      <q-card-section class="flex justify-end q-gutter-lg q-pa-lg">
+      <q-card-section class="flex justify-end q-gutter-x-lg q-pa-lg">
         <q-btn
           unelevated
           label="Cancel"
@@ -194,7 +194,7 @@
           label="Add Provider"
           icon="add"
           :ripple="false"
-          class="bg-light-green rounded-10 text-white text-capitalize self-center"
+          class="bg-light-green rounded-10 text-white text-capitalize"
         />
       </q-card-section>
     </q-card>

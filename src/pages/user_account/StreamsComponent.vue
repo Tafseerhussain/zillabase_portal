@@ -139,7 +139,7 @@
   >
     <q-card class="highlighted-border">
       <q-card-section class="flex justify-between items-center q-pa-lg">
-        <div class="flex items-center q-gutter-sm">
+        <div class="flex items-center">
           <q-icon size="sm" name="img:/icons/trash.svg" />
           <p class="text-custom-text-secondary fw-600 q-ml-md text-subtitle1">
             Delete Stream?
