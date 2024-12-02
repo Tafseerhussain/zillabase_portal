@@ -130,7 +130,7 @@
         />
       </q-card-section>
       <q-separator />
-      <q-card-section class="q-py-lg px-28">
+      <!-- <q-card-section class="q-py-lg px-28">
         <div class="flex justify-between items-center q-mb-sm">
           <p class="text-custom-text-secondary text-subtitle1 fw-600">
             Foreign Keys
@@ -158,12 +158,13 @@
             class="rounded-10 q-pa-none text-custom-dark-color"
           />
         </div>
-      </q-card-section>
+      </q-card-section> -->
       <q-separator />
       <q-card-section class="flex justify-end q-gutter-lg q-pa-lg">
         <q-btn
           unelevated
           label="Cancel"
+          @click="addNewTable = !addNewTable"
           :ripple="false"
           color="dark"
           class="text-capitalize rounded-10 highlighted-border"
