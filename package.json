@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "An event-driven backend for the next generation of web, mobile and AI applications.",
   "productName": "Zillabase",
-  "author": "Shaikh Irshad <shaikhij2000@gmail.com>",
+  "author": "Tafseer Hussain <tafseerhussain88@gmail.com>",
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.vue ./",
