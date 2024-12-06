@@ -53,6 +53,7 @@
             <q-input
               dense
               outlined
+              v-model="tableInfo.name"
               placeholder="Table Name"
               class="rounded-10 self-center text-weight-light rounded-input"
             />
@@ -70,6 +71,7 @@
               type="textarea"
               placeholder="Table Description..."
               rows="6"
+              v-model="tableInfo.description"
               autogrow
               class="rounded-10 self-center text-weight-light rounded-input"
             />
@@ -124,6 +126,7 @@
           :columns="dataTypeColumns"
           :rows="dataTypeRow"
           :typeOptions="dataTypeOptions"
+          ref="dataTypeTable"
           @add-row="addRow"
           @remove-row="removeRow"
           @setting-row="openRowSettingDialog"
@@ -172,6 +175,7 @@
         <q-btn
           unelevated
           label="Add Table"
+          @click="addTable"
           icon="add"
           :ripple="false"
           class="bg-light-green rounded-10 text-white text-capitalize self-center"
@@ -232,6 +236,7 @@
     v-model="isRowSettingDialogOpen"
     backdrop-filter="blur(4px)"
     class="row-setting-dialog"
+    @update:model-value="closeSettings"
   >
     <q-card class="highlighted-border">
       <q-card-section class="flex justify-between items-center q-pa-lg">
@@ -248,7 +253,10 @@
         <q-icon
           name="close"
           class="cursor-pointer fs-20"
-          @click="isRowSettingDialogOpen = false"
+          @click="
+            isRowSettingDialogOpen = false;
+            closeSettings();
+          "
         />
       </q-card-section>
       <q-separator />
@@ -289,6 +297,11 @@ export default defineComponent({
       isRowSettingDialogOpen: false,
       zTableVal: true,
       selectedRow: null,
+      activeRowSetting: {},
+      tableInfo: {
+        name: "",
+        description: "",
+      },
       tableColumns: [
         { name: "name", label: "Table Name", align: "left", field: "name" },
         {
@@ -302,66 +315,24 @@ export default defineComponent({
         { name: "columns", label: "Columns", align: "right", field: "columns" },
         { name: "actions", label: "Actions", align: "center" },
       ],
-      tableData: [
-        {
-          id: 1,
-          name: "Example Data Table",
-          description: "Lorem ipsum dolor sit amet.",
-          ztable: true,
-          rows: 79,
-          columns: "03",
-        },
-        {
-          id: 2,
-          name: "Example Data Table",
-          description: "Lorem ipsum dolor sit amet.",
-          ztable: false,
-          rows: 79,
-          columns: "03",
-        },
-        {
-          id: 3,
-          name: "Example Data Table",
-          description: "Lorem ipsum dolor sit amet.",
-          ztable: true,
-          rows: 79,
-          columns: "03",
-        },
-        {
-          id: 4,
-          name: "Example Data Table",
-          description: "Lorem ipsum dolor sit amet.",
-          ztable: true,
-          rows: 79,
-          columns: "03",
-        },
-        {
-          id: 5,
-          name: "Example Data Table",
-          description: "Lorem ipsum dolor sit amet.",
-          ztable: false,
-          rows: 79,
-          columns: "03",
-        },
-        {
-          id: 6,
-          name: "Example Data Table",
-          description: "Lorem ipsum dolor sit amet.",
-          ztable: true,
-          rows: 79,
-          columns: "03",
-        },
-      ],
+      tableData: [],
       dataTypeRow: [
-        { name: "id", type: "id", defaultValue: "id", primary: true },
-        { name: "name", type: "varchar()", defaultValue: "", primary: false },
+        { name: "id", type: "id", defaultValue: "id", primary: true, id: 1 },
+        {
+          name: "name",
+          type: "varchar()",
+          defaultValue: "",
+          primary: false,
+          id: 2,
+        },
         {
           name: "created_at",
           type: "timestamps()",
           defaultValue: "",
           primary: false,
+          id: 3,
         },
-        { name: "", type: "", defaultValue: "", primary: false },
+        { name: "", type: "", defaultValue: "", primary: false, id: 4 },
       ],
       dataTypeColumns: [
         {
@@ -412,13 +383,79 @@ export default defineComponent({
       ],
     };
   },
+  mounted() {
+    this.$ws.connect(() => {
+      this.getTableInformations();
+    });
+    this.$ws.addMessageHandler((data) => {
+      this.tableData = data.map((x, i) => ({
+        id: i + 1,
+        name: x.table_name,
+        description: x.table_description,
+        columns: x.total_columns,
+        rows: x.total_rows,
+        ztable: false,
+      }));
+    });
+  },
+  beforeUnmount() {
+    this.$ws.removeAll();
+  },
   methods: {
+    getTableInformations() {
+      this.$ws.sendMessage(`SELECT 
+          t.table_name,
+          pg_catalog.obj_description(c.oid) AS table_description,
+          (SELECT count(*) FROM information_schema.columns c2 WHERE c2.table_name = t.table_name) AS total_columns,
+          (SELECT n_live_tup FROM pg_stat_user_tables WHERE relname = t.table_name) AS total_rows
+          FROM 
+              information_schema.tables t
+          JOIN 
+              pg_catalog.pg_class c ON c.relname = t.table_name
+          WHERE 
+              t.table_schema = 'public'
+              AND t.table_type = 'BASE TABLE'
+          ORDER BY 
+              t.table_name;
+          `);
+    },
+    addTable() {
+      const columns = this.$refs.dataTypeTable.rows.map((field) => {
+        let columnDef = `${field.name} ${field.type.toUpperCase()}`;
+
+        if (!field.nullable) {
+          columnDef += " NOT NULL";
+        }
+
+        if (field.defaultValue) {
+          columnDef += ` DEFAULT ${field.defaultValue}`;
+        }
+
+        if (field.identity) {
+          columnDef += " GENERATED ALWAYS AS IDENTITY";
+        }
+
+        return columnDef;
+      });
+
+      const primaryKey = this.$refs.dataTypeTable.rows
+        .filter((field) => field.primary)
+        .map((field) => field.name);
+      if (primaryKey.length > 0) {
+        columns.push(`PRIMARY KEY (${primaryKey.join(", ")})`);
+      }
+
+      const query = `CREATE TABLE \"${this.tableInfo.name}\" (${columns.join(
+        ",\n    "
+      )})`;
+
+      console.log(query);
+    },
     openDeleteDialog(row) {
       this.selectedRow = row;
       this.isDeleteDialogOpen = true;
     },
     confirmDelete() {
-      // Handle deletion logic here
       this.isDeleteDialogOpen = false;
       this.selectedRow = null;
     },
@@ -426,10 +463,26 @@ export default defineComponent({
       this.addNewTable = !this.addNewTable;
     },
     openRowSettingDialog(row) {
+      this.activeRowSetting = this.dataTypeRow.find((x) => x.id == row.id);
       this.isRowSettingDialogOpen = !this.isRowSettingDialogOpen;
+      this.rowSettingData.find((x) => x.id == 1).primary =
+        this.activeRowSetting.unique || false;
+      this.rowSettingData.find((x) => x.id == 2).primary =
+        this.activeRowSetting.nullable || false;
+      this.rowSettingData.find((x) => x.id == 3).primary =
+        this.activeRowSetting.identity || false;
+    },
+    closeSettings() {
+      this.activeRowSetting.unique =
+        this.rowSettingData.find((x) => x.id == 1)?.primary || false;
+      this.activeRowSetting.nullable =
+        this.rowSettingData.find((x) => x.id == 2)?.primary || false;
+      this.activeRowSetting.identity =
+        this.rowSettingData.find((x) => x.id == 3)?.primary || false;
     },
     addRow() {
       this.dataTypeRow.push({
+        id: Date.now().valueOf(),
         name: "",
         type: "",
         defaultValue: "",
@@ -437,7 +490,7 @@ export default defineComponent({
       });
     },
     removeRow(row) {
-      this.dataTypeRow = this.dataTypeRow.filter((r) => r !== row);
+      this.dataTypeRow = this.dataTypeRow.filter((r) => r.id !== row.id);
     },
   },
 });
