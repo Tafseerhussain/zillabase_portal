@@ -295,7 +295,7 @@ export default defineComponent({
       isDeleteDialogOpen: false,
       addNewTable: false,
       isRowSettingDialogOpen: false,
-      zTableVal: true,
+      zTableVal: false,
       selectedRow: null,
       activeRowSetting: {},
       tableInfo: {
@@ -317,17 +317,17 @@ export default defineComponent({
       ],
       tableData: [],
       dataTypeRow: [
-        { name: "id", type: "id", defaultValue: "id", primary: true, id: 1 },
+        { name: "id", type: "int", defaultValue: "", primary: false, id: 1 },
         {
           name: "name",
-          type: "varchar()",
+          type: "varchar",
           defaultValue: "",
           primary: false,
           id: 2,
         },
         {
           name: "created_at",
-          type: "timestamps()",
+          type: "timestamp",
           defaultValue: "",
           primary: false,
           id: 3,
@@ -357,7 +357,49 @@ export default defineComponent({
         },
         { name: "actions", label: "Actions", align: "center" },
       ],
-      dataTypeOptions: ["id", "varchar()", "timestamps()", "int", "float"],
+      dataTypeOptions: [
+        "smallint",
+        "integer",
+        "bigint",
+        "decimal",
+        "numeric",
+        "real",
+        "double precision",
+        "serial",
+        "bigserial",
+        "money",
+        "character varying",
+        "varchar",
+        "character",
+        "char",
+        "text",
+        "bytea",
+        "timestamp",
+        "timestamp without time zone",
+        "timestamp with time zone",
+        "date",
+        "time",
+        "time without time zone",
+        "time with time zone",
+        "interval",
+        "boolean",
+        "enum",
+        "point",
+        "line",
+        "lseg",
+        "box",
+        "path",
+        "polygon",
+        "circle",
+        "cidr",
+        "inet",
+        "macaddr",
+        "macaddr8",
+        "json",
+        "jsonb",
+        "uuid",
+        "xml",
+      ],
       rowSettingData: [
         {
           id: 1,
@@ -388,14 +430,34 @@ export default defineComponent({
       this.getTableInformations();
     });
     this.$ws.addMessageHandler((data) => {
-      this.tableData = data.map((x, i) => ({
-        id: i + 1,
-        name: x.table_name,
-        description: x.table_description,
-        columns: x.total_columns,
-        rows: x.total_rows,
-        ztable: false,
-      }));
+      if (data.type == "get_table") {
+        this.tableData = data.data.map((x, i) => ({
+          id: i + 1,
+          name: x.table_name,
+          description: x.table_description,
+          columns: x.total_columns,
+          rows: x.total_rows,
+          ztable: false,
+        }));
+        this.getZViews();
+      }
+      if (data.type == "get_views") {
+        data.data.forEach((item) => {
+          const itemData = this.tableData.find(
+            (x) =>
+              `zview_${x.name.toLowerCase()}` == item.table_name.toLowerCase()
+          );
+          if (itemData) {
+            itemData.ztable = true;
+          }
+        });
+      }
+      if (data.type == "create_table") {
+        this.getTableInformations();
+      }
+      if (data.type == "create_view") {
+        this.getTableInformations();
+      }
     });
   },
   beforeUnmount() {
@@ -403,7 +465,8 @@ export default defineComponent({
   },
   methods: {
     getTableInformations() {
-      this.$ws.sendMessage(`SELECT 
+      this.$ws.sendMessage(
+        `SELECT 
           t.table_name,
           pg_catalog.obj_description(c.oid) AS table_description,
           (SELECT count(*) FROM information_schema.columns c2 WHERE c2.table_name = t.table_name) AS total_columns,
@@ -417,26 +480,38 @@ export default defineComponent({
               AND t.table_type = 'BASE TABLE'
           ORDER BY 
               t.table_name;
-          `);
+          `,
+        "get_table"
+      );
+    },
+    getZViews() {
+      this.$ws.sendMessage(
+        `SELECT table_schema, table_name
+        FROM information_schema.views
+          WHERE table_schema NOT IN ('information_schema', 'pg_catalog');`,
+        "get_views"
+      );
     },
     addTable() {
-      const columns = this.$refs.dataTypeTable.rows.map((field) => {
-        let columnDef = `${field.name} ${field.type.toUpperCase()}`;
+      const columns = this.$refs.dataTypeTable.rows
+        .filter((x) => x.name)
+        .map((field) => {
+          let columnDef = `${field.name} ${field.type.toUpperCase()}`;
 
-        if (!field.nullable) {
-          columnDef += " NOT NULL";
-        }
+          if (!field.nullable) {
+            columnDef += " NOT NULL";
+          }
 
-        if (field.defaultValue) {
-          columnDef += ` DEFAULT ${field.defaultValue}`;
-        }
+          if (field.defaultValue) {
+            columnDef += ` DEFAULT ${field.defaultValue}`;
+          }
 
-        if (field.identity) {
-          columnDef += " GENERATED ALWAYS AS IDENTITY";
-        }
+          if (field.identity) {
+            columnDef += " GENERATED ALWAYS AS IDENTITY";
+          }
 
-        return columnDef;
-      });
+          return columnDef;
+        });
 
       const primaryKey = this.$refs.dataTypeTable.rows
         .filter((field) => field.primary)
@@ -444,12 +519,19 @@ export default defineComponent({
       if (primaryKey.length > 0) {
         columns.push(`PRIMARY KEY (${primaryKey.join(", ")})`);
       }
-
       const query = `CREATE TABLE \"${this.tableInfo.name}\" (${columns.join(
         ",\n    "
-      )})`;
-
-      console.log(query);
+      )});`;
+      this.$ws.sendMessage(query, "create_table");
+      if (this.zTableVal) {
+        const zViewQuery = `CREATE VIEW zview_${this.tableInfo.name} AS
+        SELECT ${this.$refs.dataTypeTable.rows
+          .filter((x) => x.name)
+          .map((x) => x.name)
+          .join(",")} FROM \"${this.tableInfo.name}\";`;
+        this.$ws.sendMessage(zViewQuery, "create_view");
+      }
+      this.addNewTable = false;
     },
     openDeleteDialog(row) {
       this.selectedRow = row;
@@ -468,7 +550,7 @@ export default defineComponent({
       this.rowSettingData.find((x) => x.id == 1).primary =
         this.activeRowSetting.unique || false;
       this.rowSettingData.find((x) => x.id == 2).primary =
-        this.activeRowSetting.nullable || false;
+        this.activeRowSetting.nullable || true;
       this.rowSettingData.find((x) => x.id == 3).primary =
         this.activeRowSetting.identity || false;
     },

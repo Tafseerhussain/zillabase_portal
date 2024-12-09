@@ -28,10 +28,11 @@ const WebSocketService = {
         };
     },
 
-    sendMessage(message) {
+    sendMessage(message, type) {
         if (this.ws && this.ws.readyState === WebSocket.OPEN) {
             this.ws.send(JSON.stringify({
-                query: message
+                query: message,
+                type
             }));
         } else {
             console.error('WebSocket is not open');

@@ -8,7 +8,7 @@ const port = 8080;
 const client = new Client({
     user: 'postgres',
     host: 'localhost',
-    database: 'manmudra',
+    database: 'zillabase',
     password: 'Shaikh',
     port: 5432,
 });
@@ -21,11 +21,14 @@ wss.on('connection', (ws) => {
     console.log('New WebSocket connection');
 
     ws.on('message', async (message) => {
-        const { query } = JSON.parse(message);
+        const { query, type } = JSON.parse(message);
 
         try {
             const res = await client.query(query);
-            ws.send(JSON.stringify(res.rows));
+            ws.send(JSON.stringify({
+                data: res.rows,
+                type
+            }));
         } catch (error) {
             ws.send(JSON.stringify({ error: 'Query failed' }));
         }
