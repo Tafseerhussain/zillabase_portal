@@ -3,7 +3,12 @@ const WebSocketService = {
     messageHandlers: [],
 
     connect(onOpenCallback) {
-        if (this.ws) return;
+        if (this.ws) {
+            if (onOpenCallback) {
+                onOpenCallback();
+            }
+            return;
+        };
 
         this.ws = new WebSocket('ws://localhost:8080');
 

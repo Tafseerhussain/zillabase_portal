@@ -208,7 +208,8 @@
       <q-card-section>
         <p class="text-custom-gray-dark text-weight-light q-pa-sm w-90">
           Are you sure you want to delete this
-          <span class="fw-600">Table</span>? This action is irreversible.
+          <span class="fw-600">{{ this.selectedRow.name }}</span
+          >? This action is irreversible.
         </p>
       </q-card-section>
       <q-separator />
@@ -452,10 +453,11 @@ export default defineComponent({
           }
         });
       }
-      if (data.type == "create_table") {
-        this.getTableInformations();
-      }
-      if (data.type == "create_view") {
+      if (
+        data.type == "create_table" ||
+        data.type == "create_view" ||
+        data.type == "drop_table"
+      ) {
         this.getTableInformations();
       }
     });
@@ -539,6 +541,14 @@ export default defineComponent({
     },
     confirmDelete() {
       this.isDeleteDialogOpen = false;
+      this.$ws.sendMessage(
+        `DROP VIEW zview_${this.selectedRow.name};`,
+        "drop_view"
+      );
+      this.$ws.sendMessage(
+        `DROP TABLE \"${this.selectedRow.name}\";`,
+        "drop_table"
+      );
       this.selectedRow = null;
     },
     openTableDialog() {
