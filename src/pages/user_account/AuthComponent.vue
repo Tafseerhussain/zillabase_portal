@@ -579,6 +579,7 @@ export default defineComponent({
       appGetSSOProviders()
         .then(({ data }) => {
           this.ssoTableData = data;
+          this.ssoTableData.clientId = data.config?.clientId
         })
         .catch((err) => {});
     },
