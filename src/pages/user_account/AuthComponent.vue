@@ -261,7 +261,7 @@
             />
           </div>
         </div>
-        <div class="row items-start q-mt-sm q-pt-md">
+        <!-- <div class="row items-start q-mt-sm q-pt-md">
           <div class="col-3">
             <span class="text-custom-gray-dark text-subtitle1 text-weight-light"
               >Secret</span
@@ -276,8 +276,8 @@
               :rules="[ val => !!val || 'Field is required']"
             />
           </div>
-        </div>
-        <div class="row items-center q-mt-sm q-pt-md">
+        </div> -->
+        <!-- <div class="row items-center q-mt-sm q-pt-md">
           <div class="col-3 flex items-center">
             <span class="text-custom-gray-dark text-subtitle1 text-weight-light"
               >Enabled</span
@@ -297,7 +297,7 @@
               color="light-green"
             />
           </div>
-        </div>
+        </div> -->
       </q-card-section>
       <q-separator />
       <q-card-section class="flex justify-end q-gutter-x-lg q-pa-lg">
@@ -583,7 +583,7 @@ export default defineComponent({
         .catch((err) => {});
     },
     getSSOProviderById(user) {
-      appGetSSOProvidersById(user.providerId)
+      appGetSSOProvidersById(user.alias)
         .then(({ data }) => {
           this.providerInfo = data;
           this.addNewProvider = true;
@@ -598,7 +598,7 @@ export default defineComponent({
     },
     confirmSSOProviderDelete() {
       this.isDeleteSSOProviderDialogOpen = false;
-      appDeleteSSOProvidersById(user.providerId)
+      appDeleteSSOProvidersById(user.alias)
         .then(({ data }) => {
           this.getSSOProvider();
         })
