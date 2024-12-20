@@ -44,6 +44,10 @@ class Socket {
         this.emitter.on(event, listener);
     }
 
+    removeListener(event, listener) {
+        this.emitter.removeListener(event, listener);
+    }
+
     write(data, callback) {
         if (this.readyState === 'open') {
             this._send(data, callback);
