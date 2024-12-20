@@ -246,7 +246,7 @@ export default defineComponent({
         name: "",
         description: "",
         body: "",
-        selectionType: "view",
+        selectionType: "",
       },
       tableColumns: [
         { name: "name", label: "View Name", align: "left", field: "name" },
@@ -288,23 +288,26 @@ export default defineComponent({
         }));
       }
       if (data.type == "get_materialized_views") {
-        this.tableData.forEach((item) => {
-          const exist = data.data.find((x) => x.Name == item.name);
-          if (exist) {
-            exist.materialized = true;
-          }
+        data.data.forEach((item) => {
+          this.tableData.push({
+            ...item,
+            name: x.Name,
+            materialized: true,
+          });
         });
       }
       if (data.type == "get_z_views") {
-        this.tableData.forEach((item) => {
-          const exist = data.data.find((x) => x.Name == item.name);
-          if (exist) {
-            exist.zview = true;
-          }
+        data.data.forEach((item) => {
+          this.tableData.push({
+            ...item,
+            name: x.Name,
+            zview: true,
+          });
         });
       }
       if (
         data.type == "create_view" ||
+        data.type == "create_zview" ||
         data.type == "create_materialized_view" ||
         data.type == "drop_view"
       ) {
@@ -316,12 +319,12 @@ export default defineComponent({
     createViews() {
       if (this.viewInfo.selectionType == "material") {
         this.createMaterializedView();
-        this.addNewView = false;
-      }
-      if (this.viewInfo.selectionType == "view") {
+      } else if (this.viewInfo.selectionType == "view") {
         this.createZView();
-        this.addNewView = false;
+      } else {
+        this.createView();
       }
+      this.addNewView = false;
       this.$refs.addViewsForm.reset();
     },
     resetViews() {
@@ -329,7 +332,7 @@ export default defineComponent({
         name: "",
         description: "",
         body: "",
-        selectionType: "view",
+        selectionType: "",
       };
     },
     createMaterializedView() {
@@ -339,6 +342,12 @@ export default defineComponent({
       );
     },
     createZView() {
+      this.$ws.sendMessage(
+        `CREATE ZVIEW ${this.viewInfo.name} AS ${this.viewInfo.body}`,
+        "create_zview"
+      );
+    },
+    createView() {
       this.$ws.sendMessage(
         `CREATE VIEW ${this.viewInfo.name} AS ${this.viewInfo.body}`,
         "create_view"
@@ -353,6 +362,7 @@ export default defineComponent({
         `show materialized views;`,
         "get_materialized_views"
       );
+      this.getZViews();
     },
     getZViews() {
       this.$ws.sendMessage(`show zviews;`, "get_z_views");
@@ -367,17 +377,17 @@ export default defineComponent({
           `DROP ZVIEW ${this.selectedRow.name};`,
           "drop_view"
         );
-      }
-      if (this.selectedRow.materialized) {
+      } else if (this.selectedRow.materialized) {
         this.$ws.sendMessage(
           `DROP MATERIALIZED VIEW ${this.selectedRow.name};`,
           "drop_view"
         );
+      } else {
+        this.$ws.sendMessage(
+          `DROP VIEW ${this.selectedRow.name};`,
+          "drop_view"
+        );
       }
-      this.$ws.sendMessage(
-        `DROP VIEW ${this.selectedRow.name};`,
-        "drop_view"
-      );
       this.isDeleteDialogOpen = false;
       this.selectedRow = null;
     },
