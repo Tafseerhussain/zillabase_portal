@@ -451,15 +451,16 @@ export default defineComponent({
         this.getZTables();
       }
       if (data.type == "get_ztables") {
-        data.data.forEach((item) => {
-          const itemData = this.tableData.find(
-            (x) =>
-              `ztable_${x.name.toLowerCase()}` == item.Name.toLowerCase()
-          );
-          if (itemData) {
-            itemData.ztable = true;
-          }
-        });
+        data.data
+          .filter((x) => x.Name)
+          .forEach((item) => {
+            const itemData = this.tableData.find(
+              (x) => `ztable_${x.name.toLowerCase()}` == item.Name.toLowerCase()
+            );
+            if (itemData) {
+              itemData.ztable = true;
+            }
+          });
       }
       if (
         data.type == "create_table" ||
