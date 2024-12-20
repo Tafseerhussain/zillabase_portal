@@ -65,6 +65,13 @@ class Socket {
         if (callback) this.emitter.once('drain', callback);
     }
 
+    end() {
+        if (this.readyState === 'open') {
+            this.readyState = 'closing';
+            this.socket.close();
+        }
+    }
+
     close() {
         this.socket.close();
     }
