@@ -1,0 +1,11 @@
+{
+  "watch": ["connect-ws.js"],
+  "ext": "js,json",
+  "ignore": ["node_modules/**"],
+  "restartable": "rs", // Add custom key to restart manually if needed
+  "execMap": {
+    "js": "node --inspect"  // Optional: Adds debugging mode
+  },
+  "delay": "1000",  // Adds a 1 second delay between restarts
+  "legacy-watch": true // If you face file-watching issues, try enabling this
+}
