@@ -504,7 +504,7 @@ export default defineComponent({
           // }
 
           if (field.defaultValue) {
-            columnDef += ` DEFAULT ${field.defaultValue}`;
+            columnDef += ` DEFAULT '${field.defaultValue}'`;
           }
 
           // if (field.identity) {
