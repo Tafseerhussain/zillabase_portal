@@ -338,19 +338,19 @@ export default defineComponent({
     },
     createMaterializedView() {
       this.$ws.sendMessage(
-        `CREATE MATERIALIZED VIEW ${this.viewInfo.name} AS ${this.viewInfo.body}`,
+        `CREATE MATERIALIZED VIEW ${this.viewInfo.name} AS ${this.viewInfo.body};`,
         "create_materialized_view"
       );
     },
     createZView() {
       this.$ws.sendMessage(
-        `CREATE ZVIEW ${this.viewInfo.name} AS ${this.viewInfo.body}`,
+        `CREATE ZVIEW ${this.viewInfo.name} AS ${this.viewInfo.body};`,
         "create_zview"
       );
     },
     createView() {
       this.$ws.sendMessage(
-        `CREATE VIEW ${this.viewInfo.name} AS ${this.viewInfo.body}`,
+        `CREATE VIEW ${this.viewInfo.name} AS ${this.viewInfo.body};`,
         "create_view"
       );
     },
