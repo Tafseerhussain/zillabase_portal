@@ -555,7 +555,7 @@ export default defineComponent({
     confirmDelete() {
       this.isDeleteDialogOpen = false;
       this.$ws.sendMessage(
-        `DROP TABLE \"${this.selectedRow.name}\";`,
+        `DROP TABLE ${this.selectedRow.name};`,
         "drop_table"
       );
       if (this.selectedRow.ztable) {

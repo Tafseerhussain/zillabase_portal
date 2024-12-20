@@ -280,6 +280,7 @@ export default defineComponent({
         this.tableData = data.data.map((x, i) => ({
           id: i + 1,
           ...x,
+          name: x.Name
         }));
       }
       if (
@@ -325,27 +326,7 @@ export default defineComponent({
     },
     getZViews() {
       this.$ws.sendMessage(
-        `SELECT
-            table_name AS "name",
-            'View' AS "type",
-            true AS "zview",        -- Flag for regular views
-            false AS "materialized" -- Flag for materialized views
-        FROM 
-            information_schema.views
-        WHERE
-            table_schema NOT IN ('pg_catalog', 'information_schema')
-        UNION ALL
-        SELECT
-            matviewname AS "name",
-            'Materialized View' AS "type",
-            false AS "zview",
-            true AS "materialized"
-        FROM 
-            pg_catalog.pg_matviews
-        WHERE
-            schemaname NOT IN ('pg_catalog', 'information_schema')
-        ORDER BY "name";
-`,
+        `show views;`,
         "get_views"
       );
     },
