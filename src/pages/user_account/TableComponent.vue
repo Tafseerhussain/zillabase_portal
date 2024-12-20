@@ -555,13 +555,15 @@ export default defineComponent({
     confirmDelete() {
       this.isDeleteDialogOpen = false;
       this.$ws.sendMessage(
-        `DROP VIEW zview_${this.selectedRow.name};`,
-        "drop_view"
-      );
-      this.$ws.sendMessage(
         `DROP TABLE \"${this.selectedRow.name}\";`,
         "drop_table"
       );
+      if (this.selectedRow.ztable) {
+        this.$ws.sendMessage(
+          `DROP VIEW zview_${this.selectedRow.name};`,
+          "drop_view"
+        );
+      }
       this.selectedRow = null;
     },
     openTableDialog() {
