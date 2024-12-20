@@ -21,16 +21,11 @@ class Socket {
         };
 
         this.socket.onmessage = (evt) => {
-            // Log the type and content of the received data to check the format
-            console.log('Received data:', evt.data);
-            console.log('Received data type:', typeof evt.data);
-
             // Check if the data is a Buffer
             if (Buffer.isBuffer(evt.data)) {
                 const data = evt.data; // Process as Buffer
                 this.emitter.emit('data', data);
             } else {
-                console.log('Received data is not a Buffer:', evt.data);
                 // If data is not a Buffer, handle it accordingly (e.g., as a string)
                 this.emitter.emit('data', Buffer.from(evt.data));
             }
@@ -106,17 +101,15 @@ wss.on('connection', (ws) => {
     ws.on('message', async (message) => {
         try {
             const { query, type } = JSON.parse(message);
-            console.log('Query:', query);
 
             // Ensure that the query is properly processed and the result is correct
             const result = await sql.unsafe(query);
-            console.log('Query result:', result);
             
             // Send result back via WebSocket
             ws.send(JSON.stringify({ type, data: result }));
         } catch (err) {
-            console.error('Error executing query:', err.message);
-            ws.send(JSON.stringify({ error: 'Query execution failed', details: err.message }));
+            console.error('Error executing query:', err);
+            ws.send(JSON.stringify({ error: 'Query execution failed', details: err }));
         }
     });
 
