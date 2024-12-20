@@ -583,7 +583,7 @@ export default defineComponent({
         .catch((err) => {});
     },
     getSSOProviderById(user) {
-      appGetSSOProvidersById(user.id)
+      appGetSSOProvidersById(user.providerId)
         .then(({ data }) => {
           this.providerInfo = data;
           this.addNewProvider = true;
@@ -598,7 +598,7 @@ export default defineComponent({
     },
     confirmSSOProviderDelete() {
       this.isDeleteSSOProviderDialogOpen = false;
-      appDeleteSSOProvidersById(user.id)
+      appDeleteSSOProvidersById(user.providerId)
         .then(({ data }) => {
           this.getSSOProvider();
         })
