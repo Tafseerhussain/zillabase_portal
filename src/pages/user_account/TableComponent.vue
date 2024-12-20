@@ -524,7 +524,7 @@ export default defineComponent({
         ",\n    "
       )});`;
       this.$ws.sendMessage(query, "create_table");
-      if (this.zTableVal) {
+      if (this.tableInfo.zTableVal) {
         const zViewQuery = `CREATE ZVIEW zview_${this.tableInfo.name} AS
         SELECT ${this.$refs.dataTypeTable.rows
           .filter((x) => x.name)
