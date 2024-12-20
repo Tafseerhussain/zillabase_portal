@@ -22,117 +22,124 @@
   >
     <q-card class="full-height">
       <q-form @submit="addTable" @reset="resetTable" ref="addTableForm">
-      <q-card-section class="flex justify-between items-center q-pa-lg">
-        <div class="flex q-gutter-lg">
-          <q-btn
-            unelevated
-            color="light-green"
-            :icon="addNewTable ? 'chevron_left' : 'chevron_right'"
-            style="width: 30px; min-height: 30px"
-            @click="addNewTable = !addNewTable"
-            class="rounded-10"
+        <q-card-section class="flex justify-between items-center q-pa-lg">
+          <div class="flex q-gutter-lg">
+            <q-btn
+              unelevated
+              color="light-green"
+              :icon="addNewTable ? 'chevron_left' : 'chevron_right'"
+              style="width: 30px; min-height: 30px"
+              @click="addNewTable = !addNewTable"
+              class="rounded-10"
+            />
+            <p class="text-custom-text-secondary text-h6 fw-600">
+              Create New Table
+            </p>
+          </div>
+          <q-icon
+            name="img:/icons/grid-6.svg"
+            class="fs-30 filter-custom-dark"
+            style="min-height: 30px"
           />
-          <p class="text-custom-text-secondary text-h6 fw-600">
-            Create New Table
-          </p>
-        </div>
-        <q-icon
-          name="img:/icons/grid-6.svg"
-          class="fs-30 filter-custom-dark"
-          style="min-height: 30px"
-        />
-      </q-card-section>
-      <q-separator />
-      <q-card-section class="q-py-xl px-28">
-        <div class="row items-start">
-          <div class="col-3">
-            <span class="text-custom-gray-dark text-subtitle1 text-weight-light"
-              >Name</span
-            >
-          </div>
-          <div class="col-9">
-            <q-input
-              dense
-              outlined
-              v-model="tableInfo.name"
-              placeholder="Table Name"
-              class="rounded-10 self-center text-weight-light rounded-input"
-              :rules="[ val => !!val || 'Field is required']"
-            />
-          </div>
-        </div>
-        <div class="row items-start q-mt-lg">
-          <div class="col-3">
-            <span class="text-custom-gray-dark text-subtitle1 text-weight-light"
-              >Description</span
-            >
-          </div>
-          <div class="col-9">
-            <q-input
-              outlined
-              type="textarea"
-              placeholder="Table Description..."
-              rows="6"
-              v-model="tableInfo.description"
-              autogrow
-              class="rounded-10 self-center text-weight-light rounded-input"
-            />
-          </div>
-        </div>
-      </q-card-section>
-      <q-separator />
-      <q-card-section class="q-py-lg px-28">
-        <div class="row items-center">
-          <div class="col-3 flex items-center">
-            <span class="text-custom-gray-dark text-subtitle1 text-weight-light"
-              >ZView</span
-            >
-            <div>
-              <q-icon
-                name="img:icons/question-circle.svg"
-                class="fs-lg filter-gray-dark q-ml-sm"
+        </q-card-section>
+        <q-separator />
+        <q-card-section class="q-py-xl px-28">
+          <div class="row items-start">
+            <div class="col-3">
+              <span
+                class="text-custom-gray-dark text-subtitle1 text-weight-light"
+                >Name</span
+              >
+            </div>
+            <div class="col-9">
+              <q-input
+                dense
+                outlined
+                v-model="tableInfo.name"
+                placeholder="Table Name"
+                class="rounded-10 self-center text-weight-light rounded-input"
+                :rules="[(val) => !!val || 'Field is required']"
               />
-              <q-tooltip anchor="bottom middle" self="top middle">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              </q-tooltip>
             </div>
           </div>
-          <div class="col-9">
-            <q-checkbox dense v-model="tableInfo.zTableVal" color="light-green" />
+          <div class="row items-start q-mt-lg">
+            <div class="col-3">
+              <span
+                class="text-custom-gray-dark text-subtitle1 text-weight-light"
+                >Description</span
+              >
+            </div>
+            <div class="col-9">
+              <q-input
+                outlined
+                type="textarea"
+                placeholder="Table Description..."
+                rows="6"
+                v-model="tableInfo.description"
+                autogrow
+                class="rounded-10 self-center text-weight-light rounded-input"
+              />
+            </div>
           </div>
-        </div>
-      </q-card-section>
-      <q-separator />
-      <q-card-section class="q-py-lg px-28">
-        <div class="flex justify-between items-center q-mb-sm">
-          <p class="text-custom-text-secondary text-subtitle1 fw-600">
-            Columns
-          </p>
-          <div>
-            <q-tooltip anchor="center left" self="center end">
-              Data Type Docs
-            </q-tooltip>
-            <q-btn
-              flat
-              icon="img:/icons/export.svg"
-              size="md"
-              class="filter-light-green"
-              :ripple="false"
-            />
+        </q-card-section>
+        <q-separator />
+        <q-card-section class="q-py-lg px-28">
+          <div class="row items-center">
+            <div class="col-3 flex items-center">
+              <span
+                class="text-custom-gray-dark text-subtitle1 text-weight-light"
+                >ZView</span
+              >
+              <div>
+                <q-icon
+                  name="img:icons/question-circle.svg"
+                  class="fs-lg filter-gray-dark q-ml-sm"
+                />
+                <q-tooltip anchor="bottom middle" self="top middle">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                </q-tooltip>
+              </div>
+            </div>
+            <div class="col-9">
+              <q-checkbox
+                dense
+                v-model="tableInfo.zTableVal"
+                color="light-green"
+              />
+            </div>
           </div>
-        </div>
-        <data-type-table
-          :columns="dataTypeColumns"
-          :rows="dataTypeRow"
-          :typeOptions="dataTypeOptions"
-          ref="dataTypeTable"
-          @add-row="addRow"
-          @remove-row="removeRow"
-          @setting-row="openRowSettingDialog"
-        />
-      </q-card-section>
-      <q-separator />
-      <!-- <q-card-section class="q-py-lg px-28">
+        </q-card-section>
+        <q-separator />
+        <q-card-section class="q-py-lg px-28">
+          <div class="flex justify-between items-center q-mb-sm">
+            <p class="text-custom-text-secondary text-subtitle1 fw-600">
+              Columns
+            </p>
+            <div>
+              <q-tooltip anchor="center left" self="center end">
+                Data Type Docs
+              </q-tooltip>
+              <q-btn
+                flat
+                icon="img:/icons/export.svg"
+                size="md"
+                class="filter-light-green"
+                :ripple="false"
+              />
+            </div>
+          </div>
+          <data-type-table
+            :columns="dataTypeColumns"
+            :rows="dataTypeRow"
+            :typeOptions="dataTypeOptions"
+            ref="dataTypeTable"
+            @add-row="addRow"
+            @remove-row="removeRow"
+            @setting-row="openRowSettingDialog"
+          />
+        </q-card-section>
+        <q-separator />
+        <!-- <q-card-section class="q-py-lg px-28">
         <div class="flex justify-between items-center q-mb-sm">
           <p class="text-custom-text-secondary text-subtitle1 fw-600">
             Foreign Keys
@@ -161,26 +168,26 @@
           />
         </div>
       </q-card-section> -->
-      <q-separator />
-      <q-card-section class="flex justify-end q-gutter-lg q-pa-lg">
-        <q-btn
-          unelevated
-          label="Cancel"
-          @click="addNewTable = !addNewTable"
-          :ripple="false"
-          color="dark"
-          class="text-capitalize rounded-10 highlighted-border"
-        />
-        <q-btn
-          unelevated
-          label="Add Table"
-          icon="add"
-          :ripple="false"
-          type="submit"
-          class="bg-light-green rounded-10 text-white text-capitalize self-center"
-        />
-      </q-card-section>
-    </q-form>
+        <q-separator />
+        <q-card-section class="flex justify-end q-gutter-lg q-pa-lg">
+          <q-btn
+            unelevated
+            label="Cancel"
+            @click="addNewTable = !addNewTable"
+            :ripple="false"
+            color="dark"
+            class="text-capitalize rounded-10 highlighted-border"
+          />
+          <q-btn
+            unelevated
+            label="Add Table"
+            icon="add"
+            :ripple="false"
+            type="submit"
+            class="bg-light-green rounded-10 text-white text-capitalize self-center"
+          />
+        </q-card-section>
+      </q-form>
     </q-card>
   </q-dialog>
 
@@ -443,7 +450,7 @@ export default defineComponent({
         }));
         this.getZViews();
       }
-      if (data.type == "get_views") { 
+      if (data.type == "get_views") {
         data.data.forEach((item) => {
           const itemData = this.tableData.find(
             (x) =>
@@ -468,16 +475,10 @@ export default defineComponent({
   },
   methods: {
     getTableInformations() {
-      this.$ws.sendMessage(
-        `show tables;`,
-        "get_table"
-      );
+      this.$ws.sendMessage(`show tables;`, "get_table");
     },
     getZViews() {
-      this.$ws.sendMessage(
-        `show zviews;`,
-        "get_views"
-      );
+      this.$ws.sendMessage(`show zviews;`, "get_views");
     },
     addTable() {
       const hasValidData = this.dataTypeRow.some(
@@ -488,7 +489,7 @@ export default defineComponent({
         this.$q.notify({
           type: "negative",
           message: "Please fill in at least one row.",
-          position: "top-right"
+          position: "top-right",
         });
         return;
       }
@@ -540,13 +541,13 @@ export default defineComponent({
         description: "",
         zTableVal: false,
       };
-      
+
       this.dataTypeRow = [
         { name: "", type: "", defaultValue: "", primary: false, id: 1 },
-        { name: "", type: "",defaultValue: "", primary: false, id: 2, },
-        { name: "", type: "", defaultValue: "", primary: false, id: 3, },
+        { name: "", type: "", defaultValue: "", primary: false, id: 2 },
+        { name: "", type: "", defaultValue: "", primary: false, id: 3 },
         { name: "", type: "", defaultValue: "", primary: false, id: 4 },
-      ]
+      ];
     },
     openDeleteDialog(row) {
       this.selectedRow = row;
@@ -554,16 +555,16 @@ export default defineComponent({
     },
     confirmDelete() {
       this.isDeleteDialogOpen = false;
-      this.$ws.sendMessage(
-        `DROP TABLE ${this.selectedRow.name};`,
-        "drop_table"
-      );
       if (this.selectedRow.ztable) {
         this.$ws.sendMessage(
           `DROP VIEW zview_${this.selectedRow.name};`,
           "drop_view"
         );
       }
+      this.$ws.sendMessage(
+        `DROP TABLE ${this.selectedRow.name};`,
+        "drop_table"
+      );
       this.selectedRow = null;
     },
     openTableDialog() {

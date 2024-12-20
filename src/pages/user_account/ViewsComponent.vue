@@ -299,7 +299,7 @@ export default defineComponent({
         this.tableData.forEach((item) => {
           const exist = data.data.find((x) => x.Name == item.name);
           if (exist) {
-            exist.ztable = true;
+            exist.zview = true;
           }
         });
       }
@@ -355,20 +355,27 @@ export default defineComponent({
       );
     },
     getZViews() {
-      this.$ws.sendMessage(
-        `show zviews;`,
-        "get_z_views"
-      );
+      this.$ws.sendMessage(`show zviews;`, "get_z_views");
     },
     openDeleteDialog(row) {
       this.selectedRow = row;
       this.isDeleteDialogOpen = true;
     },
     confirmDelete() {
+      if (this.selectedRow.zview) {
+        this.$ws.sendMessage(
+          `DROP ZVIEW ${this.selectedRow.name};`,
+          "drop_view"
+        );
+      }
+      if (this.selectedRow.materialized) {
+        this.$ws.sendMessage(
+          `DROP MATERIALIZED VIEW ${this.selectedRow.name};`,
+          "drop_view"
+        );
+      }
       this.$ws.sendMessage(
-        `DROP ${this.selectedRow.zview ? "" : "MATERIALIZED"} VIEW \"${
-          this.selectedRow.name
-        }\";`,
+        `DROP VIEW ${this.selectedRow.name};`,
         "drop_view"
       );
       this.isDeleteDialogOpen = false;
