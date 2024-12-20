@@ -291,7 +291,7 @@ export default defineComponent({
         data.data.forEach((item) => {
           this.tableData.push({
             ...item,
-            name: x.Name,
+            name: item.Name,
             materialized: true,
           });
         });
@@ -300,7 +300,7 @@ export default defineComponent({
         data.data.forEach((item) => {
           this.tableData.push({
             ...item,
-            name: x.Name,
+            name: item.Name,
             zview: true,
           });
         });
