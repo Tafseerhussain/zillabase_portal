@@ -281,11 +281,12 @@ export default defineComponent({
     });
     this.$ws.addMessageHandler((data) => {
       if (data.type == "get_views") {
-        this.tableData = data.data.map((x, i) => ({
-          id: i + 1,
-          ...x,
-          name: x.Name,
-        }));
+        data.data.forEach((item) => {
+          this.tableData.push({
+            ...item,
+            name: item.Name,
+          });
+        });
       }
       if (data.type == "get_materialized_views") {
         data.data.forEach((item) => {
@@ -354,6 +355,7 @@ export default defineComponent({
       );
     },
     getViews() {
+      this.tableData = []
       this.$ws.sendMessage(`show views;`, "get_views");
       this.getMaterializedViews();
     },
