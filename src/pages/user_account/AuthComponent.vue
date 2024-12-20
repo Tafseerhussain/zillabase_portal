@@ -579,7 +579,6 @@ export default defineComponent({
       appGetSSOProviders()
         .then(({ data }) => {
           this.ssoTableData = data;
-          this.ssoTableData.clientId = data.config?.clientId
         })
         .catch((err) => {});
     },
@@ -587,6 +586,7 @@ export default defineComponent({
       appGetSSOProvidersById(user.alias)
         .then(({ data }) => {
           this.providerInfo = data;
+          this.providerInfo.clientId = data.config?.clientId
           this.addNewProvider = true;
         })
         .catch((err) => {
