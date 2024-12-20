@@ -76,7 +76,6 @@
               v-model="tableInfo.description"
               autogrow
               class="rounded-10 self-center text-weight-light rounded-input"
-              :rules="[ val => !!val || 'Field is required']"
             />
           </div>
         </div>

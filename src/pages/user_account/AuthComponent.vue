@@ -52,11 +52,11 @@
             color="light-green"
             :icon="addNewUser ? 'chevron_left' : 'chevron_right'"
             style="width: 30px; min-height: 30px"
-            @click="addNewUser = !addNewUser"
+            @click="closeUserDialog"
             class="rounded-10"
           />
           <p class="text-custom-text-secondary text-h6 fw-600">
-            Create New User
+            Create {{ hasUserInfoValues ? 'Edit' : 'New' }} User
           </p>
         </div>
         <q-icon
@@ -163,7 +163,7 @@
           label="Cancel"
           :ripple="false"
           color="dark"
-          @click="addNewUser = !addNewUser"
+          @click="closeUserDialog"
           class="text-capitalize rounded-10 highlighted-border"
         />
         <q-btn
@@ -196,11 +196,11 @@
             color="light-green"
             :icon="addNewProvider ? 'chevron_left' : 'chevron_right'"
             style="width: 30px; min-height: 30px"
-            @click="addNewProvider = !addNewProvider"
+            @click="closeProviderDialog"
             class="rounded-10"
           />
           <p class="text-custom-text-secondary text-h6 fw-600">
-            Add A Provider
+            {{ hasProviderInfoValues ? 'Edit' : 'Add'  }} A Provider
           </p>
         </div>
         <q-icon
@@ -306,7 +306,7 @@
           label="Cancel"
           :ripple="false"
           color="dark"
-          @click="addNewProvider = !addNewProvider"
+          @click="closeProviderDialog"
           class="text-capitalize rounded-10 highlighted-border"
         />
         <q-btn
@@ -498,6 +498,14 @@ export default defineComponent({
     openProviderDialog() {
       this.addNewProvider = !this.addNewProvider;
     },
+    closeUserDialog() {
+      this.addNewUser = false;
+      this.$refs.addUserForm.reset();
+    },
+    closeProviderDialog() {
+      this.addNewProvider = false;
+      this.$refs.addSSOProviderForm.reset();
+    },
     // Auth User
     addUser() {
       appAddUsers(this.userInfo)
@@ -597,5 +605,13 @@ export default defineComponent({
         .catch((err) => {});
     },
   },
+  computed: {
+    hasUserInfoValues() {
+      return Object.values(this.userInfo).some(value => value);
+    },
+    hasProviderInfoValues() {
+      return Object.values(this.providerInfo).some(value => value);
+    },
+  }
 });
 </script>
