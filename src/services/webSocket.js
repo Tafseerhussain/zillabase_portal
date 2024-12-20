@@ -10,7 +10,7 @@ const WebSocketService = {
             return;
         };
 
-        this.ws = new WebSocket('ws://localhost:8080');
+        this.ws = new WebSocket('ws://localhost:7184/pgsql');
 
         this.ws.onopen = () => {
             console.log('WebSocket connection established.');
@@ -35,10 +35,7 @@ const WebSocketService = {
 
     sendMessage(message, type) {
         if (this.ws && this.ws.readyState === WebSocket.OPEN) {
-            this.ws.send(JSON.stringify({
-                query: message,
-                type
-            }));
+            this.ws.send(message);
         } else {
             console.error('WebSocket is not open');
         }
