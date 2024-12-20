@@ -499,17 +499,17 @@ export default defineComponent({
         .map((field) => {
           let columnDef = `${field.name} ${field.type.toUpperCase()}`;
 
-          if (!field.nullable) {
-            columnDef += " NOT NULL";
-          }
+          // if (!field.nullable) {
+          //   columnDef += " NOT NULL";
+          // }
 
           if (field.defaultValue) {
             columnDef += ` DEFAULT ${field.defaultValue}`;
           }
 
-          if (field.identity) {
-            columnDef += " GENERATED ALWAYS AS IDENTITY";
-          }
+          // if (field.identity) {
+          //   columnDef += " GENERATED ALWAYS AS IDENTITY";
+          // }
 
           return columnDef;
         });
@@ -525,7 +525,7 @@ export default defineComponent({
       )});`;
       this.$ws.sendMessage(query, "create_table");
       if (this.zTableVal) {
-        const zViewQuery = `CREATE VIEW zview_${this.tableInfo.name} AS
+        const zViewQuery = `CREATE ZVIEW zview_${this.tableInfo.name} AS
         SELECT ${this.$refs.dataTypeTable.rows
           .filter((x) => x.name)
           .map((x) => x.name)
