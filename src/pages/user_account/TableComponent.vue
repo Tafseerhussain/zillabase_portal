@@ -436,7 +436,7 @@ export default defineComponent({
       if (data.type == "get_table") {
         this.tableData = data.data.map((x, i) => ({
           id: i + 1,
-          name: x.table_name,
+          name: x.Name,
           description: x.table_description,
           columns: x.total_columns,
           rows: x.total_rows,
@@ -444,7 +444,7 @@ export default defineComponent({
         }));
         this.getZViews();
       }
-      if (data.type == "get_views") {
+      if (data.type == "get_views") { 
         data.data.forEach((item) => {
           const itemData = this.tableData.find(
             (x) =>
@@ -470,29 +470,13 @@ export default defineComponent({
   methods: {
     getTableInformations() {
       this.$ws.sendMessage(
-        `SELECT 
-          t.table_name,
-          pg_catalog.obj_description(c.oid) AS table_description,
-          (SELECT count(*) FROM information_schema.columns c2 WHERE c2.table_name = t.table_name) AS total_columns,
-          (SELECT n_live_tup FROM pg_stat_user_tables WHERE relname = t.table_name) AS total_rows
-          FROM 
-              information_schema.tables t
-          JOIN 
-              pg_catalog.pg_class c ON c.relname = t.table_name
-          WHERE 
-              t.table_schema = 'public'
-              AND t.table_type = 'BASE TABLE'
-          ORDER BY 
-              t.table_name;
-          `,
+        `show tables;`,
         "get_table"
       );
     },
     getZViews() {
       this.$ws.sendMessage(
-        `SELECT table_schema, table_name
-        FROM information_schema.views
-          WHERE table_schema NOT IN ('information_schema', 'pg_catalog');`,
+        `show zviews;`,
         "get_views"
       );
     },

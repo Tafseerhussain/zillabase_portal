@@ -1,138 +1,112 @@
 const postgres = require('postgres');
-const EventEmitter = require('events');
 const WebSocket = require('ws');
 
-function Socket(options) {
-    const scheme = options.ssl ? 'wss' : 'ws';
-    const host = options.host;
-    const port = options.port;
-    const path = options.path || '/';
-    const location = `${scheme}://${host}:${port}${path}`;
+// Custom WebSocket implementation for PostgreSQL
+class Socket {
+    constructor(options) {
+        const scheme = options.ssl ? 'wss' : 'ws';
+        const location = `${scheme}://${options.host}:${options.port}${options.path || '/'}`;
+        this.queue = [];
+        this.emitter = new (require('events'))();
+        this.readyState = 'opening';
+        this.socket = new WebSocket(location);
 
-    const self = this;
-    const queue = [];
-    const emitter = new EventEmitter();
-    const socket = new WebSocket(location);
+        this.socket.onopen = () => {
+            this.readyState = 'open';
+            this.emitter.emit('connect');
+            while (this.queue.length) {
+                const { data, callback } = this.queue.shift();
+                this._send(data, callback);
+            }
+        };
 
-    socket.onopen = function (evt) {
-        self.readyState = 'open';
-        emitter.emit('connect', evt);
+        this.socket.onmessage = (evt) => {
+            // Log the type and content of the received data to check the format
+            console.log('Received data:', evt.data);
+            console.log('Received data type:', typeof evt.data);
 
-        while (queue.length > 0) {
-            const next = queue.shift();
-            self._flush(next.data, next.listener);
+            // Check if the data is a Buffer
+            if (Buffer.isBuffer(evt.data)) {
+                const data = evt.data; // Process as Buffer
+                this.emitter.emit('data', data);
+            } else {
+                console.log('Received data is not a Buffer:', evt.data);
+                // If data is not a Buffer, handle it accordingly (e.g., as a string)
+                this.emitter.emit('data', Buffer.from(evt.data));
+            }
+        };
+
+        this.socket.onclose = () => this.emitter.emit('close');
+        this.socket.onerror = (err) => this.emitter.emit('error', err);
+    }
+
+    on(event, listener) {
+        this.emitter.on(event, listener);
+    }
+
+    write(data, callback) {
+        if (this.readyState === 'open') {
+            this._send(data, callback);
+        } else {
+            this.queue.push({ data, callback });
         }
-    };
+    }
 
-    socket.onmessage = async function (evt) {
-        const buffer = await evt.data.arrayBuffer();
-        const array = new Uint8Array(buffer);
-        emitter.emit('data', array);
-    };
+    _send(data, callback) {
+        this.socket.send(data);
+        if (callback) this.emitter.once('drain', callback);
+    }
 
-    socket.onclose = function (evt) {
-        emitter.emit('close', evt);
-    };
-
-    socket.onerror = function (evt) {
-        emitter.emit('error', evt);
-    };
-
-    this.socket = socket;
-    this.emitter = emitter;
-    this.queue = queue;
-    this.readyState = 'opening';
+    close() {
+        this.socket.close();
+    }
 }
 
-Socket.prototype.on = 
-Socket.prototype.addListener = function (eventName, listener) {
-    this.emitter.addListener(eventName, listener);
-};
-
-Socket.prototype.removeListener = function (eventName, listener) {
-    this.emitter.removeListener(eventName, listener);
-};
-
-Socket.prototype.removeAllListeners = function (eventName) {
-    this.emitter.removeAllListeners(eventName);
-};
-
-Socket.prototype.write = function (data, listener) {
-    if (this.socket.readyState === WebSocket.OPEN) {
-        this._flush(data, listener);
-    } else {
-        this.queue.push({ data, listener });
-    }
-};
-
-Socket.prototype._flush = function (data, listener) {
-    this.socket.send(data);
-    if (listener) {
-        this.emitter.once('drain', listener);
-    }
-};
-
-Socket.prototype.close = function () {
-    this.socket.close();
-};
-
-Socket.prototype.destroy = function () {
-    this.socket.close();
-    this.emitter.removeAllListeners();
-};
-
+// Function to create a new WebSocket instance
 function newWebSocket(options) {
     return new Socket(options);
 }
 
-const options = {
+// PostgreSQL connection options
+const sqlOptions = {
     ssl: false,
     host: 'localhost',
     port: 7184,
     path: '/pgsql',
-    database: 'zillabase',
-    user: 'postgres',
-    password: 'Shaikh',
+    database: 'dev',
+    user: 'zillabase',
     fetch_types: false,
-    prepare: false
+    prepare: false,
+    socket: newWebSocket
 };
 
-const sql = postgres({
-    ...{
-        socket: newWebSocket
-    },
-    ...options
-});
+// Initialize PostgreSQL client
+const sql = postgres(sqlOptions);
 
-// WebSocket handler for queries
+// WebSocket server for handling database queries
 const wss = new WebSocket.Server({ port: 7185 });
 
 wss.on('connection', (ws) => {
-    console.log('New WebSocket connection');
-
+    console.log('WebSocket connection established');
     ws.on('message', async (message) => {
         try {
             const { query, type } = JSON.parse(message);
+            console.log('Query:', query);
+
+            // Ensure that the query is properly processed and the result is correct
             const result = await sql.unsafe(query);
-            ws.send(
-                JSON.stringify({
-                    data: result,
-                    type
-                })
-            );
-        } catch (error) {
-            ws.send(JSON.stringify({ error: 'Query failed', details: error.message }));
+            console.log('Query result:', result);
+            
+            // Send result back via WebSocket
+            ws.send(JSON.stringify({ type, data: result }));
+        } catch (err) {
+            console.error('Error executing query:', err.message);
+            ws.send(JSON.stringify({ error: 'Query execution failed', details: err.message }));
         }
     });
 
-    ws.on('close', () => {
-        console.log('WebSocket connection closed');
-    });
-
-    ws.on('error', (error) => {
-        console.error('WebSocket error:', error);
-    });
+    ws.on('close', () => console.log('WebSocket connection closed'));
+    ws.on('error', (err) => console.error('WebSocket error:', err));
 });
 
 console.log('WebSocket server is running on ws://localhost:7185');
-

@@ -16,6 +16,7 @@
     "@quasar/extras": "^1.16.4",
     "axios": "^1.7.9",
     "express": "^4.21.1",
+    "nodemon": "^3.1.9",
     "pg": "^8.13.1",
     "quasar": "^2.16.0",
     "swagger-ui": "^5.18.2",

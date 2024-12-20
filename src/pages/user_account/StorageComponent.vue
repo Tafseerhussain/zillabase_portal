@@ -50,7 +50,7 @@
             <!-- Tab name on the left -->
             <span
               class="text-custom-gray-dark text-capitalize text-weight-light"
-              >{{ tab.name }}</span
+              >{{ tab.name.path }}</span
             >
             <!-- Buttons on the right -->
             <div class="flex">
