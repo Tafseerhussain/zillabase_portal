@@ -505,6 +505,7 @@ export default defineComponent({
           this.getUsers();
         })
         .catch((err) => {
+        }).finally(() => {
           this.addNewUser = false;
         });
         this.$refs.addUserForm.reset();
@@ -552,6 +553,7 @@ export default defineComponent({
           this.getSSOProvider();
         })
         .catch((err) => {
+        }).finally(() => {
           this.addNewProvider = false;
         });
         this.$refs.addSSOProviderForm.reset();
