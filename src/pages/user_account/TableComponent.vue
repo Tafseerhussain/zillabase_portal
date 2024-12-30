@@ -553,7 +553,6 @@ export default defineComponent({
       ];
     },
     openEditDialog(row) {
-      console.log(row);
       this.$ws.sendMessage(`describe ${row.name};`, "get_table_name");
     },
     openDeleteDialog(row) {
