@@ -433,7 +433,7 @@ export default defineComponent({
           language: x.Language,
           rows: x.total_rows,
           ztable: false,
-          type: row.link ? "Embedded" : "External",
+          type: x.Link ? "Embedded" : "External",
         }));
       }
       if (data.type == "create_function" || data.type == "drop_function") {
