@@ -25,10 +25,12 @@ const appGetUsers = () => {
 
 const appApiDocs = id => {
     return new Promise((resolve, reject) => {
-        axios.get(`${app.apiEndpoint}/asyncapis/${id}`)
+        axios.get(`${app.apiEndpoint}/asyncapis/${id}`, { responseType: 'text' })
             .then(response => {
+                debugger
                 resolve(response)
             }).catch(error => {
+                debugger
                 reject(error)
             })
     })
