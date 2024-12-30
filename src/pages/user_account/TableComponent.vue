@@ -463,7 +463,7 @@ export default defineComponent({
           .filter((x) => x.Name)
           .forEach((item) => {
             const itemData = this.tableData.find(
-              (x) => `ztable_${x.name.toLowerCase()}` == item.Name.toLowerCase()
+              (x) => x.Name.toLowerCase() == item.Name.toLowerCase()
             );
             if (itemData) {
               itemData.ztable = true;
