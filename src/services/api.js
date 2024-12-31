@@ -25,20 +25,12 @@ const appGetUsers = () => {
 
 const appApiDocs = id => {
     return new Promise((resolve, reject) => {
-        let config = {
-            method: 'get',
-            maxBodyLength: Infinity,
-            url: `${app.apiEndpoint}/asyncapis/${id}`,
-            headers: {}
-        };
-
-        axios.request(config)
-            .then((response) => {
-                resolve(response.data)
-            })
-            .catch((error) => {
+        axios.get(`${app.apiEndpoint}/asyncapis/${id}`)
+            .then(response => {
+                resolve(response)
+            }).catch(error => {
                 reject(error)
-            });
+            })
     })
 }
 
