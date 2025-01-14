@@ -29295,7 +29295,7 @@ global.window.zillabaseActions = {
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
-            query = (0, _db["default"])(_templateObject || (_templateObject = _taggedTemplateLiteral(["", ""])), sqlQuery);
+            query = (0, _db["default"])(_templateObject || (_templateObject = _taggedTemplateLiteral([sqlQuery])));
             query.options.simple = true;
             query.options.onexecute = function () {
               query.options.simple = false;
