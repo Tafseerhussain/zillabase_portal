@@ -1,6 +1,6 @@
 const WebSocketService = {
     ws: null,
-    messageHandlers: [],
+    messageHandlers: null,
 
     connect(onOpenCallback) {
         if (onOpenCallback) {
@@ -12,18 +12,18 @@ const WebSocketService = {
 
     async sendMessage(message, type) {
         const res = await window.zillabaseActions.executeQuery(message, type);
-        this.messageHandlers.forEach((handler) => handler({
+        this.messageHandlers({
             data: res.data,
             type
-        }));
+        });
     },
 
     addMessageHandler(handler) {
-        this.messageHandlers.push(handler);
+        this.messageHandlers = handler;
     },
 
     removeAll() {
-        this.messageHandlers = [];
+        this.messageHandlers = null;
     }
 };
 
