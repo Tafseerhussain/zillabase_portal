@@ -319,6 +319,9 @@ export default defineComponent({
       }
     });
   },
+  beforeUnmount() {
+    this.$ws.removeAll();
+  },
   methods: {
     createViews() {
       if (this.viewInfo.selectionType == "material") {

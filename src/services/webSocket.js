@@ -10,13 +10,12 @@ const WebSocketService = {
         this.ws = {};
     },
 
-    sendMessage(message, type) {
-        window.zillabaseActions.executeQuery(message, type).then(res => {
-            this.messageHandlers.forEach((handler) => handler({
-                data: res.data,
-                type
-            }));
-        });
+    async sendMessage(message, type) {
+        const res = await window.zillabaseActions.executeQuery(message, type);
+        this.messageHandlers.forEach((handler) => handler({
+            data: res.data,
+            type
+        }));
     },
 
     addMessageHandler(handler) {
