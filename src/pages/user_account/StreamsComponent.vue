@@ -45,97 +45,102 @@
       <q-separator />
       <q-form @submit="addStream" @reset="resetStream" ref="addStreamForm">
         <q-card-section class="q-py-xl px-28">
-        <div class="row items-start">
-          <div class="col-3">
-            <span class="text-custom-gray-dark text-subtitle1 text-weight-light"
-              >Name</span
-            >
+          <div class="row items-start">
+            <div class="col-3">
+              <span
+                class="text-custom-gray-dark text-subtitle1 text-weight-light"
+                >Name</span
+              >
+            </div>
+            <div class="col-9">
+              <q-input
+                v-model="streamInfo.name"
+                dense
+                outlined
+                placeholder="Stream Name"
+                class="rounded-10 self-center text-weight-light rounded-input"
+                :rules="[(val) => !!val || 'Field is required']"
+              />
+            </div>
           </div>
-          <div class="col-9">
-            <q-input
-            v-model="streamInfo.name"
-              dense
-              outlined
-              placeholder="Stream Name"
-              class="rounded-10 self-center text-weight-light rounded-input"
-              :rules="[ val => !!val || 'Field is required']"
-            />
+          <div class="row items-start q-mt-lg q-pt-md">
+            <div class="col-3">
+              <span
+                class="text-custom-gray-dark text-subtitle1 text-weight-light"
+                >Type</span
+              >
+            </div>
+            <div class="col-9">
+              <q-select
+                v-model="streamInfo.type"
+                :options="readWriteOptions"
+                outlined
+                dense
+                placeholder="Read-Write"
+                dropdown-icon="keyboard_arrow_down"
+                class="rounded-input"
+                :rules="[(val) => !!val || 'Field is required']"
+              />
+            </div>
           </div>
-        </div>
-        <div class="row items-start q-mt-lg q-pt-md">
-          <div class="col-3">
-            <span class="text-custom-gray-dark text-subtitle1 text-weight-light"
-              >Type</span
-            >
+          <div class="row items-start q-mt-lg q-pt-md">
+            <div class="col-3">
+              <span
+                class="text-custom-gray-dark text-subtitle1 text-weight-light"
+                >Target Function</span
+              >
+            </div>
+            <div class="col-9">
+              <q-select
+                v-model="streamInfo.targetFunction"
+                :options="exampleFunctionOptions"
+                outlined
+                dense
+                placeholder="ExampleFunction"
+                dropdown-icon="keyboard_arrow_down"
+                class="rounded-input"
+                :rules="[(val) => !!val || 'Field is required']"
+              />
+            </div>
           </div>
-          <div class="col-9">
-            <q-select
-              v-model="streamInfo.type"
-              :options="readWriteOptions"
-              outlined
-              dense
-              placeholder="Read-Write"
-              dropdown-icon="keyboard_arrow_down"
-              class="rounded-input"
-              :rules="[ val => !!val || 'Field is required']"
-            />
+          <div class="row items-start q-mt-lg q-pt-md">
+            <div class="col-3 flex items-center">
+              <span
+                class="text-custom-gray-dark text-subtitle1 text-weight-light"
+                >Messages</span
+              >
+            </div>
+            <div class="col-9">
+              <q-input
+                v-model="streamInfo.messages"
+                dense
+                outlined
+                placeholder="34"
+                class="rounded-10 self-center text-weight-light rounded-input"
+                :rules="[(val) => !!val || 'Field is required']"
+              />
+            </div>
           </div>
-        </div>
-        <div class="row items-start q-mt-lg q-pt-md">
-          <div class="col-3">
-            <span class="text-custom-gray-dark text-subtitle1 text-weight-light"
-              >Target Function</span
-            >
-          </div>
-          <div class="col-9">
-            <q-select
-              v-model="streamInfo.targetFunction"
-              :options="exampleFunctionOptions"
-              outlined
-              dense
-              placeholder="ExampleFunction"
-              dropdown-icon="keyboard_arrow_down"
-              class="rounded-input"
-              :rules="[ val => !!val || 'Field is required']"
-            />
-          </div>
-        </div>
-        <div class="row items-start q-mt-lg q-pt-md">
-          <div class="col-3 flex items-center">
-            <span class="text-custom-gray-dark text-subtitle1 text-weight-light"
-              >Messages</span
-            >
-          </div>
-          <div class="col-9">
-            <q-input
-              v-model="streamInfo.messages"
-              dense
-              outlined
-              placeholder="34"
-              class="rounded-10 self-center text-weight-light rounded-input"
-              :rules="[ val => !!val || 'Field is required']"
-            />
-          </div>
-        </div>
-      </q-card-section>
-      <q-separator />
-      <q-card-section class="flex justify-end q-gutter-lg q-pa-lg">
-        <q-btn
-          unelevated
-          label="Cancel"
-          :ripple="false"
-          color="dark"
-          class="text-capitalize rounded-10 highlighted-border"
-        />
-        <q-btn
-          unelevated
-          label="Add Stream"
-          icon="add"
-          :ripple="false"
-          type="submit"
-          class="bg-light-green rounded-10 text-white text-capitalize self-center"
-        />
-      </q-card-section>
+        </q-card-section>
+        <q-separator />
+        <q-card-section class="flex justify-end q-gutter-lg q-pa-lg">
+          <q-btn
+            unelevated
+            label="Cancel"
+            :ripple="false"
+            color="dark"
+            @click="addNewStream = !addNewStream"
+            class="text-capitalize rounded-10 highlighted-border"
+          />
+          <q-btn
+            unelevated
+            label="Add Stream"
+            icon="add"
+            :ripple="false"
+            type="submit"
+            class="bg-light-green rounded-10 text-white text-capitalize self-center"
+          />
+        </q-card-section>
       </q-form>
     </q-card>
   </q-dialog>
@@ -236,53 +241,32 @@ export default defineComponent({
         },
         { name: "actions", label: "Actions", align: "center" },
       ],
-      tableData: [
-        {
-          id: 1,
-          name: "Example Stream",
-          streamType: "Read",
-          streamFunction: "function_1",
-          messages: 45,
-        },
-        {
-          id: 2,
-          name: "Example Stream",
-          streamType: "Write",
-          streamFunction: "function_2",
-          messages: 555,
-        },
-        {
-          id: 3,
-          name: "Example Stream",
-          streamType: "Read-Write",
-          streamFunction: "exampleFunction",
-          messages: 32,
-        },
-        {
-          id: 4,
-          name: "Example Stream",
-          streamType: "Request",
-          streamFunction: "function_3",
-          messages: 65,
-        },
-        {
-          id: 5,
-          name: "Example Stream",
-          streamType: "Response",
-          streamFunction: "newFunction",
-          messages: 123,
-        },
-        {
-          id: 6,
-          name: "Example Stream",
-          streamType: "Request-Response",
-          streamFunction: "testFunc",
-          messages: 9,
-        },
-      ],
+      tableData: [],
     };
   },
+  mounted() {
+    this.$ws.connect(() => {
+      this.getStreamInformations();
+    });
+    this.$ws.addMessageHandler((data) => {
+      if (data.type == "get_zstreams") {
+        this.tableData = data.data.map((x, i) => ({
+          id: i + 1,
+          name: x.Name,
+          streamType: "",
+          streamFunction: "",
+          messages: "",
+        }));
+      }
+    });
+  },
+  beforeUnmount() {
+    this.$ws.removeAll();
+  },
   methods: {
+    getStreamInformations() {
+      this.$ws.sendMessage(`SHOW ZSTREAMS;`, "get_zstreams");
+    },
     openDeleteDialog(row) {
       this.selectedRow = row;
       this.isDeleteDialogOpen = true;
@@ -305,8 +289,8 @@ export default defineComponent({
         type: "",
         targetFunction: "",
         messages: "",
-      }
-    }
+      };
+    },
   },
 });
 </script>
