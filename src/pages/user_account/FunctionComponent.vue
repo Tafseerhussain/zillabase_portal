@@ -503,7 +503,7 @@ export default defineComponent({
         .join(", ");
 
       return `
-      CREATE OR ALTER FUNCTION ${this.functionInfo.name}(${params}) RETURNS ${this.functionInfo.returnType}
+      CREATE FUNCTION ${this.functionInfo.name}(${params}) RETURNS ${this.functionInfo.returnType}
       LANGUAGE ${this.functionInfo.language} 
       AS $$
         return ${this.functionInfo.body}
@@ -521,7 +521,7 @@ export default defineComponent({
         .join(", ");
 
       return `
-      CREATE OR ALTER FUNCTION ${this.functionInfo.name}(${params}) RETURNS ${this.functionInfo.returnType}
+      CREATE FUNCTION ${this.functionInfo.name}(${params}) RETURNS ${this.functionInfo.returnType}
         LANGUAGE ${this.functionInfo.language} 
       AS '${this.functionInfo.name}';`;
     },

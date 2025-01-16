@@ -551,12 +551,12 @@ export default defineComponent({
       if (primaryKey.length > 0) {
         columns.push(`PRIMARY KEY (${primaryKey.join(", ")})`);
       }
-      const query = `CREATE OR ALTER TABLE \"${
+      const query = `CREATE TABLE \"${
         this.tableInfo.name
       }\" (${columns.join(",\n    ")});`;
       this.$ws.sendMessage(query, "create_table");
       if (this.tableInfo.zTableVal) {
-        const zTableQuery = `CREATE OR ALTER ZTABLE \"${
+        const zTableQuery = `CREATE ZTABLE \"${
           this.tableInfo.name
         }\" (${columns.join(",\n    ")});`;
         this.$ws.sendMessage(zTableQuery, "create_ztable");
