@@ -541,9 +541,9 @@ export default defineComponent({
       if (primaryKey.length > 0) {
         columns.push(`PRIMARY KEY (${primaryKey.join(", ")})`);
       }
-      const query = `CREATE TABLE \"${
-        this.tableInfo.name
-      }\" (${columns.join(",\n    ")});`;
+      const query = `CREATE TABLE \"${this.tableInfo.name}\" (${columns.join(
+        ",\n    "
+      )});`;
       this.$ws.sendMessage(query, "create_table");
       if (this.tableInfo.zTableVal) {
         const zTableQuery = `CREATE ZTABLE \"${
@@ -563,10 +563,10 @@ export default defineComponent({
 
       this.dataTypeRow = [
         { name: "", type: "", defaultValue: "", primary: false, id: 1 },
-        { name: "", type: "", defaultValue: "", primary: false, id: 2 },
-        { name: "", type: "", defaultValue: "", primary: false, id: 3 },
-        { name: "", type: "", defaultValue: "", primary: false, id: 4 },
       ];
+      this.$nextTick(() => {
+        this.$refs.dataTypeTable.rows = this.dataTypeRow;
+      });
     },
     openEditDialog(row) {
       this.selectedRow = row;
@@ -592,6 +592,7 @@ export default defineComponent({
     },
     openTableDialog() {
       this.addNewTable = !this.addNewTable;
+      this.resetTable();
     },
     openRowSettingDialog(row) {
       this.activeRowSetting = this.dataTypeRow.find((x) => x.id == row.id);

@@ -277,11 +277,7 @@ export default defineComponent({
         { name: "name", label: "Name", align: "left", field: "name" },
         { name: "actions", label: "Actions", align: "center" },
       ],
-      tableData: [
-        {
-          name: "sdd",
-        },
-      ],
+      tableData: [],
       dataTypeRow: [
         { name: "", type: "", primary: false, id: 1 },
         { name: "", type: "", primary: false, id: 2 },
@@ -352,10 +348,17 @@ export default defineComponent({
   },
   mounted() {
     this.$ws.connect(() => {
+      this.getFunctions();
       this.getStreamInformations();
     });
     this.$ws.addMessageHandler((data) => {
-      if (data.type == "get_zstreams") {
+      if (data.type == "get_function") {
+        this.exampleFunctionOptions = data.data.map((x, i) => ({
+          id: i + 1,
+          value: x.Name,
+          label: x.Name,
+        }));
+      } else if (data.type == "get_zstreams") {
         this.tableData = data.data.map((x, i) => ({
           id: i + 1,
           name: x.Name,
@@ -371,6 +374,9 @@ export default defineComponent({
     this.$ws.removeAll();
   },
   methods: {
+    getFunctions() {
+      this.$ws.sendMessage(`SHOW FUNCTIONS;`, "get_function");
+    },
     getStreamInformations() {
       this.$ws.sendMessage(`SHOW ZSTREAMS;`, "get_zstreams");
     },
@@ -387,6 +393,7 @@ export default defineComponent({
       this.selectedRow = null;
     },
     openTableDialog() {
+      this.resetStream();
       this.addNewStream = !this.addNewStream;
     },
     addStream() {
@@ -440,13 +447,12 @@ export default defineComponent({
         name: "",
         type: "",
         targetFunction: [],
+        replyFunction: "",
       };
-      this.dataTypeRow = [
-        { name: "", type: "", primary: false, id: 1 },
-        { name: "", type: "", primary: false, id: 2 },
-        { name: "", type: "", primary: false, id: 3 },
-        { name: "", type: "", primary: false, id: 4 },
-      ];
+      this.dataTypeRow = [{ name: "", type: "", primary: false, id: 1 }];
+      this.$nextTick(() => {
+        this.$refs.dataTypeTable.rows = this.dataTypeRow;
+      });
     },
     addRow() {
       this.dataTypeRow.push({

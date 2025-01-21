@@ -404,6 +404,7 @@ export default defineComponent({
     },
     openTableDialog() {
       this.addNewView = !this.addNewView;
+      this.resetViews();
     },
   },
 });

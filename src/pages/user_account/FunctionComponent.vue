@@ -476,11 +476,10 @@ export default defineComponent({
         body: "",
       };
 
-      this.functionTypeRow = [
-        { name: "", type: "", defaultValue: "" },
-        { name: "", type: "", defaultValue: "" },
-        { name: "", type: "", defaultValue: "" },
-      ];
+      this.functionTypeRow = [{ name: "", type: "", defaultValue: "" }];
+      this.$nextTick(() => {
+        this.$refs.dataTypeTable.rows = this.functionTypeRow;
+      });
     },
     dropFunction() {
       this.$ws.sendMessage(
@@ -556,6 +555,7 @@ export default defineComponent({
     },
     openFunctionDialog() {
       this.addNewFunction = !this.addNewFunction;
+      this.resetFunction();
     },
     addRow() {
       this.functionTypeRow.push({ name: "", type: "", defaultValue: "" });
