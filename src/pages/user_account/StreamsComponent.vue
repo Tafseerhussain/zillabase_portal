@@ -9,6 +9,7 @@
       searchInputPlaceholder="Streams"
       @delete-row="openDeleteDialog"
       @add-new="openTableDialog"
+      @edit-row="openEditDialog"
     />
   </div>
   <!-- add Dialog -->
@@ -395,6 +396,12 @@ export default defineComponent({
     openTableDialog() {
       this.resetStream();
       this.addNewStream = !this.addNewStream;
+    },
+    openEditDialog(row) {
+      this.selectedRow = row;
+      this.addNewStream = true;
+      this.resetStream();
+      this.streamInfo.name = row.name;
     },
     addStream() {
       const hasValidData = this.dataTypeRow.some(
