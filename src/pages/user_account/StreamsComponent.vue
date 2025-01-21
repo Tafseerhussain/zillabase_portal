@@ -63,7 +63,7 @@
               />
             </div>
           </div>
-          <div class="row items-start q-mt-lg q-pt-md">
+          <div class="row items-start q-mt-lg">
             <div class="col-3">
               <span
                 class="text-custom-gray-dark text-subtitle1 text-weight-light"
@@ -73,7 +73,7 @@
             <div class="col-9">
               <q-select
                 v-model="streamInfo.type"
-                :options="readWriteOptions"
+                :options="dataTypeOptions"
                 outlined
                 dense
                 placeholder="Read-Write"
@@ -83,7 +83,7 @@
               />
             </div>
           </div>
-          <div class="row items-start q-mt-lg q-pt-md">
+          <div class="row items-start q-mt-lg">
             <div class="col-3">
               <span
                 class="text-custom-gray-dark text-subtitle1 text-weight-light"
@@ -96,31 +96,64 @@
                 :options="exampleFunctionOptions"
                 outlined
                 dense
+                multiple
                 placeholder="ExampleFunction"
                 dropdown-icon="keyboard_arrow_down"
                 class="rounded-input"
                 :rules="[(val) => !!val || 'Field is required']"
-              />
-            </div>
-          </div>
-          <div class="row items-start q-mt-lg q-pt-md">
-            <div class="col-3 flex items-center">
-              <span
-                class="text-custom-gray-dark text-subtitle1 text-weight-light"
-                >Messages</span
+                option-value="value"
+                option-label="label"
               >
+              <template v-slot:option="scope">
+                <q-item
+                  v-bind="scope.itemProps"
+                  clickable
+                  v-ripple
+                  class="q-pl-sm"
+                >
+                  <q-checkbox
+                    v-model="scope.selected"
+                    label=" "
+                    color="primary"
+                    :value="scope.opt.value"
+                  />
+                  <q-item-section>
+                    {{ scope.opt.label }}
+                  </q-item-section>
+                </q-item>
+              </template>
+            </q-select>
             </div>
-            <div class="col-9">
-              <q-input
-                v-model="streamInfo.messages"
-                dense
-                outlined
-                placeholder="34"
-                class="rounded-10 self-center text-weight-light rounded-input"
-                :rules="[(val) => !!val || 'Field is required']"
+          </div>
+        </q-card-section>
+        <q-separator />
+        <q-card-section class="q-py-lg px-28">
+          <div class="flex justify-between items-center q-mb-sm">
+            <p class="text-custom-text-secondary text-subtitle1 fw-600">
+              Columns
+            </p>
+            <div>
+              <q-tooltip anchor="center left" self="center end">
+                Stream Docs
+              </q-tooltip>
+              <q-btn
+                flat
+                icon="img:/icons/export.svg"
+                size="md"
+                class="filter-light-green"
+                :ripple="false"
               />
             </div>
           </div>
+          <data-type-table
+            :columns="dataTypeColumns"
+            :rows="dataTypeRow"
+            :typeOptions="dataTypeOptions"
+            ref="dataTypeTable"
+            :isSettingShow="false"
+            @add-row="addRow"
+            @remove-row="removeRow"
+          />
         </q-card-section>
         <q-separator />
         <q-card-section class="flex justify-end q-gutter-lg q-pa-lg">
@@ -195,10 +228,12 @@
 <script>
 import CommonTable from "../shared/CommonTable.vue";
 import { defineComponent } from "vue";
+import DataTypeTable from "../shared/DataTypeTable.vue";
 export default defineComponent({
   name: "StreamsComponent",
   components: {
     CommonTable,
+    DataTypeTable,
   },
   data() {
     return {
@@ -208,14 +243,16 @@ export default defineComponent({
       zTableVal: true,
       materializedVal: true,
       readWrite: "",
-      readWriteOptions: ["1", "2"],
       exampleFunction: "",
-      exampleFunctionOptions: ["1", "2"],
+      exampleFunctionOptions: [
+        { value: "function1", label: "Function 1" },
+        { value: "function2", label: "Function 2" },
+        { value: "function3", label: "Function 3" },
+      ],
       streamInfo: {
         name: "",
         type: "",
-        targetFunction: "",
-        messages: "",
+        targetFunction: [],
       },
       tableColumns: [
         { name: "name", label: "Name", align: "left", field: "name" },
@@ -242,6 +279,72 @@ export default defineComponent({
         { name: "actions", label: "Actions", align: "center" },
       ],
       tableData: [],
+      dataTypeRow: [
+        { name: "", type: "", primary: false, id: 1 },
+        { name: "", type: "", primary: false, id: 2 },
+        { name: "", type: "", primary: false, id: 3 },
+        { name: "", type: "", primary: false, id: 4 },
+      ],
+      dataTypeColumns: [
+        {
+          name: "name",
+          required: true,
+          label: "Name",
+          align: "left",
+          field: "name",
+        },
+        { name: "type", label: "Type", align: "left", field: "type" },
+        {
+          name: "primary",
+          label: "Primary",
+          align: "center",
+          field: "primary",
+        },
+        { name: "actions", label: "Actions", align: "center" },
+      ],
+      dataTypeOptions: [
+        "smallint",
+        "integer",
+        "bigint",
+        "decimal",
+        "numeric",
+        "real",
+        "double precision",
+        "serial",
+        "bigserial",
+        "money",
+        "character varying",
+        "varchar",
+        "character",
+        "char",
+        "text",
+        "bytea",
+        "timestamp",
+        "timestamp without time zone",
+        "timestamp with time zone",
+        "date",
+        "time",
+        "time without time zone",
+        "time with time zone",
+        "interval",
+        "boolean",
+        "enum",
+        "point",
+        "line",
+        "lseg",
+        "box",
+        "path",
+        "polygon",
+        "circle",
+        "cidr",
+        "inet",
+        "macaddr",
+        "macaddr8",
+        "json",
+        "jsonb",
+        "uuid",
+        "xml",
+      ]
     };
   },
   mounted() {
@@ -255,7 +358,6 @@ export default defineComponent({
           name: x.Name,
           streamType: "",
           streamFunction: "",
-          messages: "",
         }));
       }
     });
@@ -287,9 +389,26 @@ export default defineComponent({
       this.streamInfo = {
         name: "",
         type: "",
-        targetFunction: "",
-        messages: "",
+        targetFunction: [],
       };
+      this.dataTypeRow = [
+        { name: "", type: "", primary: false, id: 1 },
+        { name: "", type: "", primary: false, id: 2 },
+        { name: "", type: "", primary: false, id: 3 },
+        { name: "", type: "", primary: false, id: 4 },
+      ];
+    },
+    addRow() {
+      this.dataTypeRow.push({
+        id: Date.now().valueOf(),
+        name: "",
+        type: "",
+        defaultValue: "",
+        primary: false,
+      });
+    },
+    removeRow(row) {
+      this.dataTypeRow = this.dataTypeRow.filter((r) => r.id !== row.id);
     },
   },
 });

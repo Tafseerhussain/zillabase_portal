@@ -23,6 +23,7 @@
                 outlined
                 dense
                 placeholder="Enter name"
+                class="flex-grow"
               />
             </div>
           </template>
@@ -56,6 +57,7 @@
             <!-- Show action buttons for all rows except the last one -->
             <!-- <template v-if="props.row !== rows[rows.length - 1]"> -->
               <q-btn
+              v-if="isSettingShow"
                 icon="img:/icons/setting-2.svg"
                 flat
                 dense
@@ -115,6 +117,11 @@ export default defineComponent({
       type: Array,
       required: true,
     },
+    isSettingShow: {
+      type: Boolean,
+      required: false,
+      default: true
+    }
   },
   methods: {
     addRow() {
@@ -129,3 +136,8 @@ export default defineComponent({
   },
 });
 </script>
+<style lang="scss" scope>
+.flex-grow {
+  flex-grow: 1;
+}
+</style>

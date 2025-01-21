@@ -83,7 +83,7 @@
               />
             </div>
           </div>
-          <div class="row items-start q-mt-lg">
+          <div class="row items-start q-mt-xl">
             <div class="col-3">
               <span
                 class="text-custom-gray-dark text-subtitle1 text-weight-light"
