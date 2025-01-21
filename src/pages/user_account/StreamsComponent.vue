@@ -104,25 +104,43 @@
                 option-value="value"
                 option-label="label"
               >
-              <template v-slot:option="scope">
-                <q-item
-                  v-bind="scope.itemProps"
-                  clickable
-                  v-ripple
-                  class="q-pl-sm"
-                >
-                  <q-checkbox
-                    v-model="scope.selected"
-                    label=" "
-                    color="primary"
-                    :value="scope.opt.value"
-                  />
-                  <q-item-section>
-                    {{ scope.opt.label }}
-                  </q-item-section>
-                </q-item>
-              </template>
-            </q-select>
+                <template v-slot:option="scope">
+                  <q-item
+                    v-bind="scope.itemProps"
+                    clickable
+                    v-ripple
+                    class="q-pl-sm"
+                  >
+                    <q-checkbox
+                      v-model="scope.selected"
+                      label=" "
+                      color="primary"
+                      :value="scope.opt.value"
+                    />
+                    <q-item-section>
+                      {{ scope.opt.label }}
+                    </q-item-section>
+                  </q-item>
+                </template>
+              </q-select>
+            </div>
+          </div>
+          <div class="row items-start q-mt-lg">
+            <div class="col-3">
+              <span
+                class="text-custom-gray-dark text-subtitle1 text-weight-light"
+                >Reply Function</span
+              >
+            </div>
+            <div class="col-9">
+              <q-input
+                v-model="streamInfo.replyFunction"
+                dense
+                outlined
+                placeholder="Reply Function"
+                class="rounded-10 self-center text-weight-light rounded-input"
+                :rules="[(val) => !!val || 'Field is required']"
+              />
             </div>
           </div>
         </q-card-section>
@@ -202,7 +220,8 @@
       <q-card-section>
         <p class="text-custom-gray-dark text-weight-light q-pa-sm w-90">
           Are you sure you want to delete this
-          <span class="fw-600">Stream</span>? This action is irreversible.
+          <span class="fw-600">{{ this.selectedRow.name }}</span
+          >? This action is irreversible.
         </p>
       </q-card-section>
       <q-separator />
@@ -256,29 +275,13 @@ export default defineComponent({
       },
       tableColumns: [
         { name: "name", label: "Name", align: "left", field: "name" },
-        {
-          name: "streamType",
-          label: "Type",
-          align: "left",
-          field: "streamType",
-        },
-        {
-          name: "streamFunction",
-          label: "Target Function",
-          align: "left",
-          field: "streamFunction",
-          sortable: true,
-        },
-        {
-          name: "messages",
-          label: "Messages",
-          align: "left",
-          field: "messages",
-          sortable: true,
-        },
         { name: "actions", label: "Actions", align: "center" },
       ],
-      tableData: [],
+      tableData: [
+        {
+          name: "sdd",
+        },
+      ],
       dataTypeRow: [
         { name: "", type: "", primary: false, id: 1 },
         { name: "", type: "", primary: false, id: 2 },
@@ -344,7 +347,7 @@ export default defineComponent({
         "jsonb",
         "uuid",
         "xml",
-      ]
+      ],
     };
   },
   mounted() {
@@ -359,6 +362,8 @@ export default defineComponent({
           streamType: "",
           streamFunction: "",
         }));
+      } else if (data.type == "create_zstream" || data.type == "drop_zstream") {
+        this.getStreamInformations();
       }
     });
   },
@@ -374,7 +379,10 @@ export default defineComponent({
       this.isDeleteDialogOpen = true;
     },
     confirmDelete() {
-      // Handle deletion logic here
+      this.$ws.sendMessage(
+        `DROP ZSTREAM ${this.selectedRow.name};`,
+        "drop_zstream"
+      );
       this.isDeleteDialogOpen = false;
       this.selectedRow = null;
     },
@@ -382,7 +390,49 @@ export default defineComponent({
       this.addNewStream = !this.addNewStream;
     },
     addStream() {
-      this.addNewStream = !this.addNewStream;
+      const hasValidData = this.dataTypeRow.some(
+        (row) => row.name.trim() && row.type.trim()
+      );
+
+      if (!hasValidData) {
+        this.$q.notify({
+          type: "negative",
+          message: "Please fill in at least one row.",
+          position: "top-right",
+        });
+        return;
+      }
+      const columns = this.$refs.dataTypeTable.rows
+        .filter((x) => x.name)
+        .map((field) => {
+          let columnDef = `${field.name} ${field.type.toUpperCase()}`;
+
+          if (field.defaultValue) {
+            columnDef += ` DEFAULT '${field.defaultValue}'`;
+          }
+
+          if (field.primary) {
+            columnDef += " GENERATED ALWAYS AS IDENTITY";
+          }
+
+          return columnDef;
+        });
+
+      const query = `CREATE ZSTREAM \"${this.streamInfo.name}\" 
+      (
+        type ${this.streamInfo.type} GENERATED ALWAYS AS DISPATCH,
+        ${columns.join(",\n    ")}
+      )
+      WITH (
+        command_functions = {
+          ${this.streamInfo.targetFunction
+            .map((x) => `'${x.value}' = '${x.label}'`)
+            .join(",\n")}
+        },
+        reply_function = '${this.streamInfo.replyFunction}'
+      )`;
+      this.$ws.sendMessage(query, "create_zstream");
+      this.addNewStream = false;
       this.$refs.addStreamForm.reset();
     },
     resetStream() {

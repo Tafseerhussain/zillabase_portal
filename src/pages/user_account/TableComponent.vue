@@ -321,8 +321,6 @@ export default defineComponent({
           field: "description",
         },
         { name: "ztable", label: "ZTable", align: "center", field: "ztable" },
-        { name: "rows", label: "Rows", align: "right", field: "rows" },
-        { name: "columns", label: "Columns", align: "right", field: "columns" },
         { name: "actions", label: "Actions", align: "center" },
       ],
       tableData: [],
@@ -530,17 +528,9 @@ export default defineComponent({
         .map((field) => {
           let columnDef = `${field.name} ${field.type.toUpperCase()}`;
 
-          // if (!field.nullable) {
-          //   columnDef += " NOT NULL";
-          // }
-
           if (field.defaultValue) {
             columnDef += ` DEFAULT '${field.defaultValue}'`;
           }
-
-          // if (field.identity) {
-          //   columnDef += " GENERATED ALWAYS AS IDENTITY";
-          // }
 
           return columnDef;
         });
