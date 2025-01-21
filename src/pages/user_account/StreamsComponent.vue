@@ -359,6 +359,8 @@ export default defineComponent({
           value: x.Name,
           label: x.Name,
         }));
+      } else if (data.type == 'get_zstream_name') {
+        console.log(data.data);
       } else if (data.type == "get_zstreams") {
         this.tableData = data.data.map((x, i) => ({
           id: i + 1,
@@ -402,6 +404,7 @@ export default defineComponent({
       this.addNewStream = true;
       this.resetStream();
       this.streamInfo.name = row.name;
+      this.$ws.sendMessage(`describe ${row.name};`, "get_zstream_name");
     },
     addStream() {
       const hasValidData = this.dataTypeRow.some(
