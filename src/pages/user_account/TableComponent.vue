@@ -551,9 +551,7 @@ export default defineComponent({
       )});`;
       this.$ws.sendMessage(query, "create_table");
       if (this.tableInfo.zTableVal) {
-        const zTableQuery = `CREATE ZTABLE \"${
-          this.tableInfo.name
-        }\" (${columns.join(",\n    ")});`;
+        const zTableQuery = `CREATE ZTABLE ${this.tableInfo.name} (${columns.join(",\n    ")});`;
         this.$ws.sendMessage(zTableQuery, "create_ztable");
       }
       this.addNewTable = false;
