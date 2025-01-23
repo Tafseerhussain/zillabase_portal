@@ -12,8 +12,8 @@
       @delete-row="openDeleteDialog"
       @add-new="openFunctionDialog"
       :isShowEdit="false"
-      />
-      <!-- :tableName="'function-table'" -->
+    />
+    <!-- :tableName="'function-table'" -->
   </div>
 
   <q-dialog
@@ -153,26 +153,6 @@
             <div class="col-3">
               <span
                 class="text-custom-gray-dark text-subtitle1 text-weight-light"
-                >Return Type</span
-              >
-            </div>
-            <div class="col-9">
-              <q-select
-                v-model="functionInfo.returnType"
-                :options="functionTypeOptions"
-                outlined
-                dense
-                placeholder="Function Return Type"
-                dropdown-icon="keyboard_arrow_down"
-                class="rounded-input"
-                :rules="[(val) => !!val || 'Field is required']"
-              />
-            </div>
-          </div>
-          <div class="row items-start q-mt-lg">
-            <div class="col-3">
-              <span
-                class="text-custom-gray-dark text-subtitle1 text-weight-light"
                 >Language</span
               >
             </div>
@@ -189,6 +169,23 @@
               />
             </div>
           </div>
+        </q-card-section>
+        <q-separator />
+        <q-card-section class="q-py-lg px-28">
+          <div class="flex justify-between items-center q-mb-sm">
+            <p class="text-custom-text-secondary text-subtitle1 fw-600">
+              Return Type
+            </p>
+          </div>
+          <data-type-table
+            :columns="functionParamTypeColumns"
+            :rows="functionParmaTypeRow"
+            :typeOptions="functionTypeOptions"
+            @add-row="addReturnRow"
+            ref="dataReturnTypeTable"
+            @remove-row="removeReturnRow"
+            :isSettingShow="false"
+          />
         </q-card-section>
         <q-separator />
         <q-card-section class="q-py-lg px-28">
@@ -219,7 +216,7 @@
             :isSettingShow="false"
           />
         </q-card-section>
-        <q-separator />      
+        <q-separator />
         <q-card-section class="flex justify-end q-gutter-lg q-pa-lg">
           <q-btn
             unelevated
@@ -350,6 +347,7 @@ export default defineComponent({
       ],
       tableData: [],
       functionTypeRow: [{ name: "", type: "" }],
+      functionParmaTypeRow: [{ type: "" }],
       functionTypeColumns: [
         {
           name: "name",
@@ -358,6 +356,10 @@ export default defineComponent({
           align: "left",
           field: "name",
         },
+        { name: "type", label: "Type", align: "left", field: "type" },
+        { name: "actions", label: "Actions", align: "center" },
+      ],
+      functionParamTypeColumns: [
         { name: "type", label: "Type", align: "left", field: "type" },
         { name: "actions", label: "Actions", align: "center" },
       ],
@@ -476,8 +478,10 @@ export default defineComponent({
       };
 
       this.functionTypeRow = [{ name: "", type: "", defaultValue: "" }];
+      this.functionParmaTypeRow = [{ type: "", defaultValue: "" }];
       this.$nextTick(() => {
         this.$refs.dataTypeTable.rows = this.functionTypeRow;
+        this.$refs.dataReturnTypeTable.rows = this.functionTypeRow;
       });
     },
     dropFunction() {
@@ -501,7 +505,12 @@ export default defineComponent({
         .join(", ");
 
       return `
-      CREATE FUNCTION ${this.functionInfo.name}(${params}) RETURNS ${this.functionInfo.returnType}
+      CREATE FUNCTION ${
+        this.functionInfo.name
+      }(${params}) RETURNS (${this.functionParmaTypeRow
+        .filter((x) => x.type)
+        .map((x) => x.type)
+        .join(", ")})
       LANGUAGE ${this.functionInfo.language} 
       AS $$
         return ${this.functionInfo.body}
@@ -519,7 +528,12 @@ export default defineComponent({
         .join(", ");
 
       return `
-      CREATE FUNCTION ${this.functionInfo.name}(${params}) RETURNS ${this.functionInfo.returnType}
+      CREATE FUNCTION ${
+        this.functionInfo.name
+      }(${params}) RETURNS (${this.functionParmaTypeRow
+        .filter((x) => x.type)
+        .map((x) => x.type)
+        .join(", ")})
         LANGUAGE ${this.functionInfo.language} 
       AS '${this.functionInfo.name}';`;
     },
@@ -561,6 +575,14 @@ export default defineComponent({
     },
     removeRow(row) {
       this.functionTypeRow = this.functionTypeRow.filter((r) => r !== row);
+    },
+    addReturnRow() {
+      this.functionParmaTypeRow.push({ type: "", defaultValue: "" });
+    },
+    removeReturnRow(row) {
+      this.functionParmaTypeRow = this.functionParmaTypeRow.filter(
+        (r) => r !== row
+      );
     },
   },
   computed: {
