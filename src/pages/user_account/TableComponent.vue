@@ -431,13 +431,6 @@ export default defineComponent({
         {
           id: 2,
           primary: false,
-          label: "IsNullable()",
-          description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        },
-        {
-          id: 3,
-          primary: false,
           label: "IsIdentity()",
           description:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",

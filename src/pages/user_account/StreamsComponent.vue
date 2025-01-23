@@ -435,7 +435,7 @@ export default defineComponent({
           return columnDef;
         });
 
-      const query = `CREATE ZSTREAM \"${this.streamInfo.name}\" 
+      const query = `CREATE ZSTREAM ${this.streamInfo.name} 
       (
         type ${this.streamInfo.type} GENERATED ALWAYS AS DISPATCH,
         ${columns.join(",\n    ")}
