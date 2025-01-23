@@ -52,6 +52,9 @@
           <template v-else-if="col.name === 'primary'">
             <q-checkbox v-model="props.row.primary" dense color="light-green" />
           </template>
+          <template v-else-if="col.name === 'isNullable'">
+            <q-checkbox v-model="props.row.isNullable" dense color="light-green" />
+          </template>
 
           <template v-else-if="col.name === 'actions'">
             <!-- Show action buttons for all rows except the last one -->

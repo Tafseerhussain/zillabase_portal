@@ -11,8 +11,9 @@
       @view-row="openEditDialog"
       @delete-row="openDeleteDialog"
       @add-new="openFunctionDialog"
-      :tableName="'function-table'"
-    />
+      :isShowEdit="false"
+      />
+      <!-- :tableName="'function-table'" -->
   </div>
 
   <q-dialog
@@ -48,93 +49,6 @@
             name="img:/icons/function.svg"
             class="fs-30 filter-custom-dark"
             style="min-height: 30px"
-          />
-        </q-card-section>
-        <q-separator />
-        <q-card-section class="q-py-xl px-28">
-          <div class="row items-start">
-            <div class="col-3">
-              <span
-                class="text-custom-gray-dark text-subtitle1 text-weight-light"
-                >Name</span
-              >
-            </div>
-            <div class="col-9">
-              <q-input
-                dense
-                outlined
-                v-model="functionInfo.name"
-                placeholder="Function Name"
-                class="rounded-10 self-center text-weight-light rounded-input"
-                :rules="[(val) => !!val || 'Field is required']"
-              />
-            </div>
-          </div>
-          <div class="row items-start q-mt-lg">
-            <div class="col-3">
-              <span
-                class="text-custom-gray-dark text-subtitle1 text-weight-light"
-                >Return Type</span
-              >
-            </div>
-            <div class="col-9">
-              <q-input
-                dense
-                outlined
-                v-model="functionInfo.returnType"
-                placeholder="Function Return Type"
-                class="rounded-10 self-center text-weight-light rounded-input"
-                :rules="[(val) => !!val || 'Field is required']"
-              />
-            </div>
-          </div>
-          <div class="row items-start q-mt-lg">
-            <div class="col-3">
-              <span
-                class="text-custom-gray-dark text-subtitle1 text-weight-light"
-                >Language</span
-              >
-            </div>
-            <div class="col-9">
-              <q-select
-                v-model="functionInfo.language"
-                :options="languageOptions"
-                outlined
-                dense
-                placeholder="Select Language"
-                dropdown-icon="keyboard_arrow_down"
-                class="rounded-input"
-                :rules="[(val) => !!val || 'Field is required']"
-              />
-            </div>
-          </div>
-        </q-card-section>
-        <q-separator />
-        <q-card-section class="q-py-lg px-28">
-          <div class="flex justify-between items-center q-mb-sm">
-            <p class="text-custom-text-secondary text-subtitle1 fw-600">
-              Parameters
-            </p>
-            <div>
-              <q-tooltip anchor="center left" self="center end">
-                Functions Docs
-              </q-tooltip>
-              <q-btn
-                flat
-                icon="img:/icons/export.svg"
-                size="md"
-                class="filter-light-green"
-                :ripple="false"
-              />
-            </div>
-          </div>
-          <data-type-table
-            :columns="functionTypeColumns"
-            :rows="functionTypeRow"
-            :typeOptions="functionTypeOptions"
-            @add-row="addRow"
-            ref="dataTypeTable"
-            @remove-row="removeRow"
           />
         </q-card-section>
         <q-separator />
@@ -186,10 +100,9 @@
             </div>
           </div>
         </q-card-section>
-        <q-separator v-if="functionInfo.functionType == 'external'" />
         <q-card-section
           v-if="functionInfo.functionType == 'external'"
-          class="q-py-lg px-28"
+          class="q-py-md px-28"
         >
           <div class="row items-start">
             <div class="col-3">
@@ -217,7 +130,96 @@
             </div>
           </div>
         </q-card-section>
+        <q-card-section class="q-pb-xl px-28">
+          <div class="row items-start">
+            <div class="col-3">
+              <span
+                class="text-custom-gray-dark text-subtitle1 text-weight-light"
+                >Name</span
+              >
+            </div>
+            <div class="col-9">
+              <q-input
+                dense
+                outlined
+                v-model="functionInfo.name"
+                placeholder="Function Name"
+                class="rounded-10 self-center text-weight-light rounded-input"
+                :rules="[(val) => !!val || 'Field is required']"
+              />
+            </div>
+          </div>
+          <div class="row items-start q-mt-lg">
+            <div class="col-3">
+              <span
+                class="text-custom-gray-dark text-subtitle1 text-weight-light"
+                >Return Type</span
+              >
+            </div>
+            <div class="col-9">
+              <q-select
+                v-model="functionInfo.returnType"
+                :options="functionTypeOptions"
+                outlined
+                dense
+                placeholder="Function Return Type"
+                dropdown-icon="keyboard_arrow_down"
+                class="rounded-input"
+                :rules="[(val) => !!val || 'Field is required']"
+              />
+            </div>
+          </div>
+          <div class="row items-start q-mt-lg">
+            <div class="col-3">
+              <span
+                class="text-custom-gray-dark text-subtitle1 text-weight-light"
+                >Language</span
+              >
+            </div>
+            <div class="col-9">
+              <q-select
+                v-model="functionInfo.language"
+                :options="filteredLanguageOptions"
+                outlined
+                dense
+                placeholder="Select Language"
+                dropdown-icon="keyboard_arrow_down"
+                class="rounded-input"
+                :rules="[(val) => !!val || 'Field is required']"
+              />
+            </div>
+          </div>
+        </q-card-section>
         <q-separator />
+        <q-card-section class="q-py-lg px-28">
+          <div class="flex justify-between items-center q-mb-sm">
+            <p class="text-custom-text-secondary text-subtitle1 fw-600">
+              Parameters
+            </p>
+            <div>
+              <q-tooltip anchor="center left" self="center end">
+                Functions Docs
+              </q-tooltip>
+              <q-btn
+                flat
+                icon="img:/icons/export.svg"
+                size="md"
+                class="filter-light-green"
+                :ripple="false"
+              />
+            </div>
+          </div>
+          <data-type-table
+            :columns="functionTypeColumns"
+            :rows="functionTypeRow"
+            :typeOptions="functionTypeOptions"
+            @add-row="addRow"
+            ref="dataTypeTable"
+            @remove-row="removeRow"
+            :isSettingShow="false"
+          />
+        </q-card-section>
+        <q-separator />      
         <q-card-section class="flex justify-end q-gutter-lg q-pa-lg">
           <q-btn
             unelevated
@@ -310,7 +312,10 @@ export default defineComponent({
         functionType: "embedded",
         body: "",
       },
-      languageOptions: ["php", "javaScript", "r", "sql", "python"],
+      allOptions: {
+        embedded: ["Py", "JavaScript", "Rust"],
+        external: ["Py", "Java"],
+      },
       tableColumns: [
         { name: "name", label: "Name", align: "left", field: "name" },
         {
@@ -344,7 +349,7 @@ export default defineComponent({
         { name: "actions", label: "Actions", align: "center" },
       ],
       tableData: [],
-      functionTypeRow: [{ name: "", type: "", defaultValue: "" }],
+      functionTypeRow: [{ name: "", type: "" }],
       functionTypeColumns: [
         {
           name: "name",
@@ -354,12 +359,6 @@ export default defineComponent({
           field: "name",
         },
         { name: "type", label: "Type", align: "left", field: "type" },
-        {
-          name: "defaultValue",
-          label: "Default Value",
-          align: "left",
-          field: "defaultValue",
-        },
         { name: "actions", label: "Actions", align: "center" },
       ],
       functionTypeOptions: [
@@ -562,6 +561,19 @@ export default defineComponent({
     },
     removeRow(row) {
       this.functionTypeRow = this.functionTypeRow.filter((r) => r !== row);
+    },
+  },
+  computed: {
+    filteredLanguageOptions() {
+      return this.functionInfo.functionType
+        ? this.allOptions[this.functionInfo.functionType]
+        : [];
+    },
+  },
+  watch: {
+    "functionInfo.functionType"(newVal, oldVal) {
+      this.functionInfo.language = "";
+      this.functionInfo.body = "";
     },
   },
 });

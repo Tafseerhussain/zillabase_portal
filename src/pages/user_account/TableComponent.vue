@@ -137,6 +137,7 @@
             @add-row="addRow"
             @remove-row="removeRow"
             @setting-row="openRowSettingDialog"
+            :isSettingShow="tableInfo.zTableVal"
           />
         </q-card-section>
         <q-separator />
@@ -248,16 +249,17 @@
     @update:model-value="closeSettings"
   >
     <q-card class="highlighted-border">
-      <q-card-section class="flex justify-between items-center q-pa-lg">
-        <div class="flex items-center q-gutter-md">
+      <q-card-section class="q-px-lg q-pt-lg">
+        <div class="flex justify-between items-center no-wrap">
+          <div class="flex items-center no-wrap q-gutter-md">
           <q-icon
             size="sm"
             name="img:/icons/setting-2.svg"
             class="filter-custom-white-dark"
           />
-          <p class="text-custom-text-secondary fw-600 text-subtitle1">
-            Row Settings
-          </p>
+            <p class="text-custom-text-secondary fw-600 text-subtitle1">
+            Constraints
+            </p>
         </div>
         <q-icon
           name="close"
@@ -267,7 +269,11 @@
             closeSettings();
           "
         />
+        </div>
       </q-card-section>
+      <p class="text-custom-gray-dark fw-600 text-caption q-px-lg q-pb-lg">
+          Generated As which should have two selectable options under it: Identity / Now
+      </p>
       <q-separator />
       <q-card-section>
         <div
@@ -362,6 +368,12 @@ export default defineComponent({
           label: "Primary",
           align: "center",
           field: "primary",
+        },
+        {
+          name: "isNullable",
+          label: "Nullable",
+          align: "center",
+          field: "isNullable",
         },
         { name: "actions", label: "Actions", align: "center" },
       ],
@@ -562,7 +574,7 @@ export default defineComponent({
       };
 
       this.dataTypeRow = [
-        { name: "", type: "", defaultValue: "", primary: false, id: 1 },
+        { name: "", type: "", defaultValue: "", primary: false, isNullable: false, id: 1 },
       ];
       this.$nextTick(() => {
         this.$refs.dataTypeTable.rows = this.dataTypeRow;
@@ -619,6 +631,7 @@ export default defineComponent({
         type: "",
         defaultValue: "",
         primary: false,
+        isNullable: false,
       });
     },
     removeRow(row) {
