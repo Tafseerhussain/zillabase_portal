@@ -37,6 +37,7 @@
               placeholder="Select type"
               dropdown-icon="keyboard_arrow_down"
               style="min-width: 180px"
+              :multiple="isMultiSelect"
             />
           </template>
 
@@ -124,7 +125,11 @@ export default defineComponent({
       type: Boolean,
       required: false,
       default: true
-    }
+    },
+    isMultiSelect: {
+      type: Boolean,
+      default: false
+    },
   },
   methods: {
     addRow() {

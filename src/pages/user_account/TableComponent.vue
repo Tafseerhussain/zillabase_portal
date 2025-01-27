@@ -271,11 +271,11 @@
         />
         </div>
       </q-card-section>
-      <p class="text-custom-gray-dark fw-600 text-caption q-px-lg q-pb-lg">
-          Generated As which should have two selectable options under it: Identity / Now
-      </p>
       <q-separator />
       <q-card-section>
+        <p class="text-custom-text-secondary fw-600 text-subtitle1 q-pb-sm q-pl-sm">
+            Generated Always As:
+        </p>
         <div
           v-for="setting in rowSettingData"
           :key="setting.id"
@@ -424,14 +424,14 @@ export default defineComponent({
         {
           id: 1,
           primary: true,
-          label: "IsUnique()",
+          label: "Identity",
           description:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         },
         {
           id: 2,
           primary: false,
-          label: "IsIdentity()",
+          label: "Now",
           description:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         },

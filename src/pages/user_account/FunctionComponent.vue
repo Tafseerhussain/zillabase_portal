@@ -185,6 +185,7 @@
             ref="dataReturnTypeTable"
             @remove-row="removeReturnRow"
             :isSettingShow="false"
+            :isMultiSelect="isMultiSelect"
           />
         </q-card-section>
         <q-separator />
@@ -359,10 +360,10 @@ export default defineComponent({
         { name: "type", label: "Type", align: "left", field: "type" },
         { name: "actions", label: "Actions", align: "center" },
       ],
-      functionParamTypeColumns: [
-        { name: "type", label: "Type", align: "left", field: "type" },
-        { name: "actions", label: "Actions", align: "center" },
-      ],
+      // functionParamTypeColumns: [
+      //   { name: "type", label: "Type", align: "left", field: "type" },
+      //   { name: "actions", label: "Actions", align: "center" },
+      // ],
       functionTypeOptions: [
         "smallint",
         "integer",
@@ -478,11 +479,11 @@ export default defineComponent({
       };
 
       this.functionTypeRow = [{ name: "", type: "", defaultValue: "" }];
-      this.functionParmaTypeRow = [{ type: "", defaultValue: "" }];
-      this.$nextTick(() => {
-        this.$refs.dataTypeTable.rows = this.functionTypeRow;
-        this.$refs.dataReturnTypeTable.rows = this.functionTypeRow;
-      });
+      this.functionParmaTypeRow = [{ type: "" }];
+      // this.$nextTick(() => {
+      //   this.$refs.dataTypeTable.rows = this.functionTypeRow;
+      //   this.$refs.dataReturnTypeTable.rows = this.functionParmaTypeRow;
+      // });
     },
     dropFunction() {
       this.$ws.sendMessage(
@@ -577,7 +578,8 @@ export default defineComponent({
       this.functionTypeRow = this.functionTypeRow.filter((r) => r !== row);
     },
     addReturnRow() {
-      this.functionParmaTypeRow.push({ type: "", defaultValue: "" });
+      const row = this.isMultiSelect ? { type: [], name: "" } : { type: "" };
+      this.functionParmaTypeRow.push(row);
     },
     removeReturnRow(row) {
       this.functionParmaTypeRow = this.functionParmaTypeRow.filter(
@@ -591,11 +593,38 @@ export default defineComponent({
         ? this.allOptions[this.functionInfo.functionType]
         : [];
     },
+    isMultiSelect() {
+      return this.functionInfo.functionType === "external";
+    },
+    functionParamTypeColumns() {
+      const baseColumns = [
+        { name: "type", label: "Type", align: "left", field: "type" },
+        { name: "actions", label: "Actions", align: "center" },
+      ];
+      if (this.isMultiSelect) {
+        baseColumns.splice(0, 0, {
+          name: "name",
+          label: "Name",
+          align: "left",
+          field: "name",
+        });
+      }
+      return baseColumns;
+    },
   },
   watch: {
     "functionInfo.functionType"(newVal, oldVal) {
       this.functionInfo.language = "";
       this.functionInfo.body = "";
+    },
+    isMultiSelect(newVal) {
+      this.functionParmaTypeRow = this.functionParmaTypeRow.map((row) => {
+        if (newVal) {
+          return { ...row, type: Array.isArray(row.type) ? row.type : [row.type].filter(Boolean), name: row.name || "" };
+        } else {
+          return { ...row, type: Array.isArray(row.type) ? row.type[0] || "" : row.type };
+        }
+      });
     },
   },
 });
