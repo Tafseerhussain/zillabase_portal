@@ -100,6 +100,7 @@
             </div>
           </div>
         </q-card-section>
+         <q-separator />
         <q-card-section
           v-if="functionInfo.functionType == 'external'"
           class="q-py-md px-28"
@@ -509,8 +510,8 @@ export default defineComponent({
       CREATE FUNCTION ${
         this.functionInfo.name
       }(${params}) RETURNS (${this.functionParmaTypeRow
-        .filter((x) => x.type)
-        .map((x) => x.type)
+        .filter((x) => x.type && x.name)
+        .map((x) => `${x.name} ${x.type}`)
         .join(", ")})
       LANGUAGE ${this.functionInfo.language} 
       AS $$

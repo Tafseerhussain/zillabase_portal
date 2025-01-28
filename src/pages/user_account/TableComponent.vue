@@ -252,29 +252,31 @@
       <q-card-section class="q-px-lg q-pt-lg">
         <div class="flex justify-between items-center no-wrap">
           <div class="flex items-center no-wrap q-gutter-md">
-          <q-icon
-            size="sm"
-            name="img:/icons/setting-2.svg"
-            class="filter-custom-white-dark"
-          />
+            <q-icon
+              size="sm"
+              name="img:/icons/setting-2.svg"
+              class="filter-custom-white-dark"
+            />
             <p class="text-custom-text-secondary fw-600 text-subtitle1">
-            Constraints
+              Constraints
             </p>
-        </div>
-        <q-icon
-          name="close"
-          class="cursor-pointer fs-20"
-          @click="
-            isRowSettingDialogOpen = false;
-            closeSettings();
-          "
-        />
+          </div>
+          <q-icon
+            name="close"
+            class="cursor-pointer fs-20"
+            @click="
+              isRowSettingDialogOpen = false;
+              closeSettings();
+            "
+          />
         </div>
       </q-card-section>
       <q-separator />
       <q-card-section>
-        <p class="text-custom-text-secondary fw-600 text-subtitle1 q-pb-sm q-pl-sm">
-            Generated Always As:
+        <p
+          class="text-custom-text-secondary fw-600 text-subtitle1 q-pb-sm q-pl-sm"
+        >
+          Generated Always As:
         </p>
         <div
           v-for="setting in rowSettingData"
@@ -532,9 +534,17 @@ export default defineComponent({
         .filter((x) => x.name)
         .map((field) => {
           let columnDef = `${field.name} ${field.type.toUpperCase()}`;
+          
+          if (field.isNullable) {
+            columnDef += ` NOT NULL `;
+          }
 
           if (field.defaultValue) {
             columnDef += ` DEFAULT '${field.defaultValue}'`;
+          }
+
+          if (field.identity) {
+            columnDef += " GENERATED ALWAYS AS IDENTITY";
           }
 
           return columnDef;
@@ -551,7 +561,9 @@ export default defineComponent({
       )});`;
       this.$ws.sendMessage(query, "create_table");
       if (this.tableInfo.zTableVal) {
-        const zTableQuery = `CREATE ZTABLE ${this.tableInfo.name} (${columns.join(",\n    ")});`;
+        const zTableQuery = `CREATE ZTABLE ${
+          this.tableInfo.name
+        } (${columns.join(",\n    ")});`;
         this.$ws.sendMessage(zTableQuery, "create_ztable");
       }
       this.addNewTable = false;
@@ -565,7 +577,14 @@ export default defineComponent({
       };
 
       this.dataTypeRow = [
-        { name: "", type: "", defaultValue: "", primary: false, isNullable: false, id: 1 },
+        {
+          name: "",
+          type: "",
+          defaultValue: "",
+          primary: false,
+          isNullable: true,
+          id: 1,
+        },
       ];
       this.$nextTick(() => {
         this.$refs.dataTypeTable.rows = this.dataTypeRow;
@@ -622,7 +641,7 @@ export default defineComponent({
         type: "",
         defaultValue: "",
         primary: false,
-        isNullable: false,
+        isNullable: true,
       });
     },
     removeRow(row) {
