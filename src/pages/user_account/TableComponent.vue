@@ -558,7 +558,7 @@ export default defineComponent({
             columnDef += ` DEFAULT '${field.defaultValue}'`;
           }
 
-          if (field.primary == 'identity') {
+          if (field.primary == "identity") {
             columnDef += " GENERATED ALWAYS AS IDENTITY";
           }
 
@@ -575,11 +575,13 @@ export default defineComponent({
         ",\n    "
       )});`;
       this.$ws.sendMessage(query, "create_table");
+      console.log(query);
       if (this.tableInfo.zTableVal) {
         const zTableQuery = `CREATE ZTABLE ${
           this.tableInfo.name
         } (${columns.join(",\n    ")});`;
         this.$ws.sendMessage(zTableQuery, "create_ztable");
+        console.log(zTableQuery);
       }
       this.addNewTable = false;
       this.$refs.addTableForm.reset();
@@ -602,7 +604,9 @@ export default defineComponent({
         },
       ];
       this.$nextTick(() => {
-        this.$refs.dataTypeTable.rows = this.dataTypeRow;
+        if (this.$refs.dataTypeTable) {
+          this.$refs.dataTypeTable.rows = this.dataTypeRow;
+        }
       });
     },
     openEditDialog(row) {

@@ -100,7 +100,7 @@
             </div>
           </div>
         </q-card-section>
-         <q-separator />
+        <q-separator />
         <q-card-section
           v-if="functionInfo.functionType == 'external'"
           class="q-py-md px-28"
@@ -481,10 +481,14 @@ export default defineComponent({
 
       this.functionTypeRow = [{ name: "", type: "", defaultValue: "" }];
       this.functionParmaTypeRow = [{ type: "" }];
-      // this.$nextTick(() => {
-      //   this.$refs.dataTypeTable.rows = this.functionTypeRow;
-      //   this.$refs.dataReturnTypeTable.rows = this.functionParmaTypeRow;
-      // });
+      this.$nextTick(() => {
+        if (this.$refs.dataTypeTable) {
+          this.$refs.dataTypeTable.rows = this.functionTypeRow;
+        }
+        if (this.$refs.dataReturnTypeTable) {
+          this.$refs.dataReturnTypeTable.rows = this.functionParmaTypeRow;
+        }
+      });
     },
     dropFunction() {
       this.$ws.sendMessage(
@@ -621,9 +625,18 @@ export default defineComponent({
     isMultiSelect(newVal) {
       this.functionParmaTypeRow = this.functionParmaTypeRow.map((row) => {
         if (newVal) {
-          return { ...row, type: Array.isArray(row.type) ? row.type : [row.type].filter(Boolean), name: row.name || "" };
+          return {
+            ...row,
+            type: Array.isArray(row.type)
+              ? row.type
+              : [row.type].filter(Boolean),
+            name: row.name || "",
+          };
         } else {
-          return { ...row, type: Array.isArray(row.type) ? row.type[0] || "" : row.type };
+          return {
+            ...row,
+            type: Array.isArray(row.type) ? row.type[0] || "" : row.type,
+          };
         }
       });
     },
