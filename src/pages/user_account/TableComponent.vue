@@ -550,7 +550,7 @@ export default defineComponent({
         .map((field) => {
           let columnDef = `${field.name} ${field.type.toUpperCase()}`;
 
-          if (field.isNullable) {
+          if (!field.isNullable) {
             columnDef += ` NOT NULL `;
           }
 
