@@ -605,7 +605,6 @@ export default defineComponent({
     functionParamTypeColumns() {
       const baseColumns = [
         { name: "type", label: "Type", align: "left", field: "type" },
-        { name: "actions", label: "Actions", align: "center" },
       ];
       if (this.isMultiSelect) {
         baseColumns.splice(0, 0, {
@@ -613,6 +612,11 @@ export default defineComponent({
           label: "Name",
           align: "left",
           field: "name",
+        });
+        baseColumns.push({
+          name: "actions",
+          label: "Actions",
+          align: "center",
         });
       }
       return baseColumns;
