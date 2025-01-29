@@ -466,6 +466,7 @@ export default defineComponent({
         this.functionInfo.functionType == "external"
           ? this.generateExternalFunction()
           : this.generateEmbeddedFunction();
+      console.log(query);
       this.$ws.sendMessage(query, "create_function");
       this.addNewFunction = false;
       this.$refs.addFunctionForm.reset();

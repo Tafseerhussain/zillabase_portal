@@ -370,22 +370,19 @@ export default defineComponent({
       };
     },
     createMaterializedView() {
-      this.$ws.sendMessage(
-        `CREATE MATERIALIZED VIEW ${this.viewInfo.name} AS ${this.viewInfo.body};`,
-        "create_materialized_view"
-      );
+      const query = `CREATE MATERIALIZED VIEW ${this.viewInfo.name} AS ${this.viewInfo.body};`;
+      console.log(query);
+      this.$ws.sendMessage(query, "create_materialized_view");
     },
     createZView() {
-      this.$ws.sendMessage(
-        `CREATE ZVIEW ${this.viewInfo.name} AS ${this.viewInfo.body};`,
-        "create_zview"
-      );
+      const query = `CREATE ZVIEW ${this.viewInfo.name} AS ${this.viewInfo.body};`;
+      console.log(query);
+      this.$ws.sendMessage(query, "create_zview");
     },
     createView() {
-      this.$ws.sendMessage(
-        `CREATE VIEW ${this.viewInfo.name} AS ${this.viewInfo.body};`,
-        "create_view"
-      );
+      const query = `CREATE VIEW ${this.viewInfo.name} AS ${this.viewInfo.body};`;
+      console.log(query);
+      this.$ws.sendMessage(query, "create_view");
     },
     getViews() {
       this.tableData = [];
