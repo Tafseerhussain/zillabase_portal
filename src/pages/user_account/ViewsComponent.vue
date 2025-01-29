@@ -128,7 +128,7 @@
               <q-radio
                 dense
                 v-model="viewInfo.selectionType"
-                val="view"
+                val="zview"
                 color="light-green"
               />
             </div>
@@ -353,7 +353,7 @@ export default defineComponent({
     createViews() {
       if (this.viewInfo.selectionType == "material") {
         this.createMaterializedView();
-      } else if (this.viewInfo.selectionType == "view") {
+      } else if (this.viewInfo.selectionType == "zview") {
         this.createZView();
       } else {
         this.createView();

@@ -290,7 +290,7 @@ export default defineComponent({
 .sql-result-container {
   border-radius: 20px;
   .sql-result {
-    height: 220px;
+    height: calc(100vh - 490px);
     overflow: auto;
   }
 }

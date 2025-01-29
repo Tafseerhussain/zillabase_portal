@@ -278,18 +278,33 @@
         >
           Generated Always As:
         </p>
-        <div
-          v-for="setting in rowSettingData"
-          :key="setting.id"
-          class="flex items-start q-gutter-md q-pa-sm"
-        >
-          <q-checkbox v-model="setting.primary" dense color="light-green" />
+        <div class="flex items-start q-gutter-md q-pa-sm">
+          <q-radio
+            v-model="selectedRow.primary"
+            val="identity"
+            dense
+            color="light-green"
+          />
           <div>
             <p class="text-custom-text-secondary text-weight-medium">
-              {{ setting.label }}
+              Identity
             </p>
             <p class="text-custom-gray-dark text-weight-light q-mt-xs">
-              {{ setting.description }}
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </p>
+          </div>
+        </div>
+        <div class="flex items-start q-gutter-md q-pa-sm">
+          <q-radio
+            v-model="selectedRow.primary"
+            val="now"
+            dense
+            color="light-green"
+          />
+          <div>
+            <p class="text-custom-text-secondary text-weight-medium">Now</p>
+            <p class="text-custom-gray-dark text-weight-light q-mt-xs">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             </p>
           </div>
         </div>
@@ -534,7 +549,7 @@ export default defineComponent({
         .filter((x) => x.name)
         .map((field) => {
           let columnDef = `${field.name} ${field.type.toUpperCase()}`;
-          
+
           if (field.isNullable) {
             columnDef += ` NOT NULL `;
           }
@@ -543,7 +558,7 @@ export default defineComponent({
             columnDef += ` DEFAULT '${field.defaultValue}'`;
           }
 
-          if (field.identity) {
+          if (field.primary == 'identity') {
             columnDef += " GENERATED ALWAYS AS IDENTITY";
           }
 
@@ -617,14 +632,8 @@ export default defineComponent({
       this.resetTable();
     },
     openRowSettingDialog(row) {
-      this.activeRowSetting = this.dataTypeRow.find((x) => x.id == row.id);
+      this.selectedRow = row;
       this.isRowSettingDialogOpen = !this.isRowSettingDialogOpen;
-      this.rowSettingData.find((x) => x.id == 1).primary =
-        this.activeRowSetting.unique || false;
-      this.rowSettingData.find((x) => x.id == 2).primary =
-        this.activeRowSetting.nullable || true;
-      this.rowSettingData.find((x) => x.id == 3).primary =
-        this.activeRowSetting.identity || false;
     },
     closeSettings() {
       this.activeRowSetting.unique =
