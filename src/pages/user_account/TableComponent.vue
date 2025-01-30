@@ -464,24 +464,27 @@ export default defineComponent({
         this.setEditTableInfo(data.data);
       }
       if (data.type == "get_table") {
-        this.tableData = [];
-        data.data.forEach((item) => {
-          this.tableData.push({
-            ...item,
-            name: item.Name,
-            ztable: false,
-          });
-        });
+        this.tableData = data.data.map((x, i) => ({
+          id: i + 1,
+          name: x.Name,
+          description: x.table_description,
+          columns: x.total_columns,
+          rows: x.total_rows,
+          ztable: false,
+        }));
         this.getZTables();
       }
       if (data.type == "get_ztables") {
-        data.data.forEach((item) => {
-          this.tableData.push({
-            ...item,
-            name: item.Name,
-            ztable: true,
+        data.data
+          .filter((x) => x.Name)
+          .forEach((item) => {
+            const itemData = this.tableData.find(
+              (x) => x.name.toLowerCase() == item.Name.toLowerCase()
+            );
+            if (itemData) {
+              itemData.ztable = true;
+            }
           });
-        });
       }
       if (
         data.type == "create_table" ||
