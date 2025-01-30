@@ -464,6 +464,7 @@ export default defineComponent({
         this.setEditTableInfo(data.data);
       }
       if (data.type == "get_table") {
+        this.tableData = [];
         data.data.forEach((item) => {
           this.tableData.push({
             ...item,
