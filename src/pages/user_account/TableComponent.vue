@@ -280,7 +280,7 @@
         </p>
         <div class="flex items-start q-gutter-md q-pa-sm">
           <q-radio
-            v-model="selectedRow.primary"
+            v-model="selectedRow.constraints"
             val="identity"
             dense
             color="light-green"
@@ -296,7 +296,7 @@
         </div>
         <div class="flex items-start q-gutter-md q-pa-sm">
           <q-radio
-            v-model="selectedRow.primary"
+            v-model="selectedRow.constraints"
             val="now"
             dense
             color="light-green"
@@ -316,6 +316,7 @@
 import { defineComponent } from "vue";
 import CommonTable from "../shared/CommonTable.vue";
 import DataTypeTable from "../shared/DataTypeTable.vue";
+import { showError } from "./../../services/notification";
 export default defineComponent({
   name: "TableComponent",
   components: {
@@ -558,13 +559,21 @@ export default defineComponent({
             columnDef += ` DEFAULT '${field.defaultValue}'`;
           }
 
-          if (field.primary == "identity") {
+          if (field.constraints == "identity") {
             columnDef += " GENERATED ALWAYS AS IDENTITY";
           }
 
           return columnDef;
         });
-
+      if (
+        this.tableInfo.zTableVal &&
+        this.$refs.dataTypeTable.rows.some(
+          (field) => field.constraints == "identity" && field.type == "integer"
+        )
+      ) {
+        showError("Integer is not allowed for Identity Column");
+        return;
+      }
       const primaryKey = this.$refs.dataTypeTable.rows
         .filter((field) => field.primary)
         .map((field) => field.name);
