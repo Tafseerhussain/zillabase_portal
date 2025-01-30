@@ -464,27 +464,23 @@ export default defineComponent({
         this.setEditTableInfo(data.data);
       }
       if (data.type == "get_table") {
-        this.tableData = data.data.map((x, i) => ({
-          id: i + 1,
-          name: x.Name,
-          description: x.table_description,
-          columns: x.total_columns,
-          rows: x.total_rows,
-          ztable: false,
-        }));
+        data.data.forEach((item) => {
+          this.tableData.push({
+            ...item,
+            name: item.Name,
+            ztable: false,
+          });
+        });
         this.getZTables();
       }
       if (data.type == "get_ztables") {
-        data.data
-          .filter((x) => x.Name)
-          .forEach((item) => {
-            const itemData = this.tableData.find(
-              (x) => x.name.toLowerCase() == item.Name.toLowerCase()
-            );
-            if (itemData) {
-              itemData.ztable = true;
-            }
+        data.data.forEach((item) => {
+          this.tableData.push({
+            ...item,
+            name: item.Name,
+            ztable: true,
           });
+        });
       }
       if (
         data.type == "create_table" ||
@@ -571,17 +567,18 @@ export default defineComponent({
       if (primaryKey.length > 0) {
         columns.push(`PRIMARY KEY (${primaryKey.join(", ")})`);
       }
-      const query = `CREATE TABLE \"${this.tableInfo.name}\" (${columns.join(
-        ",\n    "
-      )});`;
-      this.$ws.sendMessage(query, "create_table");
-      console.log(query);
       if (this.tableInfo.zTableVal) {
         const zTableQuery = `CREATE ZTABLE ${
           this.tableInfo.name
         } (${columns.join(",\n    ")});`;
         this.$ws.sendMessage(zTableQuery, "create_ztable");
         console.log(zTableQuery);
+      } else {
+        const query = `CREATE TABLE \"${this.tableInfo.name}\" (${columns.join(
+          ",\n    "
+        )});`;
+        this.$ws.sendMessage(query, "create_table");
+        console.log(query);
       }
       this.addNewTable = false;
       this.$refs.addTableForm.reset();
