@@ -453,6 +453,7 @@ export default defineComponent({
         this.getZTables();
       }
       if (data.type == "get_ztables") {
+        console.log(data.data.filter((x) => x.Name).map((x) => x.Name));
         data.data
           .filter((x) => x.Name)
           .forEach((item) => {
@@ -508,9 +509,7 @@ export default defineComponent({
       this.$ws.sendMessage(`show tables;`, "get_table");
     },
     getZTables() {
-      setTimeout(() => {
-        this.$ws.sendMessage(`show ztables;`, "get_ztables");
-      });
+      this.$ws.sendMessage(`show ztables;`, "get_ztables");
     },
     addTable() {
       const hasValidData = this.dataTypeRow.some(
