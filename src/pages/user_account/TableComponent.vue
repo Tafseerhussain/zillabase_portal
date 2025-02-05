@@ -413,7 +413,7 @@ export default defineComponent({
         "struct",
         "array",
         "map",
-        "JSONB"
+        "JSONB",
       ],
       rowSettingData: [
         {
@@ -504,10 +504,13 @@ export default defineComponent({
         });
     },
     getTableInformations() {
+      this.tableData = [];
       this.$ws.sendMessage(`show tables;`, "get_table");
     },
     getZTables() {
-      this.$ws.sendMessage(`show ztables;`, "get_ztables");
+      setTimeout(() => {
+        this.$ws.sendMessage(`show ztables;`, "get_ztables");
+      });
     },
     addTable() {
       const hasValidData = this.dataTypeRow.some(
