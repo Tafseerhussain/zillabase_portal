@@ -387,12 +387,12 @@ export default defineComponent({
           align: "center",
           field: "primary",
         },
-        {
-          name: "isNullable",
-          label: "Nullable",
-          align: "center",
-          field: "isNullable",
-        },
+        // {
+        //   name: "isNullable",
+        //   label: "Nullable",
+        //   align: "center",
+        //   field: "isNullable",
+        // },
         { name: "actions", label: "Actions", align: "center" },
       ],
       dataTypeOptions: [
@@ -453,7 +453,6 @@ export default defineComponent({
         this.getZTables();
       }
       if (data.type == "get_ztables") {
-        console.log(data.data.filter((x) => x.Name).map((x) => x.Name));
         data.data
           .filter((x) => x.Name)
           .forEach((item) => {
@@ -530,9 +529,9 @@ export default defineComponent({
         .map((field) => {
           let columnDef = `${field.name} ${field.type.toUpperCase()}`;
 
-          if (!field.isNullable) {
-            columnDef += ` NOT NULL `;
-          }
+          // if (!field.isNullable) {
+          //   columnDef += ` NOT NULL `;
+          // }
 
           if (field.defaultValue) {
             columnDef += ` DEFAULT '${field.defaultValue}'`;
