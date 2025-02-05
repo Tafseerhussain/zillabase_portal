@@ -562,13 +562,11 @@ export default defineComponent({
           this.tableInfo.name
         } (${columns.join(",\n    ")});`;
         this.$ws.sendMessage(zTableQuery, "create_ztable");
-        console.log(zTableQuery);
       } else {
         const query = `CREATE TABLE \"${this.tableInfo.name}\" (${columns.join(
           ",\n    "
         )});`;
         this.$ws.sendMessage(query, "create_table");
-        console.log(query);
       }
       this.addNewTable = false;
       this.$refs.addTableForm.reset();

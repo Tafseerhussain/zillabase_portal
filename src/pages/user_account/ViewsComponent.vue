@@ -371,17 +371,14 @@ export default defineComponent({
     },
     createMaterializedView() {
       const query = `CREATE MATERIALIZED VIEW ${this.viewInfo.name} AS ${this.viewInfo.body};`;
-      console.log(query);
       this.$ws.sendMessage(query, "create_materialized_view");
     },
     createZView() {
       const query = `CREATE ZVIEW ${this.viewInfo.name} AS ${this.viewInfo.body};`;
-      console.log(query);
       this.$ws.sendMessage(query, "create_zview");
     },
     createView() {
       const query = `CREATE VIEW ${this.viewInfo.name} AS ${this.viewInfo.body};`;
-      console.log(query);
       this.$ws.sendMessage(query, "create_view");
     },
     getViews() {

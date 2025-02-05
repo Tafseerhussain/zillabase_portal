@@ -11,6 +11,7 @@ const WebSocketService = {
     },
 
     async sendMessage(message, type) {
+        console.log(message, type)
         const res = await window.zillabaseActions.executeQuery(message, type);
         this.messageHandlers({
             data: res.data,
