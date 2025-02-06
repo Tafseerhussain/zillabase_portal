@@ -312,8 +312,8 @@ export default defineComponent({
         body: "",
       },
       allOptions: {
-        embedded: ["Py", "JavaScript", "Rust"],
-        external: ["Py", "Java"],
+        embedded: ["python", "javascript", "rust"],
+        external: ["python", "java"],
       },
       tableColumns: [
         { name: "name", label: "Name", align: "left", field: "name" },
@@ -460,7 +460,7 @@ export default defineComponent({
     },
     dropFunction() {
       this.$ws.sendMessage(
-        `DROP FUNCTION \"${this.selectedRow.name}\";`,
+        `DROP FUNCTION ${this.selectedRow.name};`,
         "drop_function"
       );
     },
@@ -487,7 +487,7 @@ export default defineComponent({
         .join(", ")})
       LANGUAGE ${this.functionInfo.language} 
       AS $$
-        return ${this.functionInfo.body}
+        ${this.functionInfo.body}
       $$;`;
     },
     generateEmbeddedFunction() {
@@ -504,10 +504,10 @@ export default defineComponent({
       return `
       CREATE FUNCTION ${
         this.functionInfo.name
-      }(${params}) RETURNS (${this.functionParmaTypeRow
+      }(${params}) RETURNS ${this.functionParmaTypeRow
         .filter((x) => x.type)
         .map((x) => x.type)
-        .join(", ")})
+        .join(", ")}
         LANGUAGE ${this.functionInfo.language} 
       AS '${this.functionInfo.name}';`;
     },

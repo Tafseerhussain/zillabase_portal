@@ -564,7 +564,7 @@ export default defineComponent({
         } (${columns.join(",\n    ")});`;
         this.$ws.sendMessage(zTableQuery, "create_ztable");
       } else {
-        const query = `CREATE TABLE \"${this.tableInfo.name}\" (${columns.join(
+        const query = `CREATE TABLE ${this.tableInfo.name} (${columns.join(
           ",\n    "
         )});`;
         this.$ws.sendMessage(query, "create_table");
