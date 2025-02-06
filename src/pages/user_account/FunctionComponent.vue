@@ -438,7 +438,7 @@ export default defineComponent({
           language: x.Language,
           rows: x.total_rows,
           ztable: false,
-          type: x.Link ? "Embedded" : "External",
+          type: x.Link ? "External" : "Embedded",
         }));
       }
       if (data.type == "create_function" || data.type == "drop_function") {
@@ -520,7 +520,7 @@ export default defineComponent({
         .map((x) => `${x.name} ${x.type}`)
         .join(", ")})
       LANGUAGE ${this.functionInfo.language} 
-      AS '${this.functionInfo.name}'`;
+      AS '${this.functionInfo.name}';`;
     },
     generateEmbeddedFunction() {
       const params = this.$refs.dataTypeTable.rows
@@ -550,7 +550,7 @@ export default defineComponent({
         name: row.name,
         returnType: row.returnType,
         language: row.language,
-        functionType: row.link ? "embedded" : "external",
+        functionType: row.link ? "external" : "embedded",
         body: row.link,
       };
       this.functionTypeRow = [{ name: "", type: "", defaultValue: "" }];
