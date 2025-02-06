@@ -102,7 +102,7 @@
         </q-card-section>
         <q-separator />
         <q-card-section
-          v-if="functionInfo.functionType == 'external'"
+          v-if="functionInfo.functionType == 'embedded'"
           class="q-py-md px-28"
         >
           <div class="row items-start">
@@ -520,9 +520,7 @@ export default defineComponent({
         .map((x) => `${x.name} ${x.type}`)
         .join(", ")})
       LANGUAGE ${this.functionInfo.language} 
-      AS $$
-        ${this.functionInfo.body}
-      $$;`;
+      AS '${this.functionInfo.name}'`;
     },
     generateEmbeddedFunction() {
       const params = this.$refs.dataTypeTable.rows
@@ -543,7 +541,9 @@ export default defineComponent({
         .map((x) => x.type)
         .join(", ")}
         LANGUAGE ${this.functionInfo.language} 
-      AS '${this.functionInfo.name}';`;
+      AS $$
+        ${this.functionInfo.body}
+      $$;`;
     },
     openEditDialog(row) {
       this.functionInfo = {
