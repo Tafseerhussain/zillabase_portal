@@ -403,7 +403,7 @@ export default defineComponent({
         "numeric",
         "real",
         "double precision",
-        "character varying",
+        "varchar",
         "bytea",
         "date",
         "time without time zone",
