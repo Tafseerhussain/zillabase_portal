@@ -469,7 +469,6 @@ export default defineComponent({
             type: "Z Function",
           })),
         ];
-        console.log(this.tableData)
       }
       if (data.type == "create_function" || data.type == "drop_function") {
         this.getFunctionInformations();
@@ -525,10 +524,17 @@ export default defineComponent({
       });
     },
     dropFunction() {
-      this.$ws.sendMessage(
-        `DROP FUNCTION ${this.selectedRow.name};`,
-        "drop_function"
-      );
+      if (this.selectedRow.zfunction) {
+        this.$ws.sendMessage(
+          `DROP ZFUNCTION ${this.selectedRow.name};`,
+          "drop_function"
+        );
+      } else {
+        this.$ws.sendMessage(
+          `DROP FUNCTION ${this.selectedRow.name};`,
+          "drop_function"
+        );
+      }
     },
     getFunctionInformations() {
       this.$ws.sendMessage(`SHOW FUNCTIONS;`, "get_function");
