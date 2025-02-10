@@ -207,12 +207,14 @@
               >
             </div>
             <div class="col-9">
-              <q-input
-                dense
-                outlined
+              <q-select
                 v-model="functionInfo.eventName"
-                placeholder="Event Name"
-                class="rounded-10 self-center text-weight-light rounded-input"
+                :options="eventTables"
+                outlined
+                dense
+                placeholder="Select Event"
+                dropdown-icon="keyboard_arrow_down"
+                class="rounded-input"
               />
             </div>
           </div>
@@ -395,6 +397,7 @@ export default defineComponent({
         { name: "actions", label: "Actions", align: "center" },
       ],
       tableData: [],
+      eventTables: [],
       functionTypeRow: [{ name: "", type: "" }],
       functionParmaTypeRow: [{ type: "" }],
       functionTypeColumns: [
@@ -437,6 +440,7 @@ export default defineComponent({
   mounted() {
     this.$ws.connect(() => {
       this.getFunctionInformations();
+      this.$ws.sendMessage(`show tables;`, "get_table");
     });
     this.$ws.addMessageHandler((data) => {
       if (data.type == "get_function_name") {
@@ -453,6 +457,9 @@ export default defineComponent({
           zfunction: false,
           type: x.Link ? "External" : "Embedded",
         }));
+      }
+      if (data.type == "get_table") {
+        this.eventTables = data.data.map((x) => x.Name);
       }
       if (data.type == "get_zfunction") {
         this.tableData = this.tableData.filter((x) => !x.zfunction);
