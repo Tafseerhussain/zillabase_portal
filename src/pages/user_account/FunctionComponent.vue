@@ -469,6 +469,7 @@ export default defineComponent({
             type: "Z Function",
           })),
         ];
+        console.log(this.tableData)
       }
       if (data.type == "create_function" || data.type == "drop_function") {
         this.getFunctionInformations();
