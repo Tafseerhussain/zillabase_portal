@@ -99,11 +99,37 @@
               />
             </div>
           </div>
+          <div class="row items-center q-mt-md">
+            <div class="col-3 flex items-center">
+              <span
+                class="text-custom-gray-dark text-subtitle1 text-weight-light"
+                >ZFunction</span
+              >
+              <q-icon
+                name="img:icons/question-circle.svg"
+                class="fs-lg filter-gray-dark q-ml-sm"
+              />
+              <q-tooltip anchor="bottom middle" self="top middle">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              </q-tooltip>
+            </div>
+            <div class="col-9">
+              <q-radio
+                dense
+                v-model="functionInfo.functionType"
+                val="zfunction"
+                color="light-green"
+              />
+            </div>
+          </div>
         </q-card-section>
         <q-separator />
         <q-card-section
-          v-if="functionInfo.functionType == 'embedded'"
-          class="q-py-md px-28"
+          v-if="
+            functionInfo.functionType == 'embedded' ||
+            functionInfo.functionType == 'zfunction'
+          "
+          class="q-py-sm"
         >
           <div class="row items-start">
             <div class="col-3">
@@ -131,7 +157,7 @@
             </div>
           </div>
         </q-card-section>
-        <q-card-section class="q-pb-xl px-28">
+        <q-card-section class="q-pb-xl">
           <div class="row items-start">
             <div class="col-3">
               <span
@@ -150,7 +176,7 @@
               />
             </div>
           </div>
-          <div class="row items-start q-mt-lg">
+          <div class="row items-start">
             <div class="col-3">
               <span
                 class="text-custom-gray-dark text-subtitle1 text-weight-light"
@@ -167,6 +193,26 @@
                 dropdown-icon="keyboard_arrow_down"
                 class="rounded-input"
                 :rules="[(val) => !!val || 'Field is required']"
+              />
+            </div>
+          </div>
+          <div
+            v-if="functionInfo.functionType === 'zfunction'"
+            class="row items-start"
+          >
+            <div class="col-3">
+              <span
+                class="text-custom-gray-dark text-subtitle1 text-weight-light"
+                >Event Name</span
+              >
+            </div>
+            <div class="col-9">
+              <q-input
+                dense
+                outlined
+                v-model="functionInfo.eventName"
+                placeholder="Event Name"
+                class="rounded-10 self-center text-weight-light rounded-input"
               />
             </div>
           </div>
@@ -314,6 +360,7 @@ export default defineComponent({
       allOptions: {
         embedded: ["python", "javascript", "rust"],
         external: ["python", "java"],
+        zfunction: ["sql"],
       },
       tableColumns: [
         { name: "name", label: "Name", align: "left", field: "name" },
@@ -403,9 +450,25 @@ export default defineComponent({
           returnType: x["Return Type"],
           language: x.Language,
           rows: x.total_rows,
-          ztable: false,
+          zfunction: false,
           type: x.Link ? "External" : "Embedded",
         }));
+      }
+      if (data.type == "get_zfunction") {
+        this.tableData = this.tableData.filter((x) => !x.zfunction);
+        this.tableData = [
+          ...this.tableData,
+          ...data.data.map((x, i) => ({
+            id: i + 1,
+            name: x.Name,
+            parameters: x.Arguments,
+            returnType: x["Return Type"],
+            language: x.Language,
+            rows: x.total_rows,
+            zfunction: true,
+            type: "Z Function",
+          })),
+        ];
       }
       if (data.type == "create_function" || data.type == "drop_function") {
         this.getFunctionInformations();
@@ -433,6 +496,8 @@ export default defineComponent({
       const query =
         this.functionInfo.functionType == "external"
           ? this.generateExternalFunction()
+          : this.functionInfo.functionType == "zfunction"
+          ? this.generateZFunction()
           : this.generateEmbeddedFunction();
       this.$ws.sendMessage(query, "create_function");
       this.addNewFunction = false;
@@ -466,6 +531,33 @@ export default defineComponent({
     },
     getFunctionInformations() {
       this.$ws.sendMessage(`SHOW FUNCTIONS;`, "get_function");
+      this.$ws.sendMessage(`SHOW ZFUNCTIONS;`, "get_zfunction");
+    },
+    generateZFunction() {
+      const params = this.$refs.dataTypeTable.rows
+        .filter((x) => x.name && x.type)
+        .map((param) => {
+          const { name, type, defaultValue } = param;
+          return defaultValue
+            ? `${name} ${type} DEFAULT ${defaultValue}`
+            : `${name} ${type}`;
+        })
+        .join(", ");
+
+      return `
+      CREATE ZFUNCTION ${
+        this.functionInfo.name
+      }(${params}) RETURNS TABLE(${this.functionParmaTypeRow
+        .filter((x) => x.type && x.name)
+        .map((x) => `${x.name} ${x.type}`)
+        .join(", ")})
+      LANGUAGE ${this.functionInfo.language} 
+      AS $$
+        ${this.functionInfo.body}
+      $$
+      WITH (
+        EVENTS = '${this.functionInfo.eventName}'
+      );`;
     },
     generateExternalFunction() {
       const params = this.$refs.dataTypeTable.rows
@@ -567,7 +659,10 @@ export default defineComponent({
         : [];
     },
     isMultiSelect() {
-      return this.functionInfo.functionType === "external";
+      return (
+        this.functionInfo.functionType === "external" ||
+        this.functionInfo.functionType === "zfunction"
+      );
     },
     functionParamTypeColumns() {
       const baseColumns = [
