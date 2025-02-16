@@ -627,10 +627,10 @@ export default defineComponent({
               : x.type,
         }));
         const params = rows
-          .filter((x) => x.name && x.type)
+          .filter((x) => x.type)
           .map((param) => {
             const { name, type } = param;
-            return `${name} ${type}`;
+            return type;
           })
           .join(", ");
 
