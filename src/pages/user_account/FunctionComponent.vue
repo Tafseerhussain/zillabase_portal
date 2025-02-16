@@ -433,58 +433,7 @@ export default defineComponent({
       eventTables: [],
       functionTypeRow: [{ name: "", type: "" }],
       functionParmaTypeRow: [{ type: "" }],
-      functionDetails: [
-        {
-          input_type: [
-            {
-              name: "from_username",
-              type: "string",
-            },
-            {
-              name: "to_username",
-              type: "string",
-            },
-            {
-              name: "amount",
-              type: "double",
-            },
-          ],
-          name: "assess_fraud",
-          result_type: [
-            {
-              name: "",
-              type: "struct<summary: string, risk: string>",
-            },
-          ],
-        },
-        {
-          input_type: [
-            {
-              name: "from_username",
-              type: "string",
-            },
-            {
-              name: "to_username",
-              type: "string",
-            },
-            {
-              name: "amount",
-              type: "double",
-            },
-            {
-              name: "event",
-              type: "string",
-            },
-          ],
-          name: "process_embedding",
-          result_type: [
-            {
-              name: "",
-              type: "bool",
-            },
-          ],
-        },
-      ],
+      functionDetails: [],
       functionTypeColumns: [
         {
           name: "name",
