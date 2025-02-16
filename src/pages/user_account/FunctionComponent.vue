@@ -635,7 +635,7 @@ export default defineComponent({
           .join(", ");
 
         return `
-      CREATE FUNCTION ${this.functionInfo.name}(${params}) RETURNS ${functions.result_type[0].type}
+      CREATE FUNCTION ${this.functionInfo.name}(${params}) RETURNS ${functions.result_type[0].type?.replaceAll('string', 'varchar').replaceAll('double', 'double precision').replaceAll(': ', ' ')}
       LANGUAGE ${this.functionInfo.language} 
       AS '${this.functionInfo.name}';`;
       }
