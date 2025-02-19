@@ -166,9 +166,22 @@ const appGetStorageObjectDetail = (bucketName, fileName) => {
     })
 }
 
-const appAddStorageObject = (bucketName, fileName) => {
+const appAddStorageObject = (bucketName, fileName, file) => {
+    const formData = new FormData()
+    formData.append('file', file)
     return new Promise((resolve, reject) => {
-        axios.post(`${app.apiEndpoint}/storage/objects/${bucketName}/${fileName}`)
+        axios.post(`${app.apiEndpoint}/storage/objects/${bucketName}/${fileName}/${file.name}`, formData)
+            .then(response => {
+                resolve(response)
+            }).catch(error => {
+                reject(error)
+            })
+    })
+}
+
+const appAddStorageObjectContent = (bucketName, fileName, name, body) => {
+    return new Promise((resolve, reject) => {
+        axios.post(`${app.apiEndpoint}/storage/objects/${bucketName}/${fileName}/${name}`, { content: body })
             .then(response => {
                 resolve(response)
             }).catch(error => {
@@ -217,5 +230,6 @@ export {
     appGetSSOProviders,
     appGetSSOProvidersById,
     appDeleteSSOProvidersById,
-    appGetExternalFunctionDetails
+    appGetExternalFunctionDetails,
+    appAddStorageObjectContent
 }

@@ -42,7 +42,7 @@
           </q-card-section>
           <q-tab
             @click="getStorageObjects"
-            v-for="(tab) in tabs"
+            v-for="tab in tabs"
             :key="tab.name.path"
             :name="tab.name.path"
           >
@@ -117,7 +117,11 @@
               </div>
             </div>
           </q-tab-panel>
-          <q-tab-panel v-for="tab in tabs" :key="tab.name.path" :name="tab.name.path">
+          <q-tab-panel
+            v-for="tab in tabs"
+            :key="tab.name.path"
+            :name="tab.name.path"
+          >
             <common-table
               :title="tab.name.path"
               description=""
@@ -131,7 +135,7 @@
               @move-row="openMoveDialog"
               @rename-row="openRenameDialog"
               @delete-row="openBucketObjectDeleteDialog"
-              @add-item="addNewBucketObjectDialog"
+              @add-item="addNewBucketObjectContent = true"
               showStorage
               isMultipleChecked
             />
@@ -296,7 +300,7 @@
         <div class="flex items-center">
           <q-icon size="sm" name="add" class="filter-custom-dark" />
           <p class="text-custom-text-secondary fw-600 q-ml-md text-subtitle1">
-           {{  addEditBucketDialog.bucketName ? 'Edit' : 'Add New'  }}  Bucket
+            {{ addEditBucketDialog.bucketName ? "Edit" : "Add New" }} Bucket
           </p>
         </div>
         <q-icon
@@ -376,10 +380,15 @@
           <q-icon class="fs-60" name="img:/icons/folder-add-bucket.svg" />
         </div>
         <div class="fs-18 text-custom-text-secondary text-center">
-          {{selectedFile ? selectedFile?.name : "Select a file" }}
+          {{ selectedFile ? selectedFile?.name : "Select a file" }}
         </div>
       </q-card-section>
-      <input type="file" ref="fileInput" style="display: none" @change="handleFileSelect" />
+      <input
+        type="file"
+        ref="fileInput"
+        style="display: none"
+        @change="handleFileSelect"
+      />
       <q-separator />
       <q-card-actions align="right" class="q-pa-md">
         <q-btn
@@ -394,7 +403,70 @@
           unelevated
           color="light-green"
           class="rounded-10 text-capitalize min-w-80"
+          :disable="!selectedFile"
           @click="addStorageObject"
+        />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
+
+  <q-dialog
+    v-model="addNewBucketObjectContent"
+    backdrop-filter="blur(4px)"
+    class="snippet-dialog"
+  >
+    <q-card class="highlighted-border">
+      <q-card-section class="flex justify-between items-center q-pa-lg">
+        <div class="flex items-center">
+          <q-icon size="sm" name="add" class="filter-custom-dark" />
+          <p class="text-custom-text-secondary fw-600 q-ml-md text-subtitle1">
+            Add New {{ selectedTab }}
+          </p>
+        </div>
+        <q-icon
+          name="close"
+          class="cursor-pointer fs-20"
+          @click="addNewBucketObjectContent = false"
+        />
+      </q-card-section>
+      <q-separator />
+      <q-card-section class="q-pb-lg">
+        <p class="text-custom-gray-dark text-weight-light q-pb-sm">File Name</p>
+        <q-input
+          dense
+          outlined
+          v-model="fileName"
+          placeholder="e.g file-name"
+          class="rounded-10 self-center text-weight-light rounded-input bg-custom-primary"
+        />
+
+        <p class="text-custom-gray-dark text-weight-light q-pb-sm">
+          File Content
+        </p>
+        <q-input
+          dense
+          outlined
+          v-model="fileContent"
+          placeholder="e.g file-content"
+          class="rounded-10 self-center text-weight-light rounded-input bg-custom-primary"
+        />
+      </q-card-section>
+      <q-separator />
+      <q-card-actions align="right" class="q-pa-md">
+        <q-btn
+          label="Cancel"
+          unelevated
+          color="dark"
+          class="rounded-10 text-capitalize min-w-80 highlighted-border"
+          @click="addNewBucketObjectContent = false"
+        />
+        <q-btn
+          label="Add Now"
+          unelevated
+          color="light-green"
+          class="rounded-10 text-capitalize min-w-80"
+          :disable="!fileName || !fileContent"
+          @click="addStorageObjectContent"
         />
       </q-card-actions>
     </q-card>
@@ -557,6 +629,7 @@ import { ref } from "vue";
 import {
   appAddStorageBuckets,
   appAddStorageObject,
+  appAddStorageObjectContent,
   appDeleteStorageBuckets,
   appDeleteStorageObject,
   appGetStorageBuckets,
@@ -571,6 +644,9 @@ export default defineComponent({
   },
   data() {
     return {
+      fileName: "",
+      fileContent: "",
+      addNewBucketObjectContent: false,
       newObjectBucketName: "",
       newBucketName: "",
       selectedTab: "initialTab",
@@ -582,7 +658,7 @@ export default defineComponent({
       addNewBucketObject: false,
       addEditBucketDialog: {
         isOpen: false,
-        bucketName: ''
+        bucketName: "",
       },
       deletedBucket: {
         isDeleted: false,
@@ -627,19 +703,7 @@ export default defineComponent({
         },
         { name: "tabActions", label: "Actions", align: "center" },
       ],
-      tabs: [
-        {
-          name: { path: "Tab1" },
-          tableData: [
-            { name: "File1.txt", size: "2MB", tabType: "Text", createdAt: "2025-02-19", lastUpdated: "2025-02-19" },
-            { name: "Image.png", size: "1.5MB", tabType: "Image", createdAt: "2025-02-18", lastUpdated: "2025-02-19" }
-          ]
-        },
-        {
-          name: { path: "Tab2" },
-          tableData: []
-        }
-      ],
+      tabs: [],
     };
   },
   mounted() {
@@ -647,26 +711,24 @@ export default defineComponent({
   },
   methods: {
     getStorageBuckets() {
-      appGetStorageBuckets()
-        .then(({ data }) => {
-          this.tabs = data.map((x) => ({
-            name: x,
-            tableData: [],
-          }));
-        });
+      appGetStorageBuckets().then(({ data }) => {
+        this.tabs = data.map((x) => ({
+          name: x,
+          tableData: [],
+        }));
+      });
     },
     getStorageObjects() {
-      appGetStorageObjects(this.selectedTab)
-        .then(({ data }) => {
-          const tabs = this.tabs.find((x) => x.name?.path == this.selectedTab);
-          if (tabs) {
-            tabs.tableData = data.map((x, i) => ({
-              name: x.name,
-              id: i + 1,
-              tabType: x.type,
-            }));
-          }
-        });
+      appGetStorageObjects(this.selectedTab).then(({ data }) => {
+        const tabs = this.tabs.find((x) => x.name?.path == this.selectedTab);
+        if (tabs) {
+          tabs.tableData = data.map((x, i) => ({
+            name: x.path,
+            id: i + 1,
+            tabType: x.type,
+          }));
+        }
+      });
     },
     deleteStorageObject() {
       this.isOpenBucketObjectDeleteDialog.isDeleted = false;
@@ -687,11 +749,23 @@ export default defineComponent({
     },
     addStorageObject() {
       this.addNewBucketObject = false;
-      appAddStorageObject(this.selectedTab, this.newObjectBucketName).then(
-        ({ data }) => {
-          this.getStorageObjects();
-        }
-      );
+      appAddStorageObject(
+        this.selectedTab,
+        this.newObjectBucketName,
+        this.selectedFile
+      ).then(({ data }) => {
+        this.getStorageObjects();
+      });
+    },
+    addStorageObjectContent() {
+      appAddStorageObjectContent(
+        this.selectedTab,
+        this.newObjectBucketName,
+        this.fileName,
+        this.fileContent
+      ).then(({ data }) => {
+        this.getStorageObjects();
+      });
     },
     addStorageBuckets() {
       this.addEditBucketDialog.isOpen = false;
@@ -701,9 +775,11 @@ export default defineComponent({
     },
     deleteStorageBuckets() {
       this.deletedBucket.isDeleted = false;
-      appDeleteStorageBuckets(this.deletedBucket.bucketName).then(({ data }) => {
-        this.getStorageBuckets();
-      });
+      appDeleteStorageBuckets(this.deletedBucket.bucketName).then(
+        ({ data }) => {
+          this.getStorageBuckets();
+        }
+      );
     },
     handleClick() {},
     openMoveDialog(row) {
@@ -735,15 +811,15 @@ export default defineComponent({
     },
     addNewBucketDialog() {
       this.addEditBucketDialog.isOpen = true;
-      this.addEditBucketDialog.bucketName = '';
+      this.addEditBucketDialog.bucketName = "";
     },
     addNewBucketObjectDialog() {
       this.addNewBucketObject = !this.addNewBucketObject;
     },
     closeAddEditBucketDialog() {
       this.addEditBucketDialog.isOpen = false;
-      this.addEditBucketDialog.bucketName = '';
-      this.newBucketName = '';
+      this.addEditBucketDialog.bucketName = "";
+      this.newBucketName = "";
     },
     openFilePicker() {
       this.$refs.fileInput.click();
@@ -752,9 +828,8 @@ export default defineComponent({
       const file = event.target.files[0];
       if (file) {
         this.selectedFile = file;
-        console.log("Selected file:", file);
       }
-    }
+    },
   },
   setup() {
     return {
