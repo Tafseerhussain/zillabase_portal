@@ -449,21 +449,6 @@
         />
 
         <p class="text-custom-gray-dark text-weight-light q-pb-sm q-mt-md">
-          URL
-        </p>
-        <q-input
-          dense
-          outlined
-          v-model="fileUrl"
-          placeholder="e.g file-url"
-          class="rounded-10 self-center text-weight-light rounded-input bg-custom-primary"
-        >
-          <template v-slot:append>
-            <q-btn flat icon="content_copy" @click="copyToClipboard" />
-          </template>
-        </q-input>
-
-        <p class="text-custom-gray-dark text-weight-light q-pb-sm q-mt-md">
           File Content
         </p>
         <q-input
