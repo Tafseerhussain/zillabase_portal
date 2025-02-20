@@ -140,10 +140,7 @@
               isMultipleChecked
             />
 
-            <div
-              class="row justify-center q-pt-lg"
-              v-if="tab.tableData.length <= 0"
-            >
+            <div class="row justify-center q-pt-lg">
               <div
                 class="column q-pa-lg bg-custom-primary text-center bucket-file-upload"
               >
@@ -159,14 +156,25 @@
                 <div class="text-caption text-custom-text-secondary q-my-sm">
                   OR
                 </div>
-                <q-btn
-                  unelevated
-                  label="Upload A File"
-                  icon="add"
-                  :ripple="false"
-                  class="bg-light-green rounded-10 text-white text-capitalize self-center btn-add-new q-mt-sm"
-                  @click="addNewBucketObjectDialog"
-                />
+                <div class="flex justify-center">
+                  <q-btn
+                    unelevated
+                    label="Upload A File"
+                    icon="add"
+                    :ripple="false"
+                    class="bg-light-green rounded-10 text-white text-capitalize self-center btn-add-new q-mt-sm q-mx-sm"
+                    @click="addNewBucketObjectDialog"
+                  />
+                  <q-btn
+                    unelevated
+                    label="Add A File"
+                    icon="add"
+                    :ripple="false"
+                    color="dark"
+                    class="rounded-10 text-white text-capitalize self-center btn-add-new q-mt-sm q-mx-sm"
+                    @click="addNewBucketObjectContent = true"
+                  />
+                </div>
               </div>
             </div>
           </q-tab-panel>
@@ -440,12 +448,29 @@
           class="rounded-10 self-center text-weight-light rounded-input bg-custom-primary"
         />
 
-        <p class="text-custom-gray-dark text-weight-light q-pb-sm">
+        <p class="text-custom-gray-dark text-weight-light q-pb-sm q-mt-md">
+          URL
+        </p>
+        <q-input
+          dense
+          outlined
+          v-model="fileUrl"
+          placeholder="e.g file-url"
+          class="rounded-10 self-center text-weight-light rounded-input bg-custom-primary"
+        >
+          <template v-slot:append>
+            <q-btn flat icon="content_copy" @click="copyToClipboard" />
+          </template>
+        </q-input>
+
+        <p class="text-custom-gray-dark text-weight-light q-pb-sm q-mt-md">
           File Content
         </p>
         <q-input
           dense
           outlined
+          type="textarea"
+          rows="5"
           v-model="fileContent"
           placeholder="e.g file-content"
           class="rounded-10 self-center text-weight-light rounded-input bg-custom-primary"
@@ -636,6 +661,7 @@ import {
   appGetStorageObjects,
   appUpdateStorageObject,
 } from "src/services/api";
+import { showSuccess } from "src/services/notification";
 
 export default defineComponent({
   name: "StorageComponent",
@@ -646,6 +672,7 @@ export default defineComponent({
     return {
       fileName: "",
       fileContent: "",
+      fileUrl: "",
       addNewBucketObjectContent: false,
       newObjectBucketName: "",
       newBucketName: "",
@@ -675,10 +702,10 @@ export default defineComponent({
       tableColumns: [
         { name: "name", label: "Name", align: "left", field: "name" },
         {
-          name: "size",
-          label: "Size",
+          name: "url",
+          label: "URL",
           align: "left",
-          field: "size",
+          field: "url",
         },
         {
           name: "tabType",
@@ -694,13 +721,6 @@ export default defineComponent({
           field: "createdAt",
           sortable: true,
         },
-        {
-          name: "lastUpdated",
-          label: "Last Updated",
-          align: "left",
-          field: "lastUpdated",
-          sortable: true,
-        },
         { name: "tabActions", label: "Actions", align: "center" },
       ],
       tabs: [],
@@ -710,6 +730,12 @@ export default defineComponent({
     this.getStorageBuckets();
   },
   methods: {
+    copyToClipboard() {
+      if (this.fileUrl) {
+        navigator.clipboard.writeText(this.fileUrl);
+        showSuccess("Copied!");
+      }
+    },
     getStorageBuckets() {
       appGetStorageBuckets().then(({ data }) => {
         this.tabs = data.map((x) => ({
@@ -719,6 +745,8 @@ export default defineComponent({
       });
     },
     getStorageObjects() {
+      this.addNewBucketObjectContent = false;
+      this.addNewBucketObject = false;
       appGetStorageObjects(this.selectedTab).then(({ data }) => {
         const tabs = this.tabs.find((x) => x.name?.path == this.selectedTab);
         if (tabs) {

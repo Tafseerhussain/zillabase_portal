@@ -114,7 +114,17 @@
           "
         />
       </template>
-
+      <template v-slot:body-cell-url="props">
+        <q-td :props="props">
+          <q-icon
+            size="sm"
+            class="cursor-pointer"
+            @click="copyToClipboard(props.row.url)"
+            :name="'content_copy'"
+          />
+          {{ props.row.url }}
+        </q-td>
+      </template>
       <template v-slot:header-cell-ztable="props">
         <q-th :props="props">
           {{ props.col.label }}
@@ -389,6 +399,7 @@
   </div>
 </template>
 <script>
+import { showSuccess } from 'src/services/notification';
 import { defineComponent } from "vue";
 export default defineComponent({
   name: "CommonTable",
@@ -501,6 +512,12 @@ export default defineComponent({
     },
   },
   methods: {
+    copyToClipboard(url) {
+      if (url) {
+        navigator.clipboard.writeText(url);
+        showSuccess("Copied!");
+      }
+    },
     viewRow(row) {
       this.$emit("view-row", row);
     },
