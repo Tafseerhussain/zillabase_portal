@@ -647,6 +647,7 @@ import {
   appUpdateStorageObject,
 } from "src/services/api";
 import { showSuccess } from "src/services/notification";
+import app from "src/services/app";
 
 export default defineComponent({
   name: "StorageComponent",
@@ -737,6 +738,7 @@ export default defineComponent({
         if (tabs) {
           tabs.tableData = data.map((x, i) => ({
             name: x.path,
+            url: `${app.apiEndpoint}/storage/objects/${this.selectedTab}/${x.path}`,
             id: i + 1,
             tabType: x.type,
           }));
