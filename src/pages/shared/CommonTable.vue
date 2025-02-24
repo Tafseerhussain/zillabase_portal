@@ -60,6 +60,16 @@
 
         <q-btn
           unelevated
+          icon="add"
+          :ripple="false"
+          v-if="showStorage"
+          color="light-green"
+          class="rounded-10 text-white text-capitalize self-center btn-add-new highlighted-border"
+          @click="$emit('add-file')"
+        />
+
+        <q-btn
+          unelevated
           icon="img:/icons/folder-add.svg"
           :ripple="false"
           v-if="showStorage"
@@ -399,7 +409,7 @@
   </div>
 </template>
 <script>
-import { showSuccess } from 'src/services/notification';
+import { showSuccess } from "src/services/notification";
 import { defineComponent } from "vue";
 export default defineComponent({
   name: "CommonTable",

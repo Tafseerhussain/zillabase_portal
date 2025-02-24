@@ -136,11 +136,15 @@
               @rename-row="openRenameDialog"
               @delete-row="openBucketObjectDeleteDialog"
               @add-item="addNewBucketObjectContent = true"
+              @add-file="addNewBucketObjectDialog"
               showStorage
               isMultipleChecked
             />
 
-            <div class="row justify-center q-pt-lg">
+            <div
+              class="row justify-center q-pt-lg"
+              v-if="!tab.tableData.length"
+            >
               <div
                 class="column q-pa-lg bg-custom-primary text-center bucket-file-upload"
               >
