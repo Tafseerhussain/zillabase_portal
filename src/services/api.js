@@ -193,9 +193,11 @@ const appAddStorageObjectContent = (bucketName, fileName, name, body) => {
 const appUpdateStorageObjectContent = (bucketName, fileName, body, etag) => {
     return new Promise((resolve, reject) => {
         axios.put(`${app.apiEndpoint}/storage/objects/${bucketName}/${fileName}`,
-            { content: body },
+            `${body}`,
             {
-                'if-match': etag
+                headers: {
+                    'if-match': etag
+                }
             })
             .then(response => {
                 resolve(response)
