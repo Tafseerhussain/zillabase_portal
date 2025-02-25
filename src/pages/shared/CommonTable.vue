@@ -302,9 +302,7 @@
                         size="sm"
                         class="q-pr-md filter-gray-dark"
                       />
-                      <span class="text-custom-gray-dark text-weight-light"
-                        >Move</span
-                      >
+                      <span>Move</span>
                     </div>
                   </q-item-section>
                 </q-item>
@@ -317,9 +315,7 @@
                         size="sm"
                         class="q-pr-md filter-gray-dark"
                       />
-                      <span class="text-custom-gray-dark text-weight-light"
-                        >Copy URL</span
-                      >
+                      <span>Copy URL</span>
                     </div>
                   </q-item-section>
                 </q-item>
@@ -332,9 +328,7 @@
                         size="sm"
                         class="q-pr-md filter-gray-dark"
                       />
-                      <span class="text-custom-gray-dark text-weight-light"
-                        >Edit</span
-                      >
+                      <span>Edit</span>
                     </div>
                   </q-item-section>
                 </q-item>
@@ -347,15 +341,20 @@
                         size="sm"
                         class="q-pr-md filter-gray-dark"
                       />
-                      <span class="text-custom-gray-dark text-weight-light"
-                        >Download</span
-                      >
+                      <span>Download</span>
                     </div>
                   </q-item-section>
                 </q-item>
               </q-list>
             </q-menu>
           </q-btn>
+          <q-btn
+            flat
+            dense
+            icon="img:/icons/edit.svg"
+            class="filter-text-secondary"
+            @click="editRow(props.row)"
+          />
           <q-btn
             flat
             dense
