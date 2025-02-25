@@ -720,32 +720,32 @@ export default defineComponent({
         { name: "tabActions", label: "Actions", align: "center" },
       ],
       etag: null,
-      // tabs: [],
-      tabs: [
-        {
-          name: { path: "Tab1" },
-          tableData: [
-            {
-              name: "File1.txt",
-              size: "2MB",
-              tabType: "Text",
-              createdAt: "2025-02-19",
-              lastUpdated: "2025-02-19",
-            },
-            {
-              name: "Image.png",
-              size: "1.5MB",
-              tabType: "Image",
-              createdAt: "2025-02-18",
-              lastUpdated: "2025-02-19",
-            },
-          ],
-        },
-        {
-          name: { path: "Tab2" },
-          tableData: [],
-        },
-      ],
+      tabs: [],
+      // tabs: [
+      //   {
+      //     name: { path: "Tab1" },
+      //     tableData: [
+      //       {
+      //         name: "File1.txt",
+      //         size: "2MB",
+      //         tabType: "Text",
+      //         createdAt: "2025-02-19",
+      //         lastUpdated: "2025-02-19",
+      //       },
+      //       {
+      //         name: "Image.png",
+      //         size: "1.5MB",
+      //         tabType: "Image",
+      //         createdAt: "2025-02-18",
+      //         lastUpdated: "2025-02-19",
+      //       },
+      //     ],
+      //   },
+      //   {
+      //     name: { path: "Tab2" },
+      //     tableData: [],
+      //   },
+      // ],
     };
   },
   mounted() {
