@@ -333,7 +333,7 @@
                         class="q-pr-md filter-gray-dark"
                       />
                       <span class="text-custom-gray-dark text-weight-light"
-                        >Rename</span
+                        >Edit</span
                       >
                     </div>
                   </q-item-section>

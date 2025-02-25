@@ -133,7 +133,7 @@
               noDataLabel="No Data"
               @delete-item="deleteBucketItems"
               @move-row="openMoveDialog"
-              @rename-row="openRenameDialog"
+              @rename-row="openEditFileDialog"
               @delete-row="openBucketObjectDeleteDialog"
               @add-item="addNewBucketObjectContent = true"
               @add-file="addNewBucketObjectDialog"
@@ -432,7 +432,7 @@
         <div class="flex items-center">
           <q-icon size="sm" name="add" class="filter-custom-dark" />
           <p class="text-custom-text-secondary fw-600 q-ml-md text-subtitle1">
-            Add New {{ selectedTab }}
+            {{ etag ? "Edit " : "Add New " }} {{ selectedTab }}
           </p>
         </div>
         <q-icon
@@ -475,12 +475,14 @@
           @click="addNewBucketObjectContent = false"
         />
         <q-btn
-          label="Add Now"
+          :label="etag ? 'Update Now' : 'Add Now'"
           unelevated
           color="light-green"
           class="rounded-10 text-capitalize min-w-80"
           :disable="!fileName || !fileContent"
-          @click="addStorageObjectContent"
+          @click="
+            etag ? updateStorageObjectContent() : addStorageObjectContent()
+          "
         />
       </q-card-actions>
     </q-card>
@@ -647,8 +649,10 @@ import {
   appDeleteStorageBuckets,
   appDeleteStorageObject,
   appGetStorageBuckets,
+  appGetStorageObjectDetail,
   appGetStorageObjects,
   appUpdateStorageObject,
+  appUpdateStorageObjectContent,
 } from "src/services/api";
 import { showSuccess } from "src/services/notification";
 import app from "src/services/app";
@@ -713,7 +717,33 @@ export default defineComponent({
         },
         { name: "tabActions", label: "Actions", align: "center" },
       ],
-      tabs: [],
+      etag: null,
+      // tabs: [],
+      tabs: [
+        {
+          name: { path: "Tab1" },
+          tableData: [
+            {
+              name: "File1.txt",
+              size: "2MB",
+              tabType: "Text",
+              createdAt: "2025-02-19",
+              lastUpdated: "2025-02-19",
+            },
+            {
+              name: "Image.png",
+              size: "1.5MB",
+              tabType: "Image",
+              createdAt: "2025-02-18",
+              lastUpdated: "2025-02-19",
+            },
+          ],
+        },
+        {
+          name: { path: "Tab2" },
+          tableData: [],
+        },
+      ],
     };
   },
   mounted() {
@@ -783,6 +813,33 @@ export default defineComponent({
         this.fileName,
         this.fileContent
       ).then(({ data }) => {
+        this.getStorageObjects();
+      });
+    },
+    openEditFileDialog(row) {
+      this.fileName = row.name;
+      this.getStorageObjectDetail();
+    },
+    getStorageObjectDetail() {
+      appGetStorageObjectDetail(this.selectedTab, this.fileName).then(
+        (response) => {
+          this.etag = response.headers["etag"];
+          this.fileContent = response.data;
+          this.addNewBucketObjectContent = true;
+        }
+      );
+    },
+    updateStorageObjectContent() {
+      appUpdateStorageObjectContent(
+        this.selectedTab,
+        this.fileName,
+        this.fileContent,
+        this.etag
+      ).then((response) => {
+        this.addNewBucketObjectContent = false;
+        this.fileName = "";
+        this.fileContent = "";
+        this.etag = null;
         this.getStorageObjects();
       });
     },

@@ -190,6 +190,21 @@ const appAddStorageObjectContent = (bucketName, fileName, name, body) => {
     })
 }
 
+const appUpdateStorageObjectContent = (bucketName, fileName, body, etag) => {
+    return new Promise((resolve, reject) => {
+        axios.put(`${app.apiEndpoint}/storage/objects/${bucketName}/${fileName}`,
+            { content: body },
+            {
+                'if-match': etag
+            })
+            .then(response => {
+                resolve(response)
+            }).catch(error => {
+                reject(error)
+            })
+    })
+}
+
 const appUpdateStorageObject = (bucketName, fileName) => {
     return new Promise((resolve, reject) => {
         axios.put(`${app.apiEndpoint}/storage/objects/${bucketName}/${fileName}`)
@@ -214,6 +229,7 @@ const appDeleteStorageObject = (bucketName, fileName) => {
 
 export {
     appApiDocs,
+    appUpdateStorageObjectContent,
     appUpdateStorageObject,
     appDeleteStorageObject,
     appAddStorageObject,
