@@ -284,7 +284,7 @@
       </template>
       <template v-slot:body-cell-tabActions="props">
         <q-td :props="props">
-          <q-btn
+          <!-- <q-btn
             flat
             dense
             round
@@ -347,7 +347,7 @@
                 </q-item>
               </q-list>
             </q-menu>
-          </q-btn>
+          </q-btn> -->
           <q-btn
             flat
             dense
