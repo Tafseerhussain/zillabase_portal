@@ -229,14 +229,18 @@
               >
             </div>
             <div class="col-9">
-              <q-input
-                dense
-                outlined
-                placeholder="e.g Google"
+              <q-select
                 v-model="providerInfo.providerId"
-                class="rounded-10 self-center text-weight-light rounded-input"
+                :options="providers"
+                class="rounded-input"
                 :rules="[(val) => !!val || 'Field is required']"
-              />
+                emit-value
+                map-options
+                option-value="value"
+                option-label="label"
+                outlined
+                dense
+              ></q-select>
             </div>
           </div>
           <div class="row items-start q-mt-sm q-pt-md">
@@ -414,6 +418,36 @@ export default defineComponent({
     return {
       addNewUser: false,
       addNewProvider: false,
+      providers: [
+        { label: "Bitbucket", value: "bitbucket", icon: "code" },
+        { label: "Facebook", value: "facebook", icon: "facebook" },
+        { label: "GitHub", value: "github", icon: "github" },
+        { label: "GitLab", value: "gitlab", icon: "gitlab" },
+        { label: "Google", value: "google", icon: "google" },
+        {
+          label: "Instagram",
+          value: "instagram",
+          icon: "fa-brands fa-instagram",
+        },
+        {
+          label: "LinkedIn",
+          value: "linkedin-openid-connect",
+          icon: "fa-brands fa-linkedin",
+        },
+        {
+          label: "Microsoft",
+          value: "microsoft",
+          icon: "fa-brands fa-microsoft",
+        },
+        { label: "OpenShift", value: "openshift-v4", icon: "cloud" },
+        { label: "PayPal", value: "paypal", icon: "fa-brands fa-paypal" },
+        {
+          label: "Stack Overflow",
+          value: "stackoverflow",
+          icon: "fa-brands fa-stack-overflow",
+        },
+        { label: "Twitter", value: "twitter", icon: "fa-brands fa-twitter" },
+      ],
       providerInfo: {
         providerId: "",
         alias: "",
