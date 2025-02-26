@@ -228,6 +228,13 @@
                 class="text-custom-gray-dark text-subtitle1 text-weight-light"
                 >Provider</span
               >
+              <q-icon
+                name="img:icons/question-circle.svg"
+                class="fs-lg filter-gray-dark q-ml-sm"
+              />
+              <q-tooltip anchor="bottom middle" self="top middle">
+                Identity Provider ID
+              </q-tooltip>
             </div>
             <div class="col-9">
               <q-select
@@ -250,6 +257,13 @@
                 class="text-custom-gray-dark text-subtitle1 text-weight-light"
                 >Alias</span
               >
+              <q-icon
+                name="img:icons/question-circle.svg"
+                class="fs-lg filter-gray-dark q-ml-sm"
+              />
+              <q-tooltip anchor="bottom middle" self="top middle">
+                Identity Provider Alias
+              </q-tooltip>
             </div>
             <div class="col-9">
               <q-input
@@ -267,6 +281,13 @@
                 class="text-custom-gray-dark text-subtitle1 text-weight-light"
                 >Client</span
               >
+              <q-icon
+                name="img:icons/question-circle.svg"
+                class="fs-lg filter-gray-dark q-ml-sm"
+              />
+              <q-tooltip anchor="bottom middle" self="top middle">
+                Client ID for the Identity Provider
+              </q-tooltip>
             </div>
             <div class="col-9">
               <q-input
@@ -284,6 +305,13 @@
                 class="text-custom-gray-dark text-subtitle1 text-weight-light"
                 >Secret</span
               >
+              <q-icon
+                name="img:icons/question-circle.svg"
+                class="fs-lg filter-gray-dark q-ml-sm"
+              />
+              <q-tooltip anchor="bottom middle" self="top middle">
+                Client Secret for the Identity Provider
+              </q-tooltip>
             </div>
             <div class="col-9">
               <q-input
@@ -521,7 +549,7 @@ export default defineComponent({
         { name: "actions", label: "Actions", align: "center" },
       ],
       ssoTableData: [],
-      isPasswordVisible: false
+      isPasswordVisible: false,
     };
   },
   mounted() {
