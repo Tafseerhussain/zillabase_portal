@@ -277,6 +277,24 @@
               />
             </div>
           </div>
+          <div class="row items-start q-mt-sm q-pt-md">
+            <div class="col-3">
+              <span
+                class="text-custom-gray-dark text-subtitle1 text-weight-light"
+                >Secret</span
+              >
+            </div>
+            <div class="col-9">
+              <q-input
+                dense
+                outlined
+                v-model="providerInfo.secret"
+                type="password"
+                class="rounded-10 self-center text-weight-light rounded-input"
+                :rules="[(val) => !!val || 'Field is required']"
+              />
+            </div>
+          </div>
         </q-card-section>
         <q-separator />
         <q-card-section class="flex justify-end q-gutter-x-lg q-pa-lg">
