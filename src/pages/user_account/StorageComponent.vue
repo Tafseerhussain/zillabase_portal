@@ -47,10 +47,9 @@
             :name="tab.name.path"
           >
             <!-- Tab name on the left -->
-            <span
-              class="text-custom-gray-dark text-capitalize text-weight-light"
-              >{{ tab.name.path }}</span
-            >
+            <span class="text-custom-gray-dark text-capitalize text-weight-light" style="text-transform: none;">
+              {{ tab.name.path }}
+            </span>
             <!-- Buttons on the right -->
             <div class="flex">
               <q-btn
@@ -215,12 +214,12 @@
       <q-separator />
       <q-card-section class="q-pb-lg">
         <p class="text-custom-gray-dark text-weight-light q-pb-sm">
-          Write Directory Path
+          Directory Path
         </p>
         <q-input
           dense
           outlined
-          placeholder="e.g folder1/subfodler"
+          placeholder="folder1/subfodler"
           class="rounded-10 self-center text-weight-light rounded-input bg-custom-primary"
         />
         <p class="text-custom-gray-dark text-weight-light q-pt-xs">
@@ -273,12 +272,12 @@
       <q-separator />
       <q-card-section class="q-pb-lg">
         <p class="text-custom-gray-dark text-weight-light q-pb-sm">
-          Write New Name
+          Name
         </p>
         <q-input
           dense
           outlined
-          placeholder="e.g my-image"
+          placeholder="my-image"
           class="rounded-10 self-center text-weight-light rounded-input bg-custom-primary"
         />
       </q-card-section>
@@ -325,13 +324,13 @@
       <q-separator />
       <q-card-section class="q-pb-lg">
         <p class="text-custom-gray-dark text-weight-light q-pb-sm">
-          Write Bucket Name
+          Bucket Name
         </p>
         <q-input
           dense
           outlined
           v-model="newBucketName"
-          placeholder="e.g my-bucket"
+          placeholder="my-bucket"
           class="rounded-10 self-center text-weight-light rounded-input bg-custom-primary"
         />
       </q-card-section>
@@ -376,18 +375,6 @@
         />
       </q-card-section>
       <q-separator />
-      <!-- <q-card-section class="q-pb-lg">
-        <p class="text-custom-gray-dark text-weight-light q-pb-sm">
-          Write Bucket Object Name
-        </p>
-        <q-input
-          dense
-          outlined
-          v-model="newObjectBucketName"
-          placeholder="e.g my-bucket"
-          class="rounded-10 self-center text-weight-light rounded-input bg-custom-primary"
-        />
-      </q-card-section> -->
       <q-card-section class="cursor-pointer" @click="openFilePicker">
         <div class="flex flex-center q-mb-md">
           <q-icon class="fs-60" name="img:/icons/folder-add-bucket.svg" />
@@ -450,7 +437,7 @@
           outlined
           v-model="fileName"
           :disable="etag ? true : false"
-          placeholder="e.g file-name"
+          placeholder="file-name"
           class="rounded-10 self-center text-weight-light rounded-input bg-custom-primary"
         />
 
@@ -463,7 +450,7 @@
           type="textarea"
           rows="5"
           v-model="fileContent"
-          placeholder="e.g file-content"
+          placeholder="file-content"
           class="rounded-10 self-center text-weight-light rounded-input bg-custom-primary"
         />
       </q-card-section>
@@ -634,7 +621,7 @@
           unelevated
           color="negative"
           class="rounded-10 text-capitalize min-w-80"
-          @click="deleteMultipleSelectedRows.isDeleted = false"
+          @click="deleteStorageObjects"
         />
       </q-card-actions>
     </q-card>
@@ -656,7 +643,7 @@ import {
   appUpdateStorageObject,
   appUpdateStorageObjectContent,
 } from "src/services/api";
-import { showSuccess } from "src/services/notification";
+import {showError, showSuccess} from "src/services/notification";
 import app from "src/services/app";
 
 export default defineComponent({
@@ -745,15 +732,26 @@ export default defineComponent({
       this.addNewBucketObjectContent = false;
       this.addNewBucketObject = false;
       appGetStorageObjects(this.selectedTab).then(({ data }) => {
-        const tabs = this.tabs.find((x) => x.name?.path == this.selectedTab);
+        const tabs = this.tabs.find((x) => x.name?.path === this.selectedTab);
         if (tabs) {
           tabs.tableData = data.map((x, i) => ({
-            name: x.path,
+            name: decodeURIComponent(x.path),
             url: `${app.apiEndpoint}/storage/objects/${this.selectedTab}/${x.path}`,
             id: i + 1,
             tabType: x.type,
           }));
         }
+      });
+    },
+    deleteStorageObjects() {
+      this.deleteMultipleSelectedRows.isDeleted = false;
+      const names = this.deleteMultipleSelectedRows.selectedRows.map(row => row.name);
+      Promise.all(
+        names.map(name =>
+          appDeleteStorageObject(this.selectedTab, name)
+        )
+      ).then(() => {
+        this.getStorageObjects();
       });
     },
     deleteStorageObject() {
@@ -777,7 +775,6 @@ export default defineComponent({
       this.addNewBucketObject = false;
       appAddStorageObject(
         this.selectedTab,
-        this.newObjectBucketName,
         this.selectedFile
       ).then(({ data }) => {
         this.getStorageObjects();
@@ -786,7 +783,6 @@ export default defineComponent({
     addStorageObjectContent() {
       appAddStorageObjectContent(
         this.selectedTab,
-        this.newObjectBucketName,
         this.fileName,
         this.fileContent
       ).then(({ data }) => {
@@ -832,7 +828,10 @@ export default defineComponent({
         ({ data }) => {
           this.getStorageBuckets();
         }
-      );
+      ).catch(error => {
+        const message = error?.status === 409 ? "Bucket is not empty" : "Something went wrong";
+        showError(message);
+      });
     },
     handleClick() {},
     openMoveDialog(row) {

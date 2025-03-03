@@ -57,7 +57,7 @@
             class="rounded-10"
           />
           <p class="text-custom-text-secondary text-h6 fw-600">
-            Create {{ hasUserInfoValues ? "Edit" : "New" }} User
+            {{ hasUserInfoValues ? "Edit" : "Create New" }} User
           </p>
         </div>
         <q-icon
@@ -174,8 +174,8 @@
           />
           <q-btn
             unelevated
-            label="Add User"
-            icon="add"
+            :label="`${hasUserInfoValues ? 'Edit' : 'Add'} User`"
+            :icon="`${hasUserInfoValues ? 'edit' : 'add'}`"
             :ripple="false"
             type="submit"
             class="bg-light-green rounded-10 text-white text-capitalize self-center"
@@ -248,7 +248,25 @@
                 option-label="label"
                 outlined
                 dense
-              ></q-select>
+              >
+                <template v-slot:option="scope">
+                  <q-item v-bind="scope.itemProps">
+                    <q-item-section avatar>
+                      <q-icon
+                        :class="
+                          scope.opt.value == 'microsoft'
+                            ? 'q-ml-sm q-pl-xs'
+                            : ''
+                        "
+                        :name="scope.opt.icon"
+                      />
+                    </q-item-section>
+                    <q-item-section>
+                      {{ scope.opt.label }}
+                    </q-item-section>
+                  </q-item>
+                </template>
+              </q-select>
             </div>
           </div>
           <div class="row items-start q-mt-sm q-pt-md">
@@ -475,33 +493,25 @@ export default defineComponent({
       addNewProvider: false,
       providers: [
         { label: "Bitbucket", value: "bitbucket", icon: "code" },
-        { label: "Facebook", value: "facebook", icon: "facebook" },
-        { label: "GitHub", value: "github", icon: "github" },
-        { label: "GitLab", value: "gitlab", icon: "gitlab" },
-        { label: "Google", value: "google", icon: "google" },
-        {
-          label: "Instagram",
-          value: "instagram",
-          icon: "fa-brands fa-instagram",
-        },
+        { label: "Facebook", value: "facebook", icon: "public" },
+        { label: "GitHub", value: "github", icon: "hub" },
+        { label: "GitLab", value: "gitlab", icon: "developer_mode" },
+        { label: "Google", value: "google", icon: "language" },
+        { label: "Instagram", value: "instagram", icon: "photo_camera" },
         {
           label: "LinkedIn",
           value: "linkedin-openid-connect",
-          icon: "fa-brands fa-linkedin",
+          icon: "business_center",
         },
-        {
-          label: "Microsoft",
-          value: "microsoft",
-          icon: "fa-brands fa-microsoft",
-        },
+        { label: "Microsoft", value: "microsoft", icon: "windows" },
         { label: "OpenShift", value: "openshift-v4", icon: "cloud" },
-        { label: "PayPal", value: "paypal", icon: "fa-brands fa-paypal" },
+        { label: "PayPal", value: "paypal", icon: "account_balance_wallet" },
         {
           label: "Stack Overflow",
           value: "stackoverflow",
-          icon: "fa-brands fa-stack-overflow",
+          icon: "question_answer",
         },
-        { label: "Twitter", value: "twitter", icon: "fa-brands fa-twitter" },
+        { label: "Twitter", value: "twitter", icon: "chat_bubble" },
       ],
       providerInfo: {
         providerId: "",
@@ -666,7 +676,7 @@ export default defineComponent({
     },
     confirmSSOProviderDelete() {
       this.isDeleteSSOProviderDialogOpen = false;
-      appDeleteSSOProvidersById(this.providerInfo.providerId)
+      appDeleteSSOProvidersById(this.providerInfo.alias)
         .then(({ data }) => {
           this.getSSOProvider();
         })
